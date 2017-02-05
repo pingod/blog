@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>ECMAScript 6 扫盲 | 小胡子哥的个人网站</title>
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,user-scalable=0">
+  <meta name="author" content="https://plus.google.com/112634278852964994392?hl=zh-cn">
+  <meta name="email" content="barret.china@gmail.com">
+  <meta name="description" content="ECMAScript 6 目前基本成为业界标准，它的普及速度比 ES5 要快很多，主要原因是现代浏览器对 ES6 的支持相当迅速，尤其是 Chrome 和 Firefox 浏览器，已经支持 ES6 中绝大多数的特性。">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="ECMAScript 6 扫盲 | 小胡子哥的个人网站">
+  <meta property="og:url" content="http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/">
+  <meta property="og:site_name" content="ECMAScript 6 扫盲">
+  <meta property="og:description" content="ECMAScript 6 目前基本成为业界标准，它的普及速度比 ES5 要快很多，主要原因是现代浏览器对 ES6 的支持相当迅速，尤其是 Chrome 和 Firefox 浏览器，已经支持 ES6 中绝大多数的特性。">
+  <meta name="generator" content="https://hexo.io" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <link href="http://www.barretlee.com/blogimgs/app-icon.png" rel="apple-touch-icon-precomposed">
+  <link rel="shoticon" href="http://www.barretlee.com/favicon.ico" type="image/x-icon">
+  <link rel="alternate" type="application/rss+xml" href="http://www.barretlee.com/rss2.xml" title="小胡子哥的个人网站" />
+  <link rel="prev" href="http://www.barretlee.com/blog/2016/07/11/learning-recent-years/" title="谈谈我这三年在技术上的成长" />
+  <link rel="next" href="http://www.barretlee.com/blog/2016/07/07/hongkong-cmbchina/" title="招行香港一卡通办理和使用" />
+  <link rel="start" href="http://www.barretlee.com/entry/" title="Blog Entry" />
+  <link rel="stylesheet" href="/public/css/style.css?v=20160728">
+</head>
+<span class="aria-readonly" tabindex="0" aria-hidden="true">小胡子哥的博客良好支持读屏软件阅读，请放心使用。</span>
+
+
+<body>
+  <div class="rainbow"></div>
+  <div class="container">
+  <div class="article" itemscope itemtype="http://schema.org/Article">
+    <div class="post">
+      <div class="bread">
+        <a href="/">小胡子哥的个人博客</a> »
+        <a href="/entry/">博客</a> »
+        
+	<a class="category-link" href="/blog/categories/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/前端杂烩/JavaScript/">JavaScript</a>
+
+
+      </div>
+      <div class="post-title-wrapper">
+        <h1 class="post-title" itemprop="name">ECMAScript 6 扫盲<img src="https://game.weixin.qq.com/cgi-bin/comm/qrcode?s=10&m=1&d=http:http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/" alt="扫码分享" onerror="this.style.display='none';"></h1>
+        <a href="/about/"><img src="/blogimgs/avatar150.png" alt="小胡子哥" /></a>
+      </div>
+      <div class="post-info">
+        <span>作者: <a href="/about/" itemprop="author">小胡子哥</a></span>
+        <span>
+          <time itemprop="timeCreated" aria-hidden="true">2016-07-09 14:30:40</time>
+          <span class="aria-readonly">本文发布时间为2016年07月09日14时30分40秒</span>
+        </span>
+        <span>分类: 
+	<a class="category-link" href="/blog/categories/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/前端杂烩/JavaScript/">JavaScript</a>
+
+</span>
+        <span tabindex="0" aria-hidden="true">标签: 
+<a class="article-tag-link" href="/blog/tags/ES6/">ES6</a>
+</span>
+        <span class="aria-readonly">下面是正文内容</span>
+        <span tabindex="0" aria-hidden="true">评论数: <a href="#comments"
+                      class="ds-thread-count hash-to-comments disqus-comment-count"
+                      data-thread-key="a-kickstarter-guide-to-writing-es6"
+                      data-disqus-identifier="a-kickstarter-guide-to-writing-es6"></a></span>
+        <span tabindex="0" aria-hidden="true" id="busuanzi_container_site_pv">热度: <span id="busuanzi_value_page_pv"></span></span>
+      </div>
+      <div class="post-content" itemprop="articleBody">
+        <div class="shit-spider" title="防爬虫不注明出处" tabindex="0" aria-hidden="true">
+          <p>原文地址：<a href="http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/">http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/</a>，<a href="http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/#comments">参与评论</a></p>
+          <img src="//www.barretlee.com/blogimgs/avatar150.png">
+        </div>
+        <p>ECMAScript 6 目前基本成为业界标准，它的普及速度比 ES5 要快很多，主要原因是现代浏览器对 ES6 的支持相当迅速，尤其是 Chrome 和 Firefox 浏览器，已经支持 ES6 中绝大多数的特性。</p>
+<p><img src="//ww1.sinaimg.cn/large/6c0378f8gw1f5npzp64c0j20p00dw77u.jpg" alt="//unsplash.com/photos/iCtJF-A5hvs by Jeff Hopper"></p>
+<p>本文译自 Github 上的<a href="//github.com/metagrover/ES6-for-humans">一篇文章</a>，目的是对还不太熟悉 ES6 语法的同学做一个简单的扫盲。</p>
+<a id="more"></a>
+<h3 id="1-let、const-和-block-作用域"><a href="#1-let、const-和-block-作用域" class="headerlink" title="1. let、const 和 block 作用域"></a>1. let、const 和 block 作用域</h3><p><code>let</code> 允许创建块级作用域，ES6 推荐在函数中使用 <code>let</code> 定义变量，而非 <code>var</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> a = <span class="number">2</span>;</div><div class="line">&#123;</div><div class="line">  <span class="keyword">let</span> a = <span class="number">3</span>;</div><div class="line">  <span class="built_in">console</span>.log(a); <span class="comment">// 3</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">console</span>.log(a); <span class="comment">// 2</span></div></pre></td></tr></table></figure>
+<p>同样在块级作用域有效的另一个变量声明方式是 <code>const</code>，它可以声明一个常量。ES6 中，<code>const</code> 声明的常量类似于指针，它指向某个引用，也就是说这个「常量」并非一成不变的，如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">&#123;</div><div class="line">  <span class="keyword">const</span> ARR = [<span class="number">5</span>,<span class="number">6</span>];</div><div class="line">  ARR.push(<span class="number">7</span>);</div><div class="line">  <span class="built_in">console</span>.log(ARR); <span class="comment">// [5,6,7]</span></div><div class="line">  ARR = <span class="number">10</span>; <span class="comment">// TypeError</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有几个点需要注意：</p>
+<ul>
+<li><code>let</code> 关键词声明的变量不具备变量提升（hoisting）特性</li>
+<li><code>let</code> 和 <code>const</code> 声明只在最靠近的一个块中（花括号内）有效</li>
+<li>当使用常量 <code>const</code> 声明时，请使用大写变量，如：CAPITAL_CASING</li>
+<li><code>const</code> 在声明时必须被赋值</li>
+</ul>
+<h3 id="2-箭头函数（Arrow-Functions）"><a href="#2-箭头函数（Arrow-Functions）" class="headerlink" title="2. 箭头函数（Arrow Functions）"></a>2. 箭头函数（Arrow Functions）</h3><p>ES6 中，箭头函数就是函数的一种简写形式，使用括号包裹参数，跟随一个 <code>=&gt;</code>，紧接着是函数体：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> getPrice = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> <span class="number">4.55</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="comment">// Implementation with Arrow Function</span></div><div class="line"><span class="keyword">var</span> getPrice = <span class="function"><span class="params">()</span> =&gt;</span> <span class="number">4.55</span>;</div></pre></td></tr></table></figure>
+<p>需要注意的是，上面栗子中的 <code>getPrice</code> 箭头函数采用了简洁函数体，它不需要 <code>reture</code> 语句，下面这个栗子使用的是正常函数体：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> arr = [<span class="string">'apple'</span>, <span class="string">'banana'</span>, <span class="string">'orange'</span>];</div><div class="line"></div><div class="line"><span class="keyword">let</span> breakfast = arr.map(<span class="function"><span class="params">fruit</span> =&gt;</span> &#123;</div><div class="line">  <span class="keyword">return</span> fruit + <span class="string">'s'</span>;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(breakfast); <span class="comment">// apples bananas oranges</span></div></pre></td></tr></table></figure>
+<p>当然，箭头函数不仅仅是让代码变得简洁，函数中 <code>this</code> 总是绑定总是指向对象自身。具体可以看看下面几个栗子：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">this</span>.age = <span class="number">0</span>;</div><div class="line"></div><div class="line">  setInterval(<span class="function"><span class="keyword">function</span> <span class="title">growUp</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    <span class="comment">// 在非严格模式下，growUp() 函数的 this 指向 window 对象</span></div><div class="line">    <span class="keyword">this</span>.age++;</div><div class="line">  &#125;, <span class="number">1000</span>);</div><div class="line">&#125;</div><div class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person();</div></pre></td></tr></table></figure>
+<p>我们经常需要使用一个变量来保存 <code>this</code>，然后在 growUp 函数中引用：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">  self.age = <span class="number">0</span>;</div><div class="line"></div><div class="line">  setInterval(<span class="function"><span class="keyword">function</span> <span class="title">growUp</span>(<span class="params"></span>) </span>&#123;</div><div class="line">    self.age++;</div><div class="line">  &#125;, <span class="number">1000</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>而使用箭头函数可以省却这个麻烦：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>)</span>&#123;</div><div class="line">  <span class="keyword">this</span>.age = <span class="number">0</span>;</div><div class="line"></div><div class="line">  setInterval(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="comment">// |this| 指向 person 对象</span></div><div class="line">    <span class="keyword">this</span>.age++;</div><div class="line">  &#125;, <span class="number">1000</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> person = <span class="keyword">new</span> Person();</div></pre></td></tr></table></figure>
+<p>在 <a href="//developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions#Lexical_this">这里</a> 可以阅读更多 <code>this</code> 在箭头函数中的词法特性。</p>
+<h3 id="3-函数参数默认值"><a href="#3-函数参数默认值" class="headerlink" title="3. 函数参数默认值"></a>3. 函数参数默认值</h3><p>ES6 中允许你对函数参数设置默认值：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> getFinalPrice = <span class="function">(<span class="params">price, tax=<span class="number">0.7</span></span>) =&gt;</span> price + price * tax;</div><div class="line">getFinalPrice(<span class="number">500</span>); <span class="comment">// 850</span></div></pre></td></tr></table></figure>
+<h3 id="4-Spread-Rest-操作符"><a href="#4-Spread-Rest-操作符" class="headerlink" title="4. Spread / Rest 操作符"></a>4. Spread / Rest 操作符</h3><p>Spread / Rest 操作符指的是 <code>...</code>，具体是 Spread 还是 Rest 需要看上下文语境。</p>
+<p>当被用于迭代器中时，它是一个 Spread 操作符：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">x,y,z</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(x,y,z);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line">foo(...arr); <span class="comment">// 1 2 3</span></div></pre></td></tr></table></figure>
+<p>当被用于函数传参时，是一个 Rest 操作符：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">...args</span>) </span>&#123;</div><div class="line">  <span class="built_in">console</span>.log(args);</div><div class="line">&#125;</div><div class="line">foo( <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>); <span class="comment">// [1, 2, 3, 4, 5]</span></div></pre></td></tr></table></figure>
+<h3 id="5-对象词法扩展"><a href="#5-对象词法扩展" class="headerlink" title="5. 对象词法扩展"></a>5. 对象词法扩展</h3><p>ES6 允许声明在对象字面量时使用简写语法，来初始化属性变量和函数的定义方法，并且允许在对象属性中进行计算操作：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">getCar</span>(<span class="params">make, model, value</span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="comment">// 简写变量</span></div><div class="line">    make,  <span class="comment">// 等同于 make: make</span></div><div class="line">    model, <span class="comment">// 等同于 model: model</span></div><div class="line">    value, <span class="comment">// 等同于 value: value</span></div><div class="line"></div><div class="line">    <span class="comment">// 属性可以使用表达式计算值</span></div><div class="line">    [<span class="string">'make'</span> + make]: <span class="literal">true</span>,</div><div class="line"></div><div class="line">    <span class="comment">// 忽略 `function` 关键词简写对象函数</span></div><div class="line">    depreciate() &#123;</div><div class="line">      <span class="keyword">this</span>.value -= <span class="number">2500</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> car = getCar(<span class="string">'Barret'</span>, <span class="string">'Lee'</span>, <span class="number">40000</span>);</div><div class="line"></div><div class="line"><span class="comment">// output: &#123;</span></div><div class="line"><span class="comment">//     make: 'Barret',</span></div><div class="line"><span class="comment">//     model:'Lee',</span></div><div class="line"><span class="comment">//     value: 40000,</span></div><div class="line"><span class="comment">//     makeBarret: true,</span></div><div class="line"><span class="comment">//     depreciate: function()</span></div><div class="line"><span class="comment">// &#125;</span></div></pre></td></tr></table></figure>
+<h3 id="6-二进制和八进制字面量"><a href="#6-二进制和八进制字面量" class="headerlink" title="6. 二进制和八进制字面量"></a>6. 二进制和八进制字面量</h3><p>ES6 支持二进制和八进制的字面量，通过在数字前面添加 <code>0o</code> 或者 <code>0O</code> 即可将其转换为二进制值：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> oValue = <span class="number">0o10</span>;</div><div class="line"><span class="built_in">console</span>.log(oValue); <span class="comment">// 8</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> bValue = <span class="number">0b10</span>; <span class="comment">// 二进制使用 `0b` 或者 `0B`</span></div><div class="line"><span class="built_in">console</span>.log(bValue); <span class="comment">// 2</span></div></pre></td></tr></table></figure>
+<h3 id="7-对象和数组解构"><a href="#7-对象和数组解构" class="headerlink" title="7. 对象和数组解构"></a>7. 对象和数组解构</h3><p>解构可以避免在对象赋值时产生中间变量：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>];</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> arr = foo(); <span class="comment">// [1,2,3]</span></div><div class="line"></div><div class="line"><span class="keyword">let</span> [a, b, c] = foo();</div><div class="line"><span class="built_in">console</span>.log(a, b, c); <span class="comment">// 1 2 3</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">return</span> &#123;</div><div class="line">    <span class="attr">x</span>: <span class="number">4</span>,</div><div class="line">    <span class="attr">y</span>: <span class="number">5</span>,</div><div class="line">    <span class="attr">z</span>: <span class="number">6</span></div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"><span class="keyword">let</span> &#123;<span class="attr">x</span>: x, <span class="attr">y</span>: y, <span class="attr">z</span>: z&#125; = bar();</div><div class="line"><span class="built_in">console</span>.log(x, y, z); <span class="comment">// 4 5 6</span></div></pre></td></tr></table></figure>
+<h3 id="8-对象超类"><a href="#8-对象超类" class="headerlink" title="8. 对象超类"></a>8. 对象超类</h3><p>ES6 允许在对象中使用 <code>super</code> 方法：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> parent = &#123;</div><div class="line">  foo() &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Hello from the Parent"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> child = &#123;</div><div class="line">  foo() &#123;</div><div class="line">    <span class="keyword">super</span>.foo();</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Hello from the Child"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">Object</span>.setPrototypeOf(child, parent);</div><div class="line">child.foo(); <span class="comment">// Hello from the Parent</span></div><div class="line">             <span class="comment">// Hello from the Child</span></div></pre></td></tr></table></figure>
+<h3 id="9-模板语法和分隔符"><a href="#9-模板语法和分隔符" class="headerlink" title="9. 模板语法和分隔符"></a>9. 模板语法和分隔符</h3><p>ES6 中有一种十分简洁的方法组装一堆字符串和变量。</p>
+<ul>
+<li><code>${ ... }</code> 用来渲染一个变量</li>
+<li>` 作为分隔符</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> user = <span class="string">'Barret'</span>;</div><div class="line"><span class="built_in">console</span>.log(<span class="string">`Hi <span class="subst">$&#123;user&#125;</span>!`</span>); <span class="comment">// Hi Barret!</span></div></pre></td></tr></table></figure>
+<h3 id="10-for-of-VS-for-in"><a href="#10-for-of-VS-for-in" class="headerlink" title="10. for...of VS for...in"></a>10. <code>for...of</code> VS <code>for...in</code></h3><p><code>for...of</code> 用于遍历一个迭代器，如数组：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> nicknames = [<span class="string">'di'</span>, <span class="string">'boo'</span>, <span class="string">'punkeye'</span>];</div><div class="line">nicknames.size = <span class="number">3</span>;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> nickname <span class="keyword">of</span> nicknames) &#123;</div><div class="line">  <span class="built_in">console</span>.log(nickname);</div><div class="line">&#125;</div><div class="line">Result: di, boo, punkeye</div></pre></td></tr></table></figure>
+<p><code>for...in</code> 用来遍历对象中的属性：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> nicknames = [<span class="string">'di'</span>, <span class="string">'boo'</span>, <span class="string">'punkeye'</span>];</div><div class="line">nicknames.size = <span class="number">3</span>;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> nickname <span class="keyword">in</span> nicknames) &#123;</div><div class="line">  <span class="built_in">console</span>.log(nickname);</div><div class="line">&#125;</div><div class="line">Result: <span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, size</div></pre></td></tr></table></figure>
+<h3 id="11-Map-和-WeakMap"><a href="#11-Map-和-WeakMap" class="headerlink" title="11. Map 和 WeakMap"></a>11. Map 和 WeakMap</h3><p>ES6 中两种新的数据结构集：<code>Map</code> 和 <code>WeakMap</code>。事实上每个对象都可以看作是一个 <code>Map</code>。</p>
+<p>一个对象由多个 key-val 对构成，在 <code>Map</code> 中，任何类型都可以作为对象的 key，如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> myMap = <span class="keyword">new</span> <span class="built_in">Map</span>();</div><div class="line"></div><div class="line"><span class="keyword">var</span> keyString = <span class="string">"a string"</span>,</div><div class="line">    keyObj = &#123;&#125;,</div><div class="line">    keyFunc = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;&#125;;</div><div class="line"></div><div class="line"><span class="comment">// 设置值</span></div><div class="line">myMap.set(keyString, <span class="string">"value 与 'a string' 关联"</span>);</div><div class="line">myMap.set(keyObj, <span class="string">"value 与 keyObj 关联"</span>);</div><div class="line">myMap.set(keyFunc, <span class="string">"value 与 keyFunc 关联"</span>);</div><div class="line"></div><div class="line">myMap.size; <span class="comment">// 3</span></div><div class="line"></div><div class="line"><span class="comment">// 获取值</span></div><div class="line">myMap.get(keyString);    <span class="comment">// "value 与 'a string' 关联"</span></div><div class="line">myMap.get(keyObj);       <span class="comment">// "value 与 keyObj 关联"</span></div><div class="line">myMap.get(keyFunc);      <span class="comment">// "value 与 keyFunc 关联"</span></div></pre></td></tr></table></figure>
+<p><strong>WeakMap</strong></p>
+<p><code>WeakMap</code> 就是一个 Map，只不过它的所有 key 都是弱引用，意思就是 WeakMap 中的东西垃圾回收时不考虑，使用它不用担心内存泄漏问题。</p>
+<p>另一个需要注意的点是，<code>WeakMap</code> 的所有 key 必须是对象。它只有四个方法 <code>delete(key)</code>,<code>has(key)</code>,<code>get(key)</code> 和 <code>set(key, val)</code>：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> w = <span class="keyword">new</span> <span class="built_in">WeakMap</span>();</div><div class="line">w.set(<span class="string">'a'</span>, <span class="string">'b'</span>); </div><div class="line"><span class="comment">// Uncaught TypeError: Invalid value used as weak map key</span></div><div class="line"></div><div class="line"><span class="keyword">var</span> o1 = &#123;&#125;,</div><div class="line">    o2 = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;,</div><div class="line">    o3 = <span class="built_in">window</span>;</div><div class="line"></div><div class="line">w.set(o1, <span class="number">37</span>);</div><div class="line">w.set(o2, <span class="string">"azerty"</span>);</div><div class="line">w.set(o3, <span class="literal">undefined</span>);</div><div class="line"></div><div class="line">w.get(o3); <span class="comment">// undefined, because that is the set value</span></div><div class="line"></div><div class="line">w.has(o1); <span class="comment">// true</span></div><div class="line">w.delete(o1);</div><div class="line">w.has(o1); <span class="comment">// false</span></div></pre></td></tr></table></figure>
+<h3 id="12-Set-和-WeakSet"><a href="#12-Set-和-WeakSet" class="headerlink" title="12. Set 和 WeakSet"></a>12. Set 和 WeakSet</h3><p><code>Set</code> 对象是一组不重复的值，重复的值将被忽略，值类型可以是原始类型和引用类型：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> mySet = <span class="keyword">new</span> <span class="built_in">Set</span>([<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">3</span>]);</div><div class="line">mySet.size; <span class="comment">// 3</span></div><div class="line">mySet.has(<span class="number">1</span>); <span class="comment">// true</span></div><div class="line">mySet.add(<span class="string">'strings'</span>);</div><div class="line">mySet.add(&#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>:<span class="number">2</span> &#125;);</div></pre></td></tr></table></figure>
+<p>可以通过 <code>forEach</code> 和 <code>for...of</code> 来遍历 <code>Set</code> 对象：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">mySet.forEach(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</div><div class="line">  <span class="built_in">console</span>.log(item);</div><div class="line">    <span class="comment">// 1</span></div><div class="line">    <span class="comment">// 2</span></div><div class="line">    <span class="comment">// 3</span></div><div class="line">    <span class="comment">// 'strings'</span></div><div class="line">    <span class="comment">// Object &#123; a: 1, b: 2 &#125;</span></div><div class="line">&#125;);</div><div class="line"></div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> value <span class="keyword">of</span> mySet) &#123;</div><div class="line">  <span class="built_in">console</span>.log(value);</div><div class="line">    <span class="comment">// 1</span></div><div class="line">    <span class="comment">// 2</span></div><div class="line">    <span class="comment">// 3</span></div><div class="line">    <span class="comment">// 'strings'</span></div><div class="line">    <span class="comment">// Object &#123; a: 1, b: 2 &#125;</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>Set 同样有 <code>delete()</code> 和 <code>clear()</code> 方法。</p>
+<p><strong>WeakSet</strong></p>
+<p>类似于 <code>WeakMap</code>，<code>WeakSet</code> 对象可以让你在一个集合中保存对象的弱引用，在 <code>WeakSet</code> 中的对象只允许出现一次：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> ws = <span class="keyword">new</span> <span class="built_in">WeakSet</span>();</div><div class="line"><span class="keyword">var</span> obj = &#123;&#125;;</div><div class="line"><span class="keyword">var</span> foo = &#123;&#125;;</div><div class="line"></div><div class="line">ws.add(<span class="built_in">window</span>);</div><div class="line">ws.add(obj);</div><div class="line"></div><div class="line">ws.has(<span class="built_in">window</span>); <span class="comment">// true</span></div><div class="line">ws.has(foo);    <span class="comment">// false, foo 没有添加成功</span></div><div class="line"></div><div class="line">ws.delete(<span class="built_in">window</span>); <span class="comment">// 从结合中删除 window 对象</span></div><div class="line">ws.has(<span class="built_in">window</span>);    <span class="comment">// false, window 对象已经被删除</span></div></pre></td></tr></table></figure>
+<h3 id="13-类"><a href="#13-类" class="headerlink" title="13. 类"></a>13. 类</h3><p>ES6 中有 class 语法。值得注意是，这里的 class 不是新的对象继承模型，它只是原型链的语法糖表现形式。</p>
+<p>函数中使用 <code>static</code> 关键词定义构造函数的的方法和属性：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Task</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>() &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"task instantiated!"</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  showId() &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="number">23</span>);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="keyword">static</span> loadAll() &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Loading all tasks.."</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> Task); <span class="comment">// function</span></div><div class="line"><span class="keyword">let</span> task = <span class="keyword">new</span> Task(); <span class="comment">// "task instantiated!"</span></div><div class="line">task.showId(); <span class="comment">// 23</span></div><div class="line">Task.loadAll(); <span class="comment">// "Loading all tasks.."</span></div></pre></td></tr></table></figure>
+<p>类中的继承和超集：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Car</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>() &#123;</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Creating a new car"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Porsche</span> <span class="keyword">extends</span> <span class="title">Car</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>() &#123;</div><div class="line">    <span class="keyword">super</span>();</div><div class="line">    <span class="built_in">console</span>.log(<span class="string">"Creating Porsche"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> c = <span class="keyword">new</span> Porsche();</div><div class="line"><span class="comment">// Creating a new car</span></div><div class="line"><span class="comment">// Creating Porsche</span></div></pre></td></tr></table></figure>
+<p><code>extends</code> 允许一个子类继承父类，需要注意的是，子类的 <code>constructor</code> 函数中需要执行 <code>super()</code> 函数。</p>
+<p>当然，你也可以在子类方法中调用父类的方法，如 <code>super.parentMethodName()</code>。</p>
+<p>在 <a href="//developer.mozilla.org/en/docs/Web/JavaScript/Reference/Classes">这里</a> 阅读更多关于类的介绍。</p>
+<p>有几点值得注意的是：</p>
+<ul>
+<li>类的声明不会提升（hoisting)，如果你要使用某个 Class，那你必须在使用之前定义它，否则会抛出一个 <code>ReferenceError</code> 的错误</li>
+<li>在类中定义函数不需要使用 <code>function</code> 关键词</li>
+</ul>
+<h3 id="14-Symbol"><a href="#14-Symbol" class="headerlink" title="14. Symbol"></a>14. Symbol</h3><p><code>Symbol</code> 是一种新的数据类型，它的值是唯一的，不可变的。ES6 中提出 symbol 的目的是为了生成一个唯一的标识符，不过你访问不到这个标识符：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> sym = <span class="built_in">Symbol</span>( <span class="string">"some optional description"</span> );</div><div class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> sym); <span class="comment">// symbol</span></div></pre></td></tr></table></figure>
+<p>注意，这里 Symbol 前面不能使用 <code>new</code> 操作符。</p>
+<p>如果它被用作一个对象的属性，那么这个属性会是不可枚举的：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> o = &#123;</div><div class="line">    <span class="attr">val</span>: <span class="number">10</span>,</div><div class="line">    [ <span class="built_in">Symbol</span>(<span class="string">"random"</span>) ]: <span class="string">"I'm a symbol"</span>,</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getOwnPropertyNames(o)); <span class="comment">// val</span></div></pre></td></tr></table></figure>
+<p>如果要获取对象 symbol 属性，需要使用 <code>Object.getOwnPropertySymbols(o)</code>。</p>
+<h3 id="15-迭代器（Iterators）"><a href="#15-迭代器（Iterators）" class="headerlink" title="15. 迭代器（Iterators）"></a>15. 迭代器（Iterators）</h3><p>迭代器允许每次访问数据集合的一个元素，当指针指向数据集合最后一个元素是，迭代器便会退出。它提供了 <code>next()</code> 函数来遍历一个序列，这个方法返回一个包含 <code>done</code> 和 <code>value</code> 属性的对象。</p>
+<p>ES6 中可以通过 <code>Symbol.iterator</code> 给对象设置默认的遍历器，无论什么时候对象需要被遍历，执行它的 <code>@@iterator</code> 方法便可以返回一个用于获取值的迭代器。</p>
+<p>数组默认就是一个迭代器：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> arr = [<span class="number">11</span>,<span class="number">12</span>,<span class="number">13</span>];</div><div class="line"><span class="keyword">var</span> itr = arr[<span class="built_in">Symbol</span>.iterator]();</div><div class="line"></div><div class="line">itr.next(); <span class="comment">// &#123; value: 11, done: false &#125;</span></div><div class="line">itr.next(); <span class="comment">// &#123; value: 12, done: false &#125;</span></div><div class="line">itr.next(); <span class="comment">// &#123; value: 13, done: false &#125;</span></div><div class="line"></div><div class="line">itr.next(); <span class="comment">// &#123; value: undefined, done: true &#125;</span></div></pre></td></tr></table></figure>
+<p>你可以通过 <code>[Symbol.iterator]()</code> 自定义一个对象的迭代器。</p>
+<h3 id="16-Generators"><a href="#16-Generators" class="headerlink" title="16. Generators"></a>16. Generators</h3><p>Generator 函数是 ES6 的新特性，它允许一个函数返回的可遍历对象生成多个值。</p>
+<p>在使用中你会看到 <code>*</code> 语法和一个新的关键词 <code>yield</code>:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> *<span class="title">infiniteNumbers</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> n = <span class="number">1</span>;</div><div class="line">  <span class="keyword">while</span> (<span class="literal">true</span>)&#123;</div><div class="line">    <span class="keyword">yield</span> n++;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> numbers = infiniteNumbers(); <span class="comment">// returns an iterable object</span></div><div class="line"></div><div class="line">numbers.next(); <span class="comment">// &#123; value: 1, done: false &#125;</span></div><div class="line">numbers.next(); <span class="comment">// &#123; value: 2, done: false &#125;</span></div><div class="line">numbers.next(); <span class="comment">// &#123; value: 3, done: false &#125;</span></div></pre></td></tr></table></figure>
+<p>每次执行 yield 时，返回的值变为迭代器的下一个值。</p>
+<h3 id="17-Promises"><a href="#17-Promises" class="headerlink" title="17. Promises"></a>17. Promises</h3><p>ES6 对 Promise 有了原生的支持，一个 Promise 是一个等待被异步执行的对象，当它执行完成后，其状态会变成 <code>resolved</code> 或者 <code>rejected</code>。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> p = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;  </div><div class="line">  <span class="keyword">if</span> (<span class="comment">/* condition */</span>) &#123;</div><div class="line">    <span class="comment">// fulfilled successfully</span></div><div class="line">    resolve(<span class="comment">/* value */</span>);  </div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="comment">// error, rejected</span></div><div class="line">    reject(<span class="comment">/* reason */</span>);  </div><div class="line">  &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>每一个 Promise 都有一个 <code>.then</code> 方法，这个方法接受两个参数，第一个是处理 resolved 状态的回调，一个是处理 rejected 状态的回调：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">p.then(<span class="function">(<span class="params">val</span>) =&gt;</span> <span class="built_in">console</span>.log(<span class="string">"Promise Resolved"</span>, val),</div><div class="line">       (err) =&gt; <span class="built_in">console</span>.log(<span class="string">"Promise Rejected"</span>, err));</div></pre></td></tr></table></figure>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>我很少翻译文章，因为我觉得英文是工程师的标配，所以那些还在依托人家翻译吸收新知识的同学，要好好把基础英语学好；）</p>
+<p>翻译基本按照原文行文，后面几个小结略有删减和修改，不影响阅读。如解释不当，烦请指出。</p>
+
+        <!--<p class="article-info">文/<a href="/about/"><img src="/avatar150.png">李靖</a>　微信公众号：barretlee_com</p><p class="this-page-link" aria-hidden="true">本文链接：<a href="http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/">http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/</a></p>
+        <p><a class="to-comments" href="http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/#comments" aria-hidden="true">☞ 参与评论</a></p> -->
+      </div>
+    </div>
+    
+    <div class="share-article clearfix">
+      
+      <div class="ds-share" data-thread-key="a-kickstarter-guide-to-writing-es6" data-title="ECMAScript 6 扫盲" data-images="" data-content="ECMAScript 6 目前基本成为业界标准，它的普及速度比 ES5 要快很多，主要原因是现代浏览器对 ES6 的支持相当迅速，尤其是 Chrome 和 Firefox 浏览器，已经支持 ES6 中绝大多数的特性。本文译自 Github 上的一篇文章，目的是对还不太熟悉 ES6 语法的同学做一个简单的扫盲。" data-url="http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/">
+        <div class="ds-share-inline" tabindex="0" aria-hidden="true">
+  <ul  class="ds-share-icons-16">
+    <li><a class="ds-more" href="javascript:void(0);" data-service="weibo">分享到：</a></li>
+    <li> <a class="ds-google" href="javascript:void(0);" data-service="google">Google+</a> </li>
+    <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo">新浪微博</a> </li>
+    <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a> </li>
+  </ul>
+  <div class="ds-share-icons-more">
+  </div>
+</div>
+      </div>
+    </div>
+    <!-- <div class="secretCircle">
+  <a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank"><img src="/circle.jpg" alt="前端进阶小圈子"></a>
+  <p>嗯，我新建了一个「前端进阶」的小圈子。</p>
+  <p>最近找我提问的人数飙涨的厉害，精力有限没能都回复。建了一个圈子，这个圈子里可以提问，关于前端成长和进阶的话题，我会抽空回答，也会邀请一些前端朋友进来交流，问答会沉淀在圈子里。<b>付费圈子，时限一年。</b></p>
+  <p><a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank">在这里</a>，你可以：</p>
+  <ul>
+    <li>✅ 提出你在前端学习中的疑问，</li>
+    <li>✅ 谈谈你学习的方法和经验，</li>
+    <li>✅ 了解前端，深入前端</li>
+  </ul>
+  <p>在这里，更加注重方法论的交流。</p>
+  <strong>付费圈子，时限一年</strong>
+</div>
+ -->
+    <!-- <div class="follow-wechat"><img src="/follow.jpg"></div> -->
+
+<div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
+	<!-- <a href="/about/#support" class="supportme">赏</a> -->
+	<ul>
+		<li>作者:  <a href="/about/" itemprop="name">小胡子哥 (Barret Lee)</a></li>
+		<li>发表日期:  2016-07-09 14:30:40</li>
+		<li>文章分类: 
+	<a class="category-link" href="/blog/categories/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/前端杂烩/JavaScript/">JavaScript</a>
+
+</li>
+		<li>文章标签: 
+<a class="article-tag-link" href="/blog/tags/ES6/">ES6</a>
+</li>
+		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
+		<li>最后编辑时间: 2016-07-26 10:55:46</li>
+		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
+	</ul>
+	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
+</div>
+
+    <em class="arrow-expend icon" tabindex="0" aria-hidden="true">&#xe618;
+      <ul>
+        <li><a href="/entry/">博客</a></li>
+        <li><a href="/message/">问答</a></li>
+        <li><a href="/about/">关于</a></li>
+        <li><a href="/demo/">实验室</a></li>
+        <li><a href="/comments/">最近评论</a></li>
+        <li><a href="/friends/">友情链接</a></li>
+      </ul>
+    </em>
+  </div>
+  <div class="post-relative">
+<div class="page-relative">
+  
+    <a href="/blog/2016/07/11/learning-recent-years/" class="post-prev">
+      <i class="icon" tabindex="0" aria-hidden="true">&#x261c;</i>
+      <span class="aria-readonly">上一篇文章</span>
+      
+        <b>谈谈我这三年在技术上的成长</b>
+      
+    </a>
+  
+  
+    <a href="/blog/2016/07/07/hongkong-cmbchina/" class="post-next">
+      <span class="aria-readonly">下一篇文章</span>
+      <b>招行香港一卡通办理和使用</b>
+      <i class="icon" tabindex="0" aria-hidden="true">&#xe602;</i>
+    </a>
+  
+</div>
+
+
+<div class="page-relative-fixed" tabindex="0" aria-hidden="true">
+  
+  <a href="/blog/2016/07/11/learning-recent-years/" class="prev" title="谈谈我这三年在技术上的成长">
+    <i class="icon">&#xe600;</i>
+    
+    <b>谈谈我这三年在技术上的成长</b>
+    
+  </a>
+  
+  
+  <a href="/blog/2016/07/07/hongkong-cmbchina/" class="next" title="招行香港一卡通办理和使用">
+    <i class="icon">&#x261e;</i>
+    <b>招行香港一卡通办理和使用</b>
+  </a>
+  
+</div>
+</div>
+</div>
+<div class="sidebar" tabindex="0" aria-hidden="true">
+	<div class="func-btns func-btns-up">
+    <span class="func-item">
+        <i class="func-nav icon">&#xe618;<span>目录</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="javascript:void(0);" onclick="return false;">显示目录</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-font icon">&#xe604;<span>设置</span></i>
+        <div class="font-choose-box">
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <div class="font-choose bg-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-sun font-type-song"><i class="icon">&#xe61a;</i></a>
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-moon font-type-hei"><i class="icon">&#xe619;</i></a>
+          </div>
+          <div class="font-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-song">黑体</a>
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-hei">宋体</a>
+          </div>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="http://weibo.com/173248656" target="_blank"><i class="func-fb icon">博<span>分享</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator sharecanvas"><a href="javascript: void(0);">截屏分享</a></p>
+          <p><a href="http://weibo.com/173248656" target="_blank">微博关注</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-about icon">&#x263b;<span>关于</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p><a href="/about/" class="func-about-link" target="_blank">关于作者</a></p>
+          <div id="followMeOnWeibo"></div>
+        </div>
+    </span>
+	</div>
+	<div class="func-btns">
+    <span class="func-item">
+        <a href="http://demo.barretlee.com" target="_blank"><i class="func-rss icon">&#xe603;<span>实验</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="http://demo.barretlee.com" target="_blank">Demo平台</a></p>
+          <p><a href="http://snippets.barretlee.com" target="_blank">Snippet应用</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-fb icon">&#x2121;<span>留言</span></i>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="/message/" target="_blank">给我留言</a></p>
+          <p><a href="/comments/" target="_blank">近期留言</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/friends/" target="_blank"><i class="func-rss icon">&#xe601;<span>友链</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="/friends/" target="_blank">友情链接</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/rss2.xml" target="_blank"><i class="func-rss icon">&#x25c8;<span>订阅</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i><a href="/rss2.xml" target="_blank">订阅我吧！</a></div>
+    </span>
+	</div>
+</div>
+
+<div class="single-page-footer">
+<div class="footer">
+	<div class="footer-wraper">
+		<div class="footer-content">
+			<div class="footer-nav">
+	<a href="javascript: void(0);" class="ds-thread-count disqus-comment-count"
+	   data-thread-key="a-kickstarter-guide-to-writing-es6"
+	   data-disqus-identifier="a-kickstarter-guide-to-writing-es6" tabindex="0" aria-hidden="true">评论内容</a>
+	<a href="javascript: void(0);" id="comments">相关文章</a>
+	<a href="/friends/" tabindex="0" aria-hidden="true">友情链接</a>
+</div>
+<div class="nav-detail">
+	<div tabindex="0" aria-hidden="true">
+		
+
+
+
+<div class="ds-thread" tabindex="0" aria-hidden="true" data-thread-key="a-kickstarter-guide-to-writing-es6" data-title="ECMAScript 6 扫盲" data-url="http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/" data-name="barretlee">
+	<div class="ds-loading">
+		<img src="/blogimgs/loading.gif" alt="loading..."/>
+		<p>这网速真是弱爆了...客官稍等,评论还在加载~</p>
+	</div>
+</div>
+
+
+
+
+
+	</div>
+	<div style="display:block;">
+		<div class="relative-to-comment" tabindex="0" aria-hidden="true"><span>（点击评论）</span>古今多少事，都付笑谈中！</div>
+		<div class="relative-wrapper">
+	<div class="relative-article">
+		
+		<ul>
+			<li>
+				<span><font aria-hidden="true">2017-02-04 »</font> </span>
+				<a href="/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/">聊聊设计模式（2）：享元模式</a>
+				<span class="aria-readonly">发表时间为2017年02月04日</span>
+				<div class="relative-box">
+          <a href="/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/" class="relative-img-wrapper" style="background-image:url(http://ww1.sinaimg.cn/large/6c0378f8ly1fcemcdy783j20p00dwaeb);"></a>
+          <span class="aria-readonly">文章概要 </span>如何理解享元模式，“享”是共享的意思，“元”指的是元件，也就是小颗粒的东西，享元顾名思义便是共享小部件，很多系统或者程序包含大量对象，但是这些对象绝大多数都是差不多的，除了一些极个别的属性外。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2017-01-16 »</font> </span>
+				<a href="/blog/2017/01/16/the-bridge-pattern-in-design-patterns/">聊聊设计模式（1）：桥接模式</a>
+				<span class="aria-readonly">发表时间为2017年01月16日</span>
+				<div class="relative-box">
+          <a href="/blog/2017/01/16/the-bridge-pattern-in-design-patterns/" class="relative-img-wrapper" style="background-image:url(http://ww3.sinaimg.cn/large/6c0378f8gw1fbsrsfhduuj20p00dw776.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>桥接模式（Bridge Pattern），也有很多地方称之为桥连模式，不管怎么叫，记得有个桥（bridge）就行了，重点要理解这个「桥」是如何连接的，什么场景下需要使用桥接模式。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-09-28 »</font> </span>
+				<a href="/blog/2016/09/28/ieee754-operation-in-js/">揭秘 0.1 + 0.2 != 0.3</a>
+				<span class="aria-readonly">发表时间为2016年09月28日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/09/28/ieee754-operation-in-js/" class="relative-img-wrapper" style="background-image:url(http://ww4.sinaimg.cn/large/6c0378f8gw1f89pd8hm96j20p00dwacm.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>“0.1 + 0.2 = ?”，这道题如果给小学生，他会立马告诉你答案是 0.3，但是交给一些程序去计算，结果就不是那么简单了。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-23 »</font> </span>
+				<a href="/blog/2016/08/23/javascript-sandbox/">构建一个安全的 JavaScript 沙箱</a>
+				<span class="aria-readonly">发表时间为2016年08月23日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/23/javascript-sandbox/" class="relative-img-wrapper" style="background-image:url(http://ww1.sinaimg.cn/large/6c0378f8gw1f730uldkfrj20p00dwaf1.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>在 Node.js 中有一个模块叫做 VM，它提供了几个 API，允许代码在 V8 虚拟机上下文中运行，如：const vm = require('vm');const sandbox = &#123; a: 1, b: 2 &#125;;const script = new vm.Script('a + b');const context = new vm.createContext(sandbox);script.runInContext(context);vm.Script 中的代码是预编译好的，通过 vm.createContext 将代码加载到一个上下文环境中，置入沙箱（sandbox），然后通过 script.runInContext 执行代码，整个操作都在封闭的 VM 中进行。这是 Node.js 提供给我们的便捷功能，那么，在浏览器环境中呢？是否也能做到将代码运行在沙箱中？本文带着大家来探索一番。
+        </div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+
+		<a href="/entry/" class="relative-to-comment-wrapper" tabindex="0" aria-hidden="true"><div class="relative-to-comment">回到首页</div></a>
+	</div>
+	<div class="friends-box">
+		<ul>
+			
+			<li><a href="http://hustskyking.cnblogs.com" target="_blank">旧博客</a> <font aria-hidden="true">»</font> <span>我的旧博客（博客园荣誉博客）</span></li>
+			
+			<li><a href="http://www.zhangmengxue.com" target="_blank">大额</a> <font aria-hidden="true">»</font> <span>大额大额哼歌等日落</span></li>
+			
+			<li><a href="http://www.zhangxinxu.com" target="_blank">张鑫旭</a> <font aria-hidden="true">»</font> <span>原来大学我俩一个团队的~</span></li>
+			
+			<li><a href="http://web-tinker.com" target="_blank">次碳酸钴</a> <font aria-hidden="true">»</font> <span>深度交流的一个好朋友</span></li>
+			
+			<li><a href="http://imququ.com" target="_blank">屈屈</a> <font aria-hidden="true">»</font> <span>好吧，蛐蛐同学</span></li>
+			
+			<li><a href="http://www.ruanyifeng.com" target="_blank">阮一峰</a> <font aria-hidden="true">»</font> <span>阮老师,哈哈,第一次设计博客就是抄的你的样式</span></li>
+			
+			<li><a href="http://annn.me" target="_blank">安记</a> <font aria-hidden="true">»</font> <span>阿安同学</span></li>
+			
+			<li><a href="http://mouto.org/" target="_blank">卜卜口</a> <font aria-hidden="true">»</font> <span>二次元化身</span></li>
+			
+			<li><a href="/friends/">更多列表 <font aria-hidden="true">»</font></a></li>
+		</ul>
+	</div>
+</div>
+			<div class="website-info" aria-hidden="true">
+	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
+	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
+</div>
+
+		</div>
+	</div>
+</div>
+</div>
+<div class="tools-wrapper" tabindex="0" aria-hidden="true">
+	<a class="gotop icon" href="#" title="回到顶部">&#x2191;</a>
+	<!-- <a class="wechart icon">&#xe60d;<span><img src="/wechart.png" title="扫码添加小胡子哥微信"/> </span></a> -->
+	<a class="hash-to-comments icon" title="我要评论">&#x2121;</a>
+</div>
+<div class="fixerr" tabindex="0" aria-hidden="true">纠错模式</div>
+
+</body>
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/socket.io.js"></script>
+<script>
+  window.onerror = function(e) {
+    window.console && window.console.log && window.console.log(e);
+    return true;
+  };
+</script>
+<script src="/public/js/aplayer.js"></script>
+<script src="/public/js/main.js?v=20160728"></script>
+</script>
+</html>

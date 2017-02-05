@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>Kindle 电子书生成工具 | 小胡子哥的个人网站</title>
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,user-scalable=0">
+  <meta name="author" content="https://plus.google.com/112634278852964994392?hl=zh-cn">
+  <meta name="email" content="barret.china@gmail.com">
+  <meta name="description" content="本项目旨在写一个 Kindle 电子书的构建工具，从互联网上抓取数据，合并整合都生成一本小巧的 `.mobi` 电子书。而使用这个工具，你只需要编辑下配置文件，或者直接运行命令行工具。">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Kindle 电子书生成工具 | 小胡子哥的个人网站">
+  <meta property="og:url" content="http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/">
+  <meta property="og:site_name" content="Kindle 电子书生成工具">
+  <meta property="og:description" content="本项目旨在写一个 Kindle 电子书的构建工具，从互联网上抓取数据，合并整合都生成一本小巧的 `.mobi` 电子书。而使用这个工具，你只需要编辑下配置文件，或者直接运行命令行工具。">
+  <meta name="generator" content="https://hexo.io" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <link href="http://www.barretlee.com/blogimgs/app-icon.png" rel="apple-touch-icon-precomposed">
+  <link rel="shoticon" href="http://www.barretlee.com/favicon.ico" type="image/x-icon">
+  <link rel="alternate" type="application/rss+xml" href="http://www.barretlee.com/rss2.xml" title="小胡子哥的个人网站" />
+  <link rel="prev" href="http://www.barretlee.com/blog/2016/05/30/h5-crash-research/" title="H5 Crash 研究" />
+  <link rel="next" href="http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/" title="JavaScript 代码执行效率对比工具" />
+  <link rel="start" href="http://www.barretlee.com/entry/" title="Blog Entry" />
+  <link rel="stylesheet" href="/public/css/style.css?v=20160728">
+</head>
+<span class="aria-readonly" tabindex="0" aria-hidden="true">小胡子哥的博客良好支持读屏软件阅读，请放心使用。</span>
+
+
+<body>
+  <div class="rainbow"></div>
+  <div class="container">
+  <div class="article" itemscope itemtype="http://schema.org/Article">
+    <div class="post">
+      <div class="bread">
+        <a href="/">小胡子哥的个人博客</a> »
+        <a href="/entry/">博客</a> »
+        
+	<a class="category-link" href="/blog/categories/工具/">工具</a>
+
+
+      </div>
+      <div class="post-title-wrapper">
+        <h1 class="post-title" itemprop="name">Kindle 电子书生成工具<img src="https://game.weixin.qq.com/cgi-bin/comm/qrcode?s=10&m=1&d=http:http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/" alt="扫码分享" onerror="this.style.display='none';"></h1>
+        <a href="/about/"><img src="/blogimgs/avatar150.png" alt="小胡子哥" /></a>
+      </div>
+      <div class="post-info">
+        <span>作者: <a href="/about/" itemprop="author">小胡子哥</a></span>
+        <span>
+          <time itemprop="timeCreated" aria-hidden="true">2016-05-20 12:01:20</time>
+          <span class="aria-readonly">本文发布时间为2016年05月20日12时01分20秒</span>
+        </span>
+        <span>分类: 
+	<a class="category-link" href="/blog/categories/工具/">工具</a>
+
+</span>
+        <span tabindex="0" aria-hidden="true">标签: 
+<a class="article-tag-link" href="/blog/tags/Kindle/">Kindle</a>, <a class="article-tag-link" href="/blog/tags/kindleGen/">kindleGen</a>
+</span>
+        <span class="aria-readonly">下面是正文内容</span>
+        <span tabindex="0" aria-hidden="true">评论数: <a href="#comments"
+                      class="ds-thread-count hash-to-comments disqus-comment-count"
+                      data-thread-key="kindle-book-maker"
+                      data-disqus-identifier="kindle-book-maker"></a></span>
+        <span tabindex="0" aria-hidden="true" id="busuanzi_container_site_pv">热度: <span id="busuanzi_value_page_pv"></span></span>
+      </div>
+      <div class="post-content" itemprop="articleBody">
+        <div class="shit-spider" title="防爬虫不注明出处" tabindex="0" aria-hidden="true">
+          <p>原文地址：<a href="http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/">http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/</a>，<a href="http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/#comments">参与评论</a></p>
+          <img src="//www.barretlee.com/blogimgs/avatar150.png">
+        </div>
+        <blockquote>
+<p>花了两个晚上把 OPF 和 epub 格式整明白了，准备把订阅的 RSS 内容抓取下来做成电子书推到 kindle 中阅读。后续也会把自己博客整成电子书，提供给习惯 kindle 阅读的朋友。研究这些东西目的还是想回到比较纯粹的阅读设备上，毕竟手机屏小干扰多，看久了眼睛也有点不舒服。</p>
+</blockquote>
+<p>本项目旨在写一个 Kindle 电子书的构建工具，从互联网上抓取数据，合并整合都生成一本小巧的 <code>.mobi</code> 电子书。而使用这个工具，你只需要编辑下配置文件，或者直接运行命令行工具。</p>
+<ul>
+<li>项目地址：<a href="http://github.com/barretlee/kindleBookMaker" target="_blank" rel="external">http://github.com/barretlee/kindleBookMaker</a></li>
+<li>基本原理：根据 OPF 规范生成 KF8 格式的 <code>.mobi</code> 电子书</li>
+</ul>
+<a id="more"></a>
+<p><s><strong>注意：</strong> 项目中提供的 <a href="//github.com/barretlee/kindleBookMaker/blob/master/bin/kindlegen">/bin/kindlegen</a> 文件只适用于 Mac 系统，如果您使用的是 windows，需要在这里下载对应的 <a href="http://www.amazon.com/gp/feature.html?docId=1000765211" target="_blank" rel="external">kindleGen</a>，并替换本项目中的文件。</s>  感谢 <a href="//github.com/hillwah">hillwah</a> 的 PR，帮我添加了对其他平台的支持。</p>
+<h3 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h3><p>数据有这么几个来源：</p>
+<ul>
+<li>通过抓取单个 uri 的内容，配合 title 和 content DOM 选择器，获取文章的标题和内容</li>
+<li>通过抓取 RSS 源获取内容</li>
+<li>使用本地数据，比如 hexo build 目录下的 html 文件</li>
+</ul>
+<p>下图为该工具的一个结构图： </p>
+<p><img src="//img.alicdn.com/tfs/TB1B_rJJVXXXXcvXXXXXXXXXXXX-809-584.png" alt="Kindle Book Maker"></p>
+<p>抓到数据后，工具会帮助分析过滤数据，尤其对 hexo 生成的文件做了特殊的处理，后续也会添加几个扩展功能（比如之间转换 markdown 文件），如果 html 中包含了远程内容——CSS、图片等——程序会全部抓取过来。</p>
+<p>最后，使用官方提供了 <a href="http://www.amazon.com/gp/feature.html?docId=1000765211" target="_blank" rel="external">kindleGen</a> 工具构建，我已经把这个文件放到了 <a href="//github.com/barretlee/kindleBookMaker/blob/master/bin/kindlegen">/bin/kindlegen</a> 下，大约 28M，有点大。</p>
+<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>可以下载代码之后，尝试运行下已经提供了一个 DEMO（封面图片就懒得换了，是我自己的头像）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">git <span class="built_in">clone</span> //github.com/barretlee/kindleBookMaker.git;</div><div class="line"><span class="built_in">cd</span> kindleBookMaker;</div><div class="line">npm install;</div><div class="line">node index;</div><div class="line">open build/*.mobi;</div></pre></td></tr></table></figure>
+<p>提供了很多方法可以调用，不过都通过命令行的方式简化了：</p>
+<ul>
+<li><p>从 RSS 源构建：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">node index --rss http://barretlee.com/rss2.xml</div><div class="line"><span class="comment"># node index -r http://barretlee.com/rss2.xml</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>从单个 URI 构建，<code>-u URL titleQuery ContentQuery FilterRegExp</code>， 其中 titleQuery 为文章标题的 css query，ContentQuery 为文章主要内容的 css query，FilterRegExp 为正则过滤：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">node index --uri \</div><div class="line">    http://www.barretlee.com/blog/2016/04/28/mini-query/ \</div><div class="line">    .post-title \</div><div class="line">    .post-content \</div><div class="line">    /&lt;div class=<span class="string">"shit-spider"</span>[\s\S]+?&lt;\/div&gt;/</div></pre></td></tr></table></figure>
+</li>
+<li><p>从本地构建</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">node index --dirctory ./src/demo/</div><div class="line"><span class="comment"># node index -d ./src/demo/</span></div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>还有另外三个参数：</p>
+<ul>
+<li><code>--verbose</code>, <code>-v</code>, 查看 kindle 构建的详细细节，因为编译也可能出错</li>
+<li><code>--help</code>, <code>-h</code>, 帮助说明</li>
+<li><code>-push2kindle</code>, <code>-p</code>, 将构建的 <code>.mobi</code> 文件推送你设定的 kindle 账户上</li>
+</ul>
+<h3 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h3><figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">var</span> moment = <span class="built_in">require</span>(<span class="string">'moment'</span>);</div><div class="line"></div><div class="line"><span class="built_in">module</span>.exports = &#123;</div><div class="line">  <span class="comment">// entry: './src/KF8-Demo',</span></div><div class="line">  entry: &#123;</div><div class="line">    <span class="attr">base</span>: <span class="string">'./src/KF8-Demo'</span>,</div><div class="line">    <span class="attr">list</span>: []</div><div class="line">  &#125;,</div><div class="line">  <span class="attr">bookInfo</span>: &#123;</div><div class="line">    <span class="attr">title</span>: <span class="string">"Barret Lee's Personal Website"</span>,</div><div class="line">    <span class="attr">lang</span>: <span class="string">"zh"</span>,</div><div class="line">    <span class="attr">creator</span>: <span class="string">"Barret Lee"</span>,</div><div class="line">    <span class="attr">copyright</span>: <span class="string">"Barret Lee"</span>,</div><div class="line">    <span class="attr">publisher</span>: <span class="string">""</span>,</div><div class="line">    <span class="attr">coverImage</span>: <span class="string">'coverImage.png'</span></div><div class="line">  &#125;,</div><div class="line">  <span class="comment">/*option*/</span></div><div class="line">  output: &#123;</div><div class="line">    <span class="attr">base</span>: <span class="string">'./build'</span>,</div><div class="line">    <span class="attr">format</span>: <span class="string">'[name]-'</span> + moment().format(<span class="string">'YYYYMMDD'</span>)</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">/*option for uri*/</span></div><div class="line">  singlePage: &#123;</div><div class="line">    <span class="attr">title</span>: <span class="string">'div.title'</span>,</div><div class="line">    <span class="attr">description</span>: <span class="string">'div.content'</span>,</div><div class="line">    <span class="attr">reg</span>: <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</div><div class="line">      <span class="keyword">return</span> data.replace(<span class="regexp">/&lt;div class="shit-spider"[\s\S]+?&lt;\/div&gt;/</span>, <span class="string">''</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;,</div><div class="line">  <span class="comment">/*option*/</span></div><div class="line">  push2kindle: &#123;</div><div class="line">    <span class="attr">email</span>: <span class="string">'barret.china@gmail.com'</span>,</div><div class="line">    <span class="attr">password</span>: <span class="string">'your-email-password'</span>,</div><div class="line">    <span class="attr">kindle</span>: <span class="string">'barretlee.com@kindle.cn'</span></div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<ul>
+<li><code>entry</code>, 可以为一个 String 或者 Object<ul>
+<li><code>base</code>, 入口地址，下载的文件都会放在这里</li>
+<li><code>list</code>, list 参数，会影响最后生成的电子书的文章排序</li>
+</ul>
+</li>
+<li><code>bookInfo</code>, 注意设置 <code>coverImage</code>，它为书籍封面图片</li>
+<li><code>ouput</code>, 可选参数, 默认值为 <code>./build</code> 和 <code>[name]</code></li>
+<li><code>singlePage</code>, 可选参数, 从 URI 爬取数据时会用到</li>
+<li><code>push2kindle</code>, 可选参数, <code>kindle</code> 参数为你设备对应的推送邮箱, 可以在 <a href="//www.amazon.cn/mn/dcw/myx.html/ref=kinw_myk_redirect#/home/settings/payment">这里</a> 设置</li>
+</ul>
+<h3 id="Todo"><a href="#Todo" class="headerlink" title="Todo"></a>Todo</h3><ul>
+<li>直接从 Markdown 文件生成内容</li>
+<li>找到 kindle 帐号偶尔不接受我推送 <code>.mobi</code> 文件的原因，意思就是有的时候推送未成功</li>
+</ul>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ul>
+<li><a href="http://www.idpf.org/epub/30/spec/epub30-publications.html#sec-item-property-values" target="_blank" rel="external">http://www.idpf.org/epub/30/spec/epub30-publications.html#sec-item-property-values</a></li>
+<li><a href="http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm" target="_blank" rel="external">http://www.idpf.org/epub/20/spec/OPF_2.0.1_draft.htm</a></li>
+<li><a href="http://www.aliciaramirez.com/2014/05/how-to-make-a-kindle-ebook-from-scratch/" target="_blank" rel="external">http://www.aliciaramirez.com/2014/05/how-to-make-a-kindle-ebook-from-scratch/</a></li>
+</ul>
+
+        <!--<p class="article-info">文/<a href="/about/"><img src="/avatar150.png">李靖</a>　微信公众号：barretlee_com</p><p class="this-page-link" aria-hidden="true">本文链接：<a href="http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/">http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/</a></p>
+        <p><a class="to-comments" href="http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/#comments" aria-hidden="true">☞ 参与评论</a></p> -->
+      </div>
+    </div>
+    
+    <div class="share-article clearfix">
+      
+      <div class="ds-share" data-thread-key="kindle-book-maker" data-title="Kindle 电子书生成工具" data-images="" data-content="花了两个晚上把 OPF 和 epub 格式整明白了，准备把订阅的 RSS 内容抓取下来做成电子书推到 kindle 中阅读。后续也会把自己博客整成电子书，提供给习惯 kindle 阅读的朋友。研究这些东西目的还是想回到比较纯粹的阅读设备上，毕竟手机屏小干扰多，看久了眼睛也有点不舒服。本项目旨在写一个 Kindle 电子书的构建工具，从互联网上抓取数据，合并整合都生成一本小巧的 .mobi 电子书。而使用这个工具，你只需要编辑下配置文件，或者直接运行命令行工具。项目地址：http://github.com/barretlee/kindleBookMaker基本原理：根据 OPF 规范生成 KF8 格式的 .mobi 电子书" data-url="http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/">
+        <div class="ds-share-inline" tabindex="0" aria-hidden="true">
+  <ul  class="ds-share-icons-16">
+    <li><a class="ds-more" href="javascript:void(0);" data-service="weibo">分享到：</a></li>
+    <li> <a class="ds-google" href="javascript:void(0);" data-service="google">Google+</a> </li>
+    <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo">新浪微博</a> </li>
+    <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a> </li>
+  </ul>
+  <div class="ds-share-icons-more">
+  </div>
+</div>
+      </div>
+    </div>
+    <!-- <div class="secretCircle">
+  <a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank"><img src="/circle.jpg" alt="前端进阶小圈子"></a>
+  <p>嗯，我新建了一个「前端进阶」的小圈子。</p>
+  <p>最近找我提问的人数飙涨的厉害，精力有限没能都回复。建了一个圈子，这个圈子里可以提问，关于前端成长和进阶的话题，我会抽空回答，也会邀请一些前端朋友进来交流，问答会沉淀在圈子里。<b>付费圈子，时限一年。</b></p>
+  <p><a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank">在这里</a>，你可以：</p>
+  <ul>
+    <li>✅ 提出你在前端学习中的疑问，</li>
+    <li>✅ 谈谈你学习的方法和经验，</li>
+    <li>✅ 了解前端，深入前端</li>
+  </ul>
+  <p>在这里，更加注重方法论的交流。</p>
+  <strong>付费圈子，时限一年</strong>
+</div>
+ -->
+    <!-- <div class="follow-wechat"><img src="/follow.jpg"></div> -->
+
+<div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
+	<!-- <a href="/about/#support" class="supportme">赏</a> -->
+	<ul>
+		<li>作者:  <a href="/about/" itemprop="name">小胡子哥 (Barret Lee)</a></li>
+		<li>发表日期:  2016-05-20 12:01:20</li>
+		<li>文章分类: 
+	<a class="category-link" href="/blog/categories/工具/">工具</a>
+
+</li>
+		<li>文章标签: 
+<a class="article-tag-link" href="/blog/tags/Kindle/">Kindle</a>, <a class="article-tag-link" href="/blog/tags/kindleGen/">kindleGen</a>
+</li>
+		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
+		<li>最后编辑时间: 2016-08-23 17:47:01</li>
+		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
+	</ul>
+	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
+</div>
+
+    <em class="arrow-expend icon" tabindex="0" aria-hidden="true">&#xe618;
+      <ul>
+        <li><a href="/entry/">博客</a></li>
+        <li><a href="/message/">问答</a></li>
+        <li><a href="/about/">关于</a></li>
+        <li><a href="/demo/">实验室</a></li>
+        <li><a href="/comments/">最近评论</a></li>
+        <li><a href="/friends/">友情链接</a></li>
+      </ul>
+    </em>
+  </div>
+  <div class="post-relative">
+<div class="page-relative">
+  
+    <a href="/blog/2016/05/30/h5-crash-research/" class="post-prev">
+      <i class="icon" tabindex="0" aria-hidden="true">&#x261c;</i>
+      <span class="aria-readonly">上一篇文章</span>
+      
+        <b>H5 Crash 研究</b>
+      
+    </a>
+  
+  
+    <a href="/blog/2016/04/28/javascript-performance-tester/" class="post-next">
+      <span class="aria-readonly">下一篇文章</span>
+      <b>JavaScript 代码执行效率对比工具</b>
+      <i class="icon" tabindex="0" aria-hidden="true">&#xe602;</i>
+    </a>
+  
+</div>
+
+
+<div class="page-relative-fixed" tabindex="0" aria-hidden="true">
+  
+  <a href="/blog/2016/05/30/h5-crash-research/" class="prev" title="H5 Crash 研究">
+    <i class="icon">&#xe600;</i>
+    
+    <b>H5 Crash 研究</b>
+    
+  </a>
+  
+  
+  <a href="/blog/2016/04/28/javascript-performance-tester/" class="next" title="JavaScript 代码执行效率对比工具">
+    <i class="icon">&#x261e;</i>
+    <b>JavaScript 代码执行效率对比工具</b>
+  </a>
+  
+</div>
+</div>
+</div>
+<div class="sidebar" tabindex="0" aria-hidden="true">
+	<div class="func-btns func-btns-up">
+    <span class="func-item">
+        <i class="func-nav icon">&#xe618;<span>目录</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="javascript:void(0);" onclick="return false;">显示目录</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-font icon">&#xe604;<span>设置</span></i>
+        <div class="font-choose-box">
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <div class="font-choose bg-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-sun font-type-song"><i class="icon">&#xe61a;</i></a>
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-moon font-type-hei"><i class="icon">&#xe619;</i></a>
+          </div>
+          <div class="font-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-song">黑体</a>
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-hei">宋体</a>
+          </div>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="http://weibo.com/173248656" target="_blank"><i class="func-fb icon">博<span>分享</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator sharecanvas"><a href="javascript: void(0);">截屏分享</a></p>
+          <p><a href="http://weibo.com/173248656" target="_blank">微博关注</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-about icon">&#x263b;<span>关于</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p><a href="/about/" class="func-about-link" target="_blank">关于作者</a></p>
+          <div id="followMeOnWeibo"></div>
+        </div>
+    </span>
+	</div>
+	<div class="func-btns">
+    <span class="func-item">
+        <a href="http://demo.barretlee.com" target="_blank"><i class="func-rss icon">&#xe603;<span>实验</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="http://demo.barretlee.com" target="_blank">Demo平台</a></p>
+          <p><a href="http://snippets.barretlee.com" target="_blank">Snippet应用</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-fb icon">&#x2121;<span>留言</span></i>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="/message/" target="_blank">给我留言</a></p>
+          <p><a href="/comments/" target="_blank">近期留言</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/friends/" target="_blank"><i class="func-rss icon">&#xe601;<span>友链</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="/friends/" target="_blank">友情链接</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/rss2.xml" target="_blank"><i class="func-rss icon">&#x25c8;<span>订阅</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i><a href="/rss2.xml" target="_blank">订阅我吧！</a></div>
+    </span>
+	</div>
+</div>
+
+<div class="single-page-footer">
+<div class="footer">
+	<div class="footer-wraper">
+		<div class="footer-content">
+			<div class="footer-nav">
+	<a href="javascript: void(0);" class="ds-thread-count disqus-comment-count"
+	   data-thread-key="kindle-book-maker"
+	   data-disqus-identifier="kindle-book-maker" tabindex="0" aria-hidden="true">评论内容</a>
+	<a href="javascript: void(0);" id="comments">相关文章</a>
+	<a href="/friends/" tabindex="0" aria-hidden="true">友情链接</a>
+</div>
+<div class="nav-detail">
+	<div tabindex="0" aria-hidden="true">
+		
+
+
+
+<div class="ds-thread" tabindex="0" aria-hidden="true" data-thread-key="kindle-book-maker" data-title="Kindle 电子书生成工具" data-url="http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/" data-name="barretlee">
+	<div class="ds-loading">
+		<img src="/blogimgs/loading.gif" alt="loading..."/>
+		<p>这网速真是弱爆了...客官稍等,评论还在加载~</p>
+	</div>
+</div>
+
+
+
+
+
+	</div>
+	<div style="display:block;">
+		<div class="relative-to-comment" tabindex="0" aria-hidden="true"><span>（点击评论）</span>古今多少事，都付笑谈中！</div>
+		<div class="relative-wrapper">
+	<div class="relative-article">
+		
+		<ul>
+			<li>
+				<span><font aria-hidden="true">2016-12-26 »</font> </span>
+				<a href="/blog/2016/12/26/how-to-design-webhook/">如何设计友好的 WebHook</a>
+				<span class="aria-readonly">发表时间为2016年12月26日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/12/26/how-to-design-webhook/" class="relative-img-wrapper" style="background-image:url(http://img.alicdn.com/tfs/TB19mqDOVXXXXceapXXXXXXXXXX-580-283.png);"></a>
+          <span class="aria-readonly">文章概要 </span>在一些工具流的设计中，经常遇到一个体验非常不好的情况：每次都需要采用长轮询或者隔一段时间再尝试的方式获取结果。其原因可能有两个：调用方（Client）没有一个稳定的在线服务，Server 无法主动联系 ClientServer 并没有考虑主动 Push 消息
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-04 »</font> </span>
+				<a href="/blog/2016/08/04/funning-gitlog/">有意思的 git-log</a>
+				<span class="aria-readonly">发表时间为2016年08月04日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/04/funning-gitlog/" class="relative-img-wrapper" style="background-image:url(//ww4.sinaimg.cn/large/6c0378f8gw1f6imxm25vtj21kw16p7wh.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>之前写过几篇 git 相关的文章，内容很基础，git版本回退操作git切换到远程分支git版本管理策略及相关技巧(A)但发现最近被搜索引擎检索的量还比较大，最近正好在阅读 git 相关的资料，准备将不错的几个点，详细地说一说，记录下来写出来分享给大家。今天要说的便是常用的 git log 命令。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-03 »</font> </span>
+				<a href="/blog/2016/08/03/shadowsocks/">Shadowsocks 原理简介及安装指南</a>
+				<span class="aria-readonly">发表时间为2016年08月03日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/03/shadowsocks/" class="relative-img-wrapper" style="background-image:url(http://ww2.sinaimg.cn/large/6c0378f8gw1f6gx28ymtqj20p00dwdg3.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>对 Shadowsocks 早有耳闻，当时我还在用 HTTP 代理、VPN 服务等翻墙，感觉它是个比较高大上的东西，也一直没有碰它。最近 GreenVPN 抽风，Mac 一直连接不上，害得我折腾了很久，最后还是买了一台国外的 VPS，于是开始折腾起 Shadowsocks，部署之前，对它做了一个简单的了解，下面先介绍下。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-07-14 »</font> </span>
+				<a href="/blog/2016/07/14/codes-in-wechat/">在公众号中优雅地呈现代码</a>
+				<span class="aria-readonly">发表时间为2016年07月14日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/07/14/codes-in-wechat/" class="relative-img-wrapper" style="background-image:url(//ww1.sinaimg.cn/large/6c0378f8gw1f5spwap82oj20p00dwacl.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>这几天有不少朋友在我的微信公众号留言，问我是如何在公众号页面中整齐摆放代码的，今天就分享下我的方法，事实上我也折腾了好一会儿。
+        </div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+
+		<a href="/entry/" class="relative-to-comment-wrapper" tabindex="0" aria-hidden="true"><div class="relative-to-comment">回到首页</div></a>
+	</div>
+	<div class="friends-box">
+		<ul>
+			
+			<li><a href="http://hustskyking.cnblogs.com" target="_blank">旧博客</a> <font aria-hidden="true">»</font> <span>我的旧博客（博客园荣誉博客）</span></li>
+			
+			<li><a href="http://www.zhangmengxue.com" target="_blank">大额</a> <font aria-hidden="true">»</font> <span>大额大额哼歌等日落</span></li>
+			
+			<li><a href="http://www.zhangxinxu.com" target="_blank">张鑫旭</a> <font aria-hidden="true">»</font> <span>原来大学我俩一个团队的~</span></li>
+			
+			<li><a href="http://web-tinker.com" target="_blank">次碳酸钴</a> <font aria-hidden="true">»</font> <span>深度交流的一个好朋友</span></li>
+			
+			<li><a href="http://imququ.com" target="_blank">屈屈</a> <font aria-hidden="true">»</font> <span>好吧，蛐蛐同学</span></li>
+			
+			<li><a href="http://www.ruanyifeng.com" target="_blank">阮一峰</a> <font aria-hidden="true">»</font> <span>阮老师,哈哈,第一次设计博客就是抄的你的样式</span></li>
+			
+			<li><a href="http://annn.me" target="_blank">安记</a> <font aria-hidden="true">»</font> <span>阿安同学</span></li>
+			
+			<li><a href="http://mouto.org/" target="_blank">卜卜口</a> <font aria-hidden="true">»</font> <span>二次元化身</span></li>
+			
+			<li><a href="/friends/">更多列表 <font aria-hidden="true">»</font></a></li>
+		</ul>
+	</div>
+</div>
+			<div class="website-info" aria-hidden="true">
+	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
+	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
+</div>
+
+		</div>
+	</div>
+</div>
+</div>
+<div class="tools-wrapper" tabindex="0" aria-hidden="true">
+	<a class="gotop icon" href="#" title="回到顶部">&#x2191;</a>
+	<!-- <a class="wechart icon">&#xe60d;<span><img src="/wechart.png" title="扫码添加小胡子哥微信"/> </span></a> -->
+	<a class="hash-to-comments icon" title="我要评论">&#x2121;</a>
+</div>
+<div class="fixerr" tabindex="0" aria-hidden="true">纠错模式</div>
+
+</body>
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/socket.io.js"></script>
+<script>
+  window.onerror = function(e) {
+    window.console && window.console.log && window.console.log(e);
+    return true;
+  };
+</script>
+<script src="/public/js/aplayer.js"></script>
+<script src="/public/js/main.js?v=20160728"></script>
+</script>
+</html>

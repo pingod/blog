@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>如何快速定位不小心暴露到全局的变量 | 小胡子哥的个人网站</title>
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,user-scalable=0">
+  <meta name="author" content="https://plus.google.com/112634278852964994392?hl=zh-cn">
+  <meta name="email" content="barret.china@gmail.com">
+  <meta name="description" content="本文为归档内容,原始地址在 博客园.今天在查看页面控制台的时候，无意中看到了一个暴露到全局的变量 i，全局变量是不会被压缩工具压缩成简写的字母，这个被频繁使用的变量名暴露到全局也是个相当大的隐患，可能一个不小心就覆盖了第二次暴露到全局的同名变量。刚开始我就怀疑是自己出现了这样愚蠢的错误：functi">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="如何快速定位不小心暴露到全局的变量 | 小胡子哥的个人网站">
+  <meta property="og:url" content="http://www.barretlee.com/blog/2015/07/09/cb-window-var/">
+  <meta property="og:site_name" content="如何快速定位不小心暴露到全局的变量">
+  <meta property="og:description" content="本文为归档内容,原始地址在 博客园.今天在查看页面控制台的时候，无意中看到了一个暴露到全局的变量 i，全局变量是不会被压缩工具压缩成简写的字母，这个被频繁使用的变量名暴露到全局也是个相当大的隐患，可能一个不小心就覆盖了第二次暴露到全局的同名变量。刚开始我就怀疑是自己出现了这样愚蠢的错误：functi">
+  <meta name="generator" content="https://hexo.io" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <link href="http://www.barretlee.com/blogimgs/app-icon.png" rel="apple-touch-icon-precomposed">
+  <link rel="shoticon" href="http://www.barretlee.com/favicon.ico" type="image/x-icon">
+  <link rel="alternate" type="application/rss+xml" href="http://www.barretlee.com/rss2.xml" title="小胡子哥的个人网站" />
+  <link rel="prev" href="http://www.barretlee.com/blog/2015/08/12/cb-data-uri/" title="细说 Data URI" />
+  <link rel="next" href="http://www.barretlee.com/blog/2015/05/30/无题/" title="无题" />
+  <link rel="start" href="http://www.barretlee.com/entry/" title="Blog Entry" />
+  <link rel="stylesheet" href="/public/css/style.css?v=20160728">
+</head>
+<span class="aria-readonly" tabindex="0" aria-hidden="true">小胡子哥的博客良好支持读屏软件阅读，请放心使用。</span>
+
+
+<body>
+  <div class="rainbow"></div>
+  <div class="container">
+  <div class="article" itemscope itemtype="http://schema.org/Article">
+    <div class="post">
+      <div class="bread">
+        <a href="/">小胡子哥的个人博客</a> »
+        <a href="/entry/">博客</a> »
+        
+	<a class="category-link" href="/blog/categories/JavaScript/">JavaScript</a>,<a class="category-link" href="/blog/categories/JavaScript/前端杂烩/">前端杂烩</a>
+
+
+      </div>
+      <div class="post-title-wrapper">
+        <h1 class="post-title" itemprop="name">如何快速定位不小心暴露到全局的变量<img src="https://game.weixin.qq.com/cgi-bin/comm/qrcode?s=10&m=1&d=http:http://www.barretlee.com/blog/2015/07/09/cb-window-var/" alt="扫码分享" onerror="this.style.display='none';"></h1>
+        <a href="/about/"><img src="/blogimgs/avatar150.png" alt="小胡子哥" /></a>
+      </div>
+      <div class="post-info">
+        <span>作者: <a href="/about/" itemprop="author">小胡子哥</a></span>
+        <span>
+          <time itemprop="timeCreated" aria-hidden="true">2015-07-09 11:40:00</time>
+          <span class="aria-readonly">本文发布时间为2015年07月09日11时40分00秒</span>
+        </span>
+        <span>分类: 
+	<a class="category-link" href="/blog/categories/JavaScript/">JavaScript</a>,<a class="category-link" href="/blog/categories/JavaScript/前端杂烩/">前端杂烩</a>
+
+</span>
+        <span tabindex="0" aria-hidden="true">标签: 
+<a class="article-tag-link" href="/blog/tags/cnblogs/">cnblogs</a>, <a class="article-tag-link" href="/blog/tags/tech/">tech</a>
+</span>
+        <span class="aria-readonly">下面是正文内容</span>
+        <span tabindex="0" aria-hidden="true">评论数: <a href="#comments"
+                      class="ds-thread-count hash-to-comments disqus-comment-count"
+                      data-thread-key="cb-window-var"
+                      data-disqus-identifier="cb-window-var"></a></span>
+        <span tabindex="0" aria-hidden="true" id="busuanzi_container_site_pv">热度: <span id="busuanzi_value_page_pv"></span></span>
+      </div>
+      <div class="post-content" itemprop="articleBody">
+        <div class="shit-spider" title="防爬虫不注明出处" tabindex="0" aria-hidden="true">
+          <p>原文地址：<a href="http://www.barretlee.com/blog/2015/07/09/cb-window-var/">http://www.barretlee.com/blog/2015/07/09/cb-window-var/</a>，<a href="http://www.barretlee.com/blog/2015/07/09/cb-window-var/#comments">参与评论</a></p>
+          <img src="//www.barretlee.com/blogimgs/avatar150.png">
+        </div>
+        <div class="history-article">本文为归档内容,原始地址在 <a href="http://www.cnblogs.com/hustskyking/archive/2015/07/09/window-var.html" target="_blank">博客园</a>.</div>
+
+<p>今天在查看页面控制台的时候，无意中看到了一个暴露到全局的变量 i，全局变量是不会被压缩工具压缩成简写的字母，这个被频繁使用的变量名暴露到全局也是个相当大的隐患，可能一个不小心就覆盖了第二次暴露到全局的同名变量。</p><br><p>刚开始我就怀疑是自己出现了这样愚蠢的错误：</p>
+
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="comment">// 在一个函数中多次用到了 for 循环，为了节省变量，都是用了变量 i</span></div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; ...) &#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; ...) &#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; ...) &#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>结果在某次拆分函数的时候，忘记定义:</p>
+
+<figure class="highlight actionscript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">A</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; ...) &#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; ...) &#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">B</span><span class="params">()</span></span>&#123;</div><div class="line">    <span class="keyword">for</span>(i = <span class="number">0</span>; ...) &#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个时候，变量 i 在 B 函数执行的时候就暴露到了全局。抱着这样的怀疑，我搜索了 50 多个模块的代码，一无所获…此时，我依然十分怀疑是自己的程序哪里疏忽了，全局搜索 <code class="highlight">i =</code> 和 <code class="highlight">i++</code>，五分钟过去了，未果…</p><br><h3 id="">找到这个变量</h3><br><p>如果这个变量名叫做 <code class="highlight">fuckIE</code>，分分钟全局搜索就出来了，类似这种简短的常用的变量，着实让人头疼了好一会儿。后来想到了这个方案：</p>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">Object</span>.defineProperty(<span class="built_in">window</span>, <span class="string">"i"</span>, &#123;</div><div class="line">    <span class="attr">get</span> : <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">return</span> <span class="built_in">window</span>.i; &#125;,</div><div class="line">    <span class="attr">set</span> : <span class="function"><span class="keyword">function</span>(<span class="params">newValue</span>)</span>&#123; <span class="keyword">debugger</span>;<span class="built_in">window</span>.i = newValue; &#125;,</div><div class="line">    <span class="attr">enumerable</span> : <span class="literal">true</span>,</div><div class="line">    <span class="attr">configurable</span> : <span class="literal">true</span></div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在全局定义变量 i 的时刻，打一个断点，然后 F10 往前走一步，果然，在控制台右侧的 Call Stack 中找到了端倪！</p><br><p><img src="http://images0.cnblogs.com/blog2015/387325/201507/091139059868960.png" alt="" width="728" height="297"></p><br><p>这个变量是从第三方组件中（offline组件，使用相当频繁的一个组件）暴露出来的，估计出错的方式同我上面的描述差不多，拆分函数的时候忘记重新定义变量 i。</p><br><p>当然还有更快的方式：</p>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">window</span>.__defineSetter__(<span class="string">'i'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="keyword">debugger</span> &#125;)</div></pre></td></tr></table></figure>
+<p></p><h3 id="">不挖坑才是最好的解决方案</h3><p></p>
+<p><strong>1. 使用 <code class="highlight">use strict;</code></strong></p><br><p>在严格模式下，这种问题暴露无遗，每个函数内都加上 <code class="highlight">use strict;</code>，虽然在语言上有所限制，但是低级错误一定不会出现，因为严格模式会给你报错！</p><br><p><strong>2. 使用 jslint/jshint 等 js 分析工具</strong></p><br><p>这些东西除了配置上较为繁琐，用起来还是很顺手的，做过配置的错误都会直接在 IDE 上标红显示出来，很容易发现问题，但是不建议一个项目中途使用，因为代码习惯的问题，很多地方被 js 分析工具作为错误抛出来，改动量是相当大的。</p><br><p>我有次也犯了个比较隐晦的错误：</p>
+
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">$(<span class="built_in">window</span>).on(<span class="string">'click'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">evt</span>)</span>&#123;</div><div class="line">    <span class="keyword">var</span> target = event.target.nodeName.toLowerCase();</div><div class="line">    <span class="keyword">if</span>(target !== <span class="string">'ul'</span>)&#123;</div><div class="line">        <span class="comment">//...</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>在 IE 和 Chrome 下，代码跑得好好的，但是到了测试较少的 FF 下，问题出来了，<code class="highlight">event is not defined.</code>，IE 和 Chrome 是支持 <code class="highlight">window.event</code> 抓取当前事件对象的，而 FF 不支持，所以每次点击页面上都会报错。。。</p><br><p>诸如此类的问题，在我们的平时编码之中不胜枚举，所以有一个编码规范作为强约束是十分有必要的！</p>
+
+
+        <!--<p class="article-info">文/<a href="/about/"><img src="/avatar150.png">李靖</a>　微信公众号：barretlee_com</p><p class="this-page-link" aria-hidden="true">本文链接：<a href="http://www.barretlee.com/blog/2015/07/09/cb-window-var/">http://www.barretlee.com/blog/2015/07/09/cb-window-var/</a></p>
+        <p><a class="to-comments" href="http://www.barretlee.com/blog/2015/07/09/cb-window-var/#comments" aria-hidden="true">☞ 参与评论</a></p> -->
+      </div>
+    </div>
+    
+    <div class="share-article clearfix">
+      
+      <div class="ds-share" data-thread-key="cb-window-var" data-title="如何快速定位不小心暴露到全局的变量" data-images="" data-content="本文为归档内容,原始地址在 博客园.今天在查看页面控制台的时候，无意中看到了一个暴露到全局的变量 i，全局变量是不会被压缩工具压缩成简写的字母，这个被频繁使用的变量名暴露到全局也是个相当大的隐患，可能一个不小心就覆盖了第..." data-url="http://www.barretlee.com/blog/2015/07/09/cb-window-var/">
+        <div class="ds-share-inline" tabindex="0" aria-hidden="true">
+  <ul  class="ds-share-icons-16">
+    <li><a class="ds-more" href="javascript:void(0);" data-service="weibo">分享到：</a></li>
+    <li> <a class="ds-google" href="javascript:void(0);" data-service="google">Google+</a> </li>
+    <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo">新浪微博</a> </li>
+    <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a> </li>
+  </ul>
+  <div class="ds-share-icons-more">
+  </div>
+</div>
+      </div>
+    </div>
+    <!-- <div class="secretCircle">
+  <a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank"><img src="/circle.jpg" alt="前端进阶小圈子"></a>
+  <p>嗯，我新建了一个「前端进阶」的小圈子。</p>
+  <p>最近找我提问的人数飙涨的厉害，精力有限没能都回复。建了一个圈子，这个圈子里可以提问，关于前端成长和进阶的话题，我会抽空回答，也会邀请一些前端朋友进来交流，问答会沉淀在圈子里。<b>付费圈子，时限一年。</b></p>
+  <p><a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank">在这里</a>，你可以：</p>
+  <ul>
+    <li>✅ 提出你在前端学习中的疑问，</li>
+    <li>✅ 谈谈你学习的方法和经验，</li>
+    <li>✅ 了解前端，深入前端</li>
+  </ul>
+  <p>在这里，更加注重方法论的交流。</p>
+  <strong>付费圈子，时限一年</strong>
+</div>
+ -->
+    <!-- <div class="follow-wechat"><img src="/follow.jpg"></div> -->
+
+<div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
+	<!-- <a href="/about/#support" class="supportme">赏</a> -->
+	<ul>
+		<li>作者:  <a href="/about/" itemprop="name">小胡子哥 (Barret Lee)</a></li>
+		<li>发表日期:  2015-07-09 11:40:00</li>
+		<li>文章分类: 
+	<a class="category-link" href="/blog/categories/JavaScript/">JavaScript</a>,<a class="category-link" href="/blog/categories/JavaScript/前端杂烩/">前端杂烩</a>
+
+</li>
+		<li>文章标签: 
+<a class="article-tag-link" href="/blog/tags/cnblogs/">cnblogs</a>, <a class="article-tag-link" href="/blog/tags/tech/">tech</a>
+</li>
+		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
+		<li>最后编辑时间: 2016-03-31 15:20:07</li>
+		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
+	</ul>
+	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
+</div>
+
+    <em class="arrow-expend icon" tabindex="0" aria-hidden="true">&#xe618;
+      <ul>
+        <li><a href="/entry/">博客</a></li>
+        <li><a href="/message/">问答</a></li>
+        <li><a href="/about/">关于</a></li>
+        <li><a href="/demo/">实验室</a></li>
+        <li><a href="/comments/">最近评论</a></li>
+        <li><a href="/friends/">友情链接</a></li>
+      </ul>
+    </em>
+  </div>
+  <div class="post-relative">
+<div class="page-relative">
+  
+    <a href="/blog/2015/08/12/cb-data-uri/" class="post-prev">
+      <i class="icon" tabindex="0" aria-hidden="true">&#x261c;</i>
+      <span class="aria-readonly">上一篇文章</span>
+      
+        <b>细说 Data URI</b>
+      
+    </a>
+  
+  
+    <a href="/blog/2015/05/30/无题/" class="post-next">
+      <span class="aria-readonly">下一篇文章</span>
+      <b>无题</b>
+      <i class="icon" tabindex="0" aria-hidden="true">&#xe602;</i>
+    </a>
+  
+</div>
+
+
+<div class="page-relative-fixed" tabindex="0" aria-hidden="true">
+  
+  <a href="/blog/2015/08/12/cb-data-uri/" class="prev" title="细说 Data URI">
+    <i class="icon">&#xe600;</i>
+    
+    <b>细说 Data URI</b>
+    
+  </a>
+  
+  
+  <a href="/blog/2015/05/30/无题/" class="next" title="无题">
+    <i class="icon">&#x261e;</i>
+    <b>无题</b>
+  </a>
+  
+</div>
+</div>
+</div>
+<div class="sidebar" tabindex="0" aria-hidden="true">
+	<div class="func-btns func-btns-up">
+    <span class="func-item">
+        <i class="func-nav icon">&#xe618;<span>目录</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="javascript:void(0);" onclick="return false;">显示目录</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-font icon">&#xe604;<span>设置</span></i>
+        <div class="font-choose-box">
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <div class="font-choose bg-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-sun font-type-song"><i class="icon">&#xe61a;</i></a>
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-moon font-type-hei"><i class="icon">&#xe619;</i></a>
+          </div>
+          <div class="font-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-song">黑体</a>
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-hei">宋体</a>
+          </div>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="http://weibo.com/173248656" target="_blank"><i class="func-fb icon">博<span>分享</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator sharecanvas"><a href="javascript: void(0);">截屏分享</a></p>
+          <p><a href="http://weibo.com/173248656" target="_blank">微博关注</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-about icon">&#x263b;<span>关于</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p><a href="/about/" class="func-about-link" target="_blank">关于作者</a></p>
+          <div id="followMeOnWeibo"></div>
+        </div>
+    </span>
+	</div>
+	<div class="func-btns">
+    <span class="func-item">
+        <a href="http://demo.barretlee.com" target="_blank"><i class="func-rss icon">&#xe603;<span>实验</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="http://demo.barretlee.com" target="_blank">Demo平台</a></p>
+          <p><a href="http://snippets.barretlee.com" target="_blank">Snippet应用</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-fb icon">&#x2121;<span>留言</span></i>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="/message/" target="_blank">给我留言</a></p>
+          <p><a href="/comments/" target="_blank">近期留言</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/friends/" target="_blank"><i class="func-rss icon">&#xe601;<span>友链</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="/friends/" target="_blank">友情链接</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/rss2.xml" target="_blank"><i class="func-rss icon">&#x25c8;<span>订阅</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i><a href="/rss2.xml" target="_blank">订阅我吧！</a></div>
+    </span>
+	</div>
+</div>
+
+<div class="single-page-footer">
+<div class="footer">
+	<div class="footer-wraper">
+		<div class="footer-content">
+			<div class="footer-nav">
+	<a href="javascript: void(0);" class="ds-thread-count disqus-comment-count"
+	   data-thread-key="cb-window-var"
+	   data-disqus-identifier="cb-window-var" tabindex="0" aria-hidden="true">评论内容</a>
+	<a href="javascript: void(0);" id="comments">相关文章</a>
+	<a href="/friends/" tabindex="0" aria-hidden="true">友情链接</a>
+</div>
+<div class="nav-detail">
+	<div tabindex="0" aria-hidden="true">
+		
+
+
+
+<div class="ds-thread" tabindex="0" aria-hidden="true" data-thread-key="cb-window-var" data-title="如何快速定位不小心暴露到全局的变量" data-url="http://www.barretlee.com/blog/2015/07/09/cb-window-var/" data-name="barretlee">
+	<div class="ds-loading">
+		<img src="/blogimgs/loading.gif" alt="loading..."/>
+		<p>这网速真是弱爆了...客官稍等,评论还在加载~</p>
+	</div>
+</div>
+
+
+
+
+
+	</div>
+	<div style="display:block;">
+		<div class="relative-to-comment" tabindex="0" aria-hidden="true"><span>（点击评论）</span>古今多少事，都付笑谈中！</div>
+		<div class="relative-wrapper">
+	<div class="relative-article">
+		
+		<ul>
+			<li>
+				<span><font aria-hidden="true">2016-09-28 »</font> </span>
+				<a href="/blog/2016/09/28/ieee754-operation-in-js/">揭秘 0.1 + 0.2 != 0.3</a>
+				<span class="aria-readonly">发表时间为2016年09月28日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/09/28/ieee754-operation-in-js/" class="relative-img-wrapper" style="background-image:url(http://ww4.sinaimg.cn/large/6c0378f8gw1f89pd8hm96j20p00dwacm.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>“0.1 + 0.2 = ?”，这道题如果给小学生，他会立马告诉你答案是 0.3，但是交给一些程序去计算，结果就不是那么简单了。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-23 »</font> </span>
+				<a href="/blog/2016/08/23/javascript-sandbox/">构建一个安全的 JavaScript 沙箱</a>
+				<span class="aria-readonly">发表时间为2016年08月23日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/23/javascript-sandbox/" class="relative-img-wrapper" style="background-image:url(http://ww1.sinaimg.cn/large/6c0378f8gw1f730uldkfrj20p00dwaf1.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>在 Node.js 中有一个模块叫做 VM，它提供了几个 API，允许代码在 V8 虚拟机上下文中运行，如：const vm = require('vm');const sandbox = &#123; a: 1, b: 2 &#125;;const script = new vm.Script('a + b');const context = new vm.createContext(sandbox);script.runInContext(context);vm.Script 中的代码是预编译好的，通过 vm.createContext 将代码加载到一个上下文环境中，置入沙箱（sandbox），然后通过 script.runInContext 执行代码，整个操作都在封闭的 VM 中进行。这是 Node.js 提供给我们的便捷功能，那么，在浏览器环境中呢？是否也能做到将代码运行在沙箱中？本文带着大家来探索一番。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-07-13 »</font> </span>
+				<a href="/blog/2016/07/13/why-i-learning-es6/">我需要学习 ECMAScript 6 么？</a>
+				<span class="aria-readonly">发表时间为2016年07月13日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/07/13/why-i-learning-es6/" class="relative-img-wrapper" style="background-image:url(//ww1.sinaimg.cn/large/6c0378f8gw1f5rkudyzzoj20p00dwt9x.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>前几天翻译了一篇 ECMAScript 6 的入门文章，看到几则评论说 JavaScript 越来越像 Java 了，我暗暗地笑了笑。也有同学很疑惑是否有必要学习 ES6，使用 TypeScript 的同学也有类似的疑惑。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-07-09 »</font> </span>
+				<a href="/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/">ECMAScript 6 扫盲</a>
+				<span class="aria-readonly">发表时间为2016年07月09日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/" class="relative-img-wrapper" style="background-image:url(//ww1.sinaimg.cn/large/6c0378f8gw1f5npzp64c0j20p00dw77u.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>ECMAScript 6 目前基本成为业界标准，它的普及速度比 ES5 要快很多，主要原因是现代浏览器对 ES6 的支持相当迅速，尤其是 Chrome 和 Firefox 浏览器，已经支持 ES6 中绝大多数的特性。本文译自 Github 上的一篇文章，目的是对还不太熟悉 ES6 语法的同学做一个简单的扫盲。
+        </div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+
+		<a href="/entry/" class="relative-to-comment-wrapper" tabindex="0" aria-hidden="true"><div class="relative-to-comment">回到首页</div></a>
+	</div>
+	<div class="friends-box">
+		<ul>
+			
+			<li><a href="http://hustskyking.cnblogs.com" target="_blank">旧博客</a> <font aria-hidden="true">»</font> <span>我的旧博客（博客园荣誉博客）</span></li>
+			
+			<li><a href="http://www.zhangmengxue.com" target="_blank">大额</a> <font aria-hidden="true">»</font> <span>大额大额哼歌等日落</span></li>
+			
+			<li><a href="http://www.zhangxinxu.com" target="_blank">张鑫旭</a> <font aria-hidden="true">»</font> <span>原来大学我俩一个团队的~</span></li>
+			
+			<li><a href="http://web-tinker.com" target="_blank">次碳酸钴</a> <font aria-hidden="true">»</font> <span>深度交流的一个好朋友</span></li>
+			
+			<li><a href="http://imququ.com" target="_blank">屈屈</a> <font aria-hidden="true">»</font> <span>好吧，蛐蛐同学</span></li>
+			
+			<li><a href="http://www.ruanyifeng.com" target="_blank">阮一峰</a> <font aria-hidden="true">»</font> <span>阮老师,哈哈,第一次设计博客就是抄的你的样式</span></li>
+			
+			<li><a href="http://annn.me" target="_blank">安记</a> <font aria-hidden="true">»</font> <span>阿安同学</span></li>
+			
+			<li><a href="http://mouto.org/" target="_blank">卜卜口</a> <font aria-hidden="true">»</font> <span>二次元化身</span></li>
+			
+			<li><a href="/friends/">更多列表 <font aria-hidden="true">»</font></a></li>
+		</ul>
+	</div>
+</div>
+			<div class="website-info" aria-hidden="true">
+	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
+	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
+</div>
+
+		</div>
+	</div>
+</div>
+</div>
+<div class="tools-wrapper" tabindex="0" aria-hidden="true">
+	<a class="gotop icon" href="#" title="回到顶部">&#x2191;</a>
+	<!-- <a class="wechart icon">&#xe60d;<span><img src="/wechart.png" title="扫码添加小胡子哥微信"/> </span></a> -->
+	<a class="hash-to-comments icon" title="我要评论">&#x2121;</a>
+</div>
+<div class="fixerr" tabindex="0" aria-hidden="true">纠错模式</div>
+
+</body>
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/socket.io.js"></script>
+<script>
+  window.onerror = function(e) {
+    window.console && window.console.log && window.console.log(e);
+    return true;
+  };
+</script>
+<script src="/public/js/aplayer.js"></script>
+<script src="/public/js/main.js?v=20160728"></script>
+</script>
+</html>

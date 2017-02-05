@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>在公众号中优雅地呈现代码 | 小胡子哥的个人网站</title>
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,user-scalable=0">
+  <meta name="author" content="https://plus.google.com/112634278852964994392?hl=zh-cn">
+  <meta name="email" content="barret.china@gmail.com">
+  <meta name="description" content="这几天有不少朋友在我的微信公众号留言，问我是如何在公众号页面中整齐摆放代码的，今天就分享下我的方法，事实上我也折腾了好一会儿。">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="在公众号中优雅地呈现代码 | 小胡子哥的个人网站">
+  <meta property="og:url" content="http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/">
+  <meta property="og:site_name" content="在公众号中优雅地呈现代码">
+  <meta property="og:description" content="这几天有不少朋友在我的微信公众号留言，问我是如何在公众号页面中整齐摆放代码的，今天就分享下我的方法，事实上我也折腾了好一会儿。">
+  <meta name="generator" content="https://hexo.io" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <link href="http://www.barretlee.com/blogimgs/app-icon.png" rel="apple-touch-icon-precomposed">
+  <link rel="shoticon" href="http://www.barretlee.com/favicon.ico" type="image/x-icon">
+  <link rel="alternate" type="application/rss+xml" href="http://www.barretlee.com/rss2.xml" title="小胡子哥的个人网站" />
+  <link rel="prev" href="http://www.barretlee.com/blog/2016/07/14/question-and-answer/" title="向小胡子哥提问" />
+  <link rel="next" href="http://www.barretlee.com/blog/2016/07/13/why-i-learning-es6/" title="我需要学习 ECMAScript 6 么？" />
+  <link rel="start" href="http://www.barretlee.com/entry/" title="Blog Entry" />
+  <link rel="stylesheet" href="/public/css/style.css?v=20160728">
+</head>
+<span class="aria-readonly" tabindex="0" aria-hidden="true">小胡子哥的博客良好支持读屏软件阅读，请放心使用。</span>
+
+
+<body>
+  <div class="rainbow"></div>
+  <div class="container">
+  <div class="article" itemscope itemtype="http://schema.org/Article">
+    <div class="post">
+      <div class="bread">
+        <a href="/">小胡子哥的个人博客</a> »
+        <a href="/entry/">博客</a> »
+        
+	<a class="category-link" href="/blog/categories/工具/">工具</a>,<a class="category-link" href="/blog/categories/工具/前端杂烩/">前端杂烩</a>
+
+
+      </div>
+      <div class="post-title-wrapper">
+        <h1 class="post-title" itemprop="name">在公众号中优雅地呈现代码<img src="https://game.weixin.qq.com/cgi-bin/comm/qrcode?s=10&m=1&d=http:http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/" alt="扫码分享" onerror="this.style.display='none';"></h1>
+        <a href="/about/"><img src="/blogimgs/avatar150.png" alt="小胡子哥" /></a>
+      </div>
+      <div class="post-info">
+        <span>作者: <a href="/about/" itemprop="author">小胡子哥</a></span>
+        <span>
+          <time itemprop="timeCreated" aria-hidden="true">2016-07-14 00:00:01</time>
+          <span class="aria-readonly">本文发布时间为2016年07月14日00时00分01秒</span>
+        </span>
+        <span>分类: 
+	<a class="category-link" href="/blog/categories/工具/">工具</a>,<a class="category-link" href="/blog/categories/工具/前端杂烩/">前端杂烩</a>
+
+</span>
+        <span tabindex="0" aria-hidden="true">标签: 
+<a class="article-tag-link" href="/blog/tags/微信公众号/">微信公众号</a>
+</span>
+        <span class="aria-readonly">下面是正文内容</span>
+        <span tabindex="0" aria-hidden="true">评论数: <a href="#comments"
+                      class="ds-thread-count hash-to-comments disqus-comment-count"
+                      data-thread-key="codes-in-wechat"
+                      data-disqus-identifier="codes-in-wechat"></a></span>
+        <span tabindex="0" aria-hidden="true" id="busuanzi_container_site_pv">热度: <span id="busuanzi_value_page_pv"></span></span>
+      </div>
+      <div class="post-content" itemprop="articleBody">
+        <div class="shit-spider" title="防爬虫不注明出处" tabindex="0" aria-hidden="true">
+          <p>原文地址：<a href="http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/">http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/</a>，<a href="http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/#comments">参与评论</a></p>
+          <img src="//www.barretlee.com/blogimgs/avatar150.png">
+        </div>
+        <p>这几天有不少朋友在我的微信公众号留言，问我是如何在公众号页面中整齐摆放代码的，今天就分享下我的方法，事实上我也折腾了好一会儿。</p>
+<p><img src="//ww1.sinaimg.cn/large/6c0378f8gw1f5spwap82oj20p00dwacl.jpg" alt="//unsplash.com/photos/KR84RpMCb0w by Khara Woods"></p>
+<a id="more"></a>
+<h3 id="长话短说"><a href="#长话短说" class="headerlink" title="长话短说"></a>长话短说</h3><blockquote>
+<p>Markdown 解释器在转换代码片段时，没有在换行的时候添加 <code>&lt;br&gt;</code> 标签，而是直接输出一个换行符 <code>\n</code>，微信编辑页在保存或者预览时，将部分换行符给过滤了。</p>
+</blockquote>
+<p>下文主要讲的是很多公众号维护者遇到的代码展示问题，以及处理这些问题的几个思路。</p>
+<h3 id="自动批量将代码转为图片"><a href="#自动批量将代码转为图片" class="headerlink" title="自动批量将代码转为图片"></a>自动批量将代码转为图片</h3><p>观察了很多技术类公众号，绝大多数为了保证良好可视效果，直接采用代码截图，这种做法很简洁，但也存在几个问题：</p>
+<ul>
+<li>需要人肉截图和上传图片，对公众号维护者来说很麻烦</li>
+<li>页面中代码截图太多，也影响阅读，尤其是弱网下的读者</li>
+<li>截图控制不好，会出现多余内边距，或者因为尺寸问题，不得已做缩放处理</li>
+</ul>
+<p>以上对维护者和用户来说，都是很不爽的，如果一定要使用图片，我倒是建议维护者开发一个组件，将页面中的代码段自动转为图片，思路如下：</p>
+<ul>
+<li>将代码片段渲染出来，使用 <code>highlight.js</code> 高亮代码</li>
+<li>将高亮的代码绘制到 canvas 中</li>
+<li>导出 base64 图片，或者通过 <code>a[download]</code> 将图片下载下来保存到本地</li>
+</ul>
+<p>之前月影姐姐开发了一个 <code>code-to-image</code>，感兴趣的同学可以去 github 上搜索下。</p>
+<p>我有考虑过写这个程序，不过后来找到了一个更加有用的办法。</p>
+<h3 id="Markdown-Here"><a href="#Markdown-Here" class="headerlink" title="Markdown Here"></a>Markdown Here</h3><p><code>Markdown Here</code> 是一款 Chrome 插件，顾名思义，就是将你写的 Markdown 直接转为 HTML 代码，我做了一个演示图片：</p>
+<p><img src="//ww1.sinaimg.cn/mw690/6c0378f8gw1f5sr5vq6sng20f70c844o.gif" alt="markdown here"></p>
+<p>图中的编辑框并不是一个 <code>textarea</code> 控件，试想下这个控件中怎么玩也玩不出渲染好的 HTML 代码来，事实上，它是一个可编辑的普通元素，即加了一个 <code>contenteditable</code> 属性，你可以按照下面的步骤测试下：</p>
+<ul>
+<li>打开一个新的 Tab</li>
+<li>URL 中输入：<code>data:text/html,&lt;html contenteditable&gt;</code></li>
+<li>然后去一个网页中全选所有内容，在上面的 URL 页面中粘贴</li>
+</ul>
+<p>是不是把粘贴的内容是具备样式的？再用 Chrome Devtools 看看每个元素，你会发现，原来的样式被继承下来并且作为内敛样式嵌入。</p>
+<p>微信公众号的编辑框也是 contenteditable 的，所以你可以通过 Markdown Here 插件将 Markdown 文本直接转换为代码。只可惜，可是在点击保存和预览的时候，内容又被微信的脚本重新解析了一次，过滤了部分内敛属性，一些转行符也被它给忽略了，如下在微信编辑框中展示正常的代码：</p>
+<p><img src="//ww1.sinaimg.cn/large/6c0378f8gw1f5spemu4oxj20x608ijs2.jpg" alt="正常代码"></p>
+<p>在点击预览后，展示效果为：</p>
+<p><img src="//ww1.sinaimg.cn/large/6c0378f8gw1f5spfr9y53j20kc0gowfi.jpg" alt="错乱代码"></p>
+<p>变成一行了，原因是代码中部分转行符号被过滤掉了。</p>
+<h3 id="处理办法"><a href="#处理办法" class="headerlink" title="处理办法"></a>处理办法</h3><p>可以通过几行正则，将 Markdown 转换的源码做小小的修改，部分换行符 <code>\n</code> 替换成 <code>&lt;br&gt;</code> 标签就行了。我的个人博客采用的是 hexo 构建的，它渲染出来的代码在换行处已经有了换行标签：</p>
+<p><img src="//ww1.sinaimg.cn/large/6c0378f8gw1f5sprhj1v5j214c0ziafp.jpg" alt="棒棒的代码效果"></p>
+<p>把博客代码直接粘贴过来的效果是：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">syntaxHighlighting</span>(<span class="params"></span>) </span>&#123;</div><div class="line">  <span class="keyword">var</span> n = <span class="number">33</span>;</div><div class="line">  <span class="keyword">var</span> s = <span class="string">"hello, こんにちは"</span>;</div><div class="line">  <span class="built_in">console</span>.log(s);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>是不是感觉还不错？那么，写正则替换微信编辑器渲染源码，修复过滤换行符问题这么神圣的事情，就交给读者了！</p>
+
+        <!--<p class="article-info">文/<a href="/about/"><img src="/avatar150.png">李靖</a>　微信公众号：barretlee_com</p><p class="this-page-link" aria-hidden="true">本文链接：<a href="http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/">http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/</a></p>
+        <p><a class="to-comments" href="http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/#comments" aria-hidden="true">☞ 参与评论</a></p> -->
+      </div>
+    </div>
+    
+    <div class="share-article clearfix">
+      
+      <div class="ds-share" data-thread-key="codes-in-wechat" data-title="在公众号中优雅地呈现代码" data-images="" data-content="这几天有不少朋友在我的微信公众号留言，问我是如何在公众号页面中整齐摆放代码的，今天就分享下我的方法，事实上我也折腾了好一会儿。" data-url="http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/">
+        <div class="ds-share-inline" tabindex="0" aria-hidden="true">
+  <ul  class="ds-share-icons-16">
+    <li><a class="ds-more" href="javascript:void(0);" data-service="weibo">分享到：</a></li>
+    <li> <a class="ds-google" href="javascript:void(0);" data-service="google">Google+</a> </li>
+    <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo">新浪微博</a> </li>
+    <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a> </li>
+  </ul>
+  <div class="ds-share-icons-more">
+  </div>
+</div>
+      </div>
+    </div>
+    <!-- <div class="secretCircle">
+  <a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank"><img src="/circle.jpg" alt="前端进阶小圈子"></a>
+  <p>嗯，我新建了一个「前端进阶」的小圈子。</p>
+  <p>最近找我提问的人数飙涨的厉害，精力有限没能都回复。建了一个圈子，这个圈子里可以提问，关于前端成长和进阶的话题，我会抽空回答，也会邀请一些前端朋友进来交流，问答会沉淀在圈子里。<b>付费圈子，时限一年。</b></p>
+  <p><a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank">在这里</a>，你可以：</p>
+  <ul>
+    <li>✅ 提出你在前端学习中的疑问，</li>
+    <li>✅ 谈谈你学习的方法和经验，</li>
+    <li>✅ 了解前端，深入前端</li>
+  </ul>
+  <p>在这里，更加注重方法论的交流。</p>
+  <strong>付费圈子，时限一年</strong>
+</div>
+ -->
+    <!-- <div class="follow-wechat"><img src="/follow.jpg"></div> -->
+
+<div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
+	<!-- <a href="/about/#support" class="supportme">赏</a> -->
+	<ul>
+		<li>作者:  <a href="/about/" itemprop="name">小胡子哥 (Barret Lee)</a></li>
+		<li>发表日期:  2016-07-14 00:00:01</li>
+		<li>文章分类: 
+	<a class="category-link" href="/blog/categories/工具/">工具</a>,<a class="category-link" href="/blog/categories/工具/前端杂烩/">前端杂烩</a>
+
+</li>
+		<li>文章标签: 
+<a class="article-tag-link" href="/blog/tags/微信公众号/">微信公众号</a>
+</li>
+		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
+		<li>最后编辑时间: 2016-07-26 10:55:46</li>
+		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
+	</ul>
+	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
+</div>
+
+    <em class="arrow-expend icon" tabindex="0" aria-hidden="true">&#xe618;
+      <ul>
+        <li><a href="/entry/">博客</a></li>
+        <li><a href="/message/">问答</a></li>
+        <li><a href="/about/">关于</a></li>
+        <li><a href="/demo/">实验室</a></li>
+        <li><a href="/comments/">最近评论</a></li>
+        <li><a href="/friends/">友情链接</a></li>
+      </ul>
+    </em>
+  </div>
+  <div class="post-relative">
+<div class="page-relative">
+  
+    <a href="/blog/2016/07/14/question-and-answer/" class="post-prev">
+      <i class="icon" tabindex="0" aria-hidden="true">&#x261c;</i>
+      <span class="aria-readonly">上一篇文章</span>
+      
+        <b>向小胡子哥提问</b>
+      
+    </a>
+  
+  
+    <a href="/blog/2016/07/13/why-i-learning-es6/" class="post-next">
+      <span class="aria-readonly">下一篇文章</span>
+      <b>我需要学习 ECMAScript 6 么？</b>
+      <i class="icon" tabindex="0" aria-hidden="true">&#xe602;</i>
+    </a>
+  
+</div>
+
+
+<div class="page-relative-fixed" tabindex="0" aria-hidden="true">
+  
+  <a href="/blog/2016/07/14/question-and-answer/" class="prev" title="向小胡子哥提问">
+    <i class="icon">&#xe600;</i>
+    
+    <b>向小胡子哥提问</b>
+    
+  </a>
+  
+  
+  <a href="/blog/2016/07/13/why-i-learning-es6/" class="next" title="我需要学习 ECMAScript 6 么？">
+    <i class="icon">&#x261e;</i>
+    <b>我需要学习 ECMAScript 6 么？</b>
+  </a>
+  
+</div>
+</div>
+</div>
+<div class="sidebar" tabindex="0" aria-hidden="true">
+	<div class="func-btns func-btns-up">
+    <span class="func-item">
+        <i class="func-nav icon">&#xe618;<span>目录</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="javascript:void(0);" onclick="return false;">显示目录</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-font icon">&#xe604;<span>设置</span></i>
+        <div class="font-choose-box">
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <div class="font-choose bg-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-sun font-type-song"><i class="icon">&#xe61a;</i></a>
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-moon font-type-hei"><i class="icon">&#xe619;</i></a>
+          </div>
+          <div class="font-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-song">黑体</a>
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-hei">宋体</a>
+          </div>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="http://weibo.com/173248656" target="_blank"><i class="func-fb icon">博<span>分享</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator sharecanvas"><a href="javascript: void(0);">截屏分享</a></p>
+          <p><a href="http://weibo.com/173248656" target="_blank">微博关注</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-about icon">&#x263b;<span>关于</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p><a href="/about/" class="func-about-link" target="_blank">关于作者</a></p>
+          <div id="followMeOnWeibo"></div>
+        </div>
+    </span>
+	</div>
+	<div class="func-btns">
+    <span class="func-item">
+        <a href="http://demo.barretlee.com" target="_blank"><i class="func-rss icon">&#xe603;<span>实验</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="http://demo.barretlee.com" target="_blank">Demo平台</a></p>
+          <p><a href="http://snippets.barretlee.com" target="_blank">Snippet应用</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-fb icon">&#x2121;<span>留言</span></i>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="/message/" target="_blank">给我留言</a></p>
+          <p><a href="/comments/" target="_blank">近期留言</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/friends/" target="_blank"><i class="func-rss icon">&#xe601;<span>友链</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="/friends/" target="_blank">友情链接</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/rss2.xml" target="_blank"><i class="func-rss icon">&#x25c8;<span>订阅</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i><a href="/rss2.xml" target="_blank">订阅我吧！</a></div>
+    </span>
+	</div>
+</div>
+
+<div class="single-page-footer">
+<div class="footer">
+	<div class="footer-wraper">
+		<div class="footer-content">
+			<div class="footer-nav">
+	<a href="javascript: void(0);" class="ds-thread-count disqus-comment-count"
+	   data-thread-key="codes-in-wechat"
+	   data-disqus-identifier="codes-in-wechat" tabindex="0" aria-hidden="true">评论内容</a>
+	<a href="javascript: void(0);" id="comments">相关文章</a>
+	<a href="/friends/" tabindex="0" aria-hidden="true">友情链接</a>
+</div>
+<div class="nav-detail">
+	<div tabindex="0" aria-hidden="true">
+		
+
+
+
+<div class="ds-thread" tabindex="0" aria-hidden="true" data-thread-key="codes-in-wechat" data-title="在公众号中优雅地呈现代码" data-url="http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/" data-name="barretlee">
+	<div class="ds-loading">
+		<img src="/blogimgs/loading.gif" alt="loading..."/>
+		<p>这网速真是弱爆了...客官稍等,评论还在加载~</p>
+	</div>
+</div>
+
+
+
+
+
+	</div>
+	<div style="display:block;">
+		<div class="relative-to-comment" tabindex="0" aria-hidden="true"><span>（点击评论）</span>古今多少事，都付笑谈中！</div>
+		<div class="relative-wrapper">
+	<div class="relative-article">
+		
+		<ul>
+			<li>
+				<span><font aria-hidden="true">2016-12-26 »</font> </span>
+				<a href="/blog/2016/12/26/how-to-design-webhook/">如何设计友好的 WebHook</a>
+				<span class="aria-readonly">发表时间为2016年12月26日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/12/26/how-to-design-webhook/" class="relative-img-wrapper" style="background-image:url(http://img.alicdn.com/tfs/TB19mqDOVXXXXceapXXXXXXXXXX-580-283.png);"></a>
+          <span class="aria-readonly">文章概要 </span>在一些工具流的设计中，经常遇到一个体验非常不好的情况：每次都需要采用长轮询或者隔一段时间再尝试的方式获取结果。其原因可能有两个：调用方（Client）没有一个稳定的在线服务，Server 无法主动联系 ClientServer 并没有考虑主动 Push 消息
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-04 »</font> </span>
+				<a href="/blog/2016/08/04/funning-gitlog/">有意思的 git-log</a>
+				<span class="aria-readonly">发表时间为2016年08月04日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/04/funning-gitlog/" class="relative-img-wrapper" style="background-image:url(//ww4.sinaimg.cn/large/6c0378f8gw1f6imxm25vtj21kw16p7wh.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>之前写过几篇 git 相关的文章，内容很基础，git版本回退操作git切换到远程分支git版本管理策略及相关技巧(A)但发现最近被搜索引擎检索的量还比较大，最近正好在阅读 git 相关的资料，准备将不错的几个点，详细地说一说，记录下来写出来分享给大家。今天要说的便是常用的 git log 命令。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-03 »</font> </span>
+				<a href="/blog/2016/08/03/shadowsocks/">Shadowsocks 原理简介及安装指南</a>
+				<span class="aria-readonly">发表时间为2016年08月03日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/03/shadowsocks/" class="relative-img-wrapper" style="background-image:url(http://ww2.sinaimg.cn/large/6c0378f8gw1f6gx28ymtqj20p00dwdg3.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>对 Shadowsocks 早有耳闻，当时我还在用 HTTP 代理、VPN 服务等翻墙，感觉它是个比较高大上的东西，也一直没有碰它。最近 GreenVPN 抽风，Mac 一直连接不上，害得我折腾了很久，最后还是买了一台国外的 VPS，于是开始折腾起 Shadowsocks，部署之前，对它做了一个简单的了解，下面先介绍下。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-05-20 »</font> </span>
+				<a href="/blog/2016/05/20/kindle-book-maker/">Kindle 电子书生成工具</a>
+				<span class="aria-readonly">发表时间为2016年05月20日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/05/20/kindle-book-maker/" class="relative-img-wrapper" style="background-image:url(//img.alicdn.com/tfs/TB1B_rJJVXXXXcvXXXXXXXXXXXX-809-584.png);"></a>
+          <span class="aria-readonly">文章概要 </span>花了两个晚上把 OPF 和 epub 格式整明白了，准备把订阅的 RSS 内容抓取下来做成电子书推到 kindle 中阅读。后续也会把自己博客整成电子书，提供给习惯 kindle 阅读的朋友。研究这些东西目的还是想回到比较纯粹的阅读设备上，毕竟手机屏小干扰多，看久了眼睛也有点不舒服。本项目旨在写一个 Kindle 电子书的构建工具，从互联网上抓取数据，合并整合都生成一本小巧的 .mobi 电子书。而使用这个工具，你只需要编辑下配置文件，或者直接运行命令行工具。项目地址：http://github.com/barretlee/kindleBookMaker基本原理：根据 OPF 规范生成 KF8 格式的 .mobi 电子书
+        </div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+
+		<a href="/entry/" class="relative-to-comment-wrapper" tabindex="0" aria-hidden="true"><div class="relative-to-comment">回到首页</div></a>
+	</div>
+	<div class="friends-box">
+		<ul>
+			
+			<li><a href="http://hustskyking.cnblogs.com" target="_blank">旧博客</a> <font aria-hidden="true">»</font> <span>我的旧博客（博客园荣誉博客）</span></li>
+			
+			<li><a href="http://www.zhangmengxue.com" target="_blank">大额</a> <font aria-hidden="true">»</font> <span>大额大额哼歌等日落</span></li>
+			
+			<li><a href="http://www.zhangxinxu.com" target="_blank">张鑫旭</a> <font aria-hidden="true">»</font> <span>原来大学我俩一个团队的~</span></li>
+			
+			<li><a href="http://web-tinker.com" target="_blank">次碳酸钴</a> <font aria-hidden="true">»</font> <span>深度交流的一个好朋友</span></li>
+			
+			<li><a href="http://imququ.com" target="_blank">屈屈</a> <font aria-hidden="true">»</font> <span>好吧，蛐蛐同学</span></li>
+			
+			<li><a href="http://www.ruanyifeng.com" target="_blank">阮一峰</a> <font aria-hidden="true">»</font> <span>阮老师,哈哈,第一次设计博客就是抄的你的样式</span></li>
+			
+			<li><a href="http://annn.me" target="_blank">安记</a> <font aria-hidden="true">»</font> <span>阿安同学</span></li>
+			
+			<li><a href="http://mouto.org/" target="_blank">卜卜口</a> <font aria-hidden="true">»</font> <span>二次元化身</span></li>
+			
+			<li><a href="/friends/">更多列表 <font aria-hidden="true">»</font></a></li>
+		</ul>
+	</div>
+</div>
+			<div class="website-info" aria-hidden="true">
+	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
+	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
+</div>
+
+		</div>
+	</div>
+</div>
+</div>
+<div class="tools-wrapper" tabindex="0" aria-hidden="true">
+	<a class="gotop icon" href="#" title="回到顶部">&#x2191;</a>
+	<!-- <a class="wechart icon">&#xe60d;<span><img src="/wechart.png" title="扫码添加小胡子哥微信"/> </span></a> -->
+	<a class="hash-to-comments icon" title="我要评论">&#x2121;</a>
+</div>
+<div class="fixerr" tabindex="0" aria-hidden="true">纠错模式</div>
+
+</body>
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/socket.io.js"></script>
+<script>
+  window.onerror = function(e) {
+    window.console && window.console.log && window.console.log(e);
+    return true;
+  };
+</script>
+<script src="/public/js/aplayer.js"></script>
+<script src="/public/js/main.js?v=20160728"></script>
+</script>
+</html>

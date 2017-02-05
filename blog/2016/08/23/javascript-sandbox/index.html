@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>构建一个安全的 JavaScript 沙箱 | 小胡子哥的个人网站</title>
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,user-scalable=0">
+  <meta name="author" content="https://plus.google.com/112634278852964994392?hl=zh-cn">
+  <meta name="email" content="barret.china@gmail.com">
+  <meta name="description" content="灵活是 Javascript 这门语言的特性，也是它难以被掌控的主要原因，这点可以从文中各种沙箱逃逸方式就能看出。ES6 提供了很多新的特性，本文以沙箱为切入点，带着大家学习了几个函数和属性，希望读者有些收获。">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="构建一个安全的 JavaScript 沙箱 | 小胡子哥的个人网站">
+  <meta property="og:url" content="http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/">
+  <meta property="og:site_name" content="构建一个安全的 JavaScript 沙箱">
+  <meta property="og:description" content="灵活是 Javascript 这门语言的特性，也是它难以被掌控的主要原因，这点可以从文中各种沙箱逃逸方式就能看出。ES6 提供了很多新的特性，本文以沙箱为切入点，带着大家学习了几个函数和属性，希望读者有些收获。">
+  <meta name="generator" content="https://hexo.io" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <link href="http://www.barretlee.com/blogimgs/app-icon.png" rel="apple-touch-icon-precomposed">
+  <link rel="shoticon" href="http://www.barretlee.com/favicon.ico" type="image/x-icon">
+  <link rel="alternate" type="application/rss+xml" href="http://www.barretlee.com/rss2.xml" title="小胡子哥的个人网站" />
+  <link rel="prev" href="http://www.barretlee.com/blog/2016/08/25/pac-file/" title="详解代理自动配置 PAC" />
+  <link rel="next" href="http://www.barretlee.com/blog/2016/08/11/algorithms-of-sort/" title="聊一聊排序算法" />
+  <link rel="start" href="http://www.barretlee.com/entry/" title="Blog Entry" />
+  <link rel="stylesheet" href="/public/css/style.css?v=20160728">
+</head>
+<span class="aria-readonly" tabindex="0" aria-hidden="true">小胡子哥的博客良好支持读屏软件阅读，请放心使用。</span>
+
+
+<body>
+  <div class="rainbow"></div>
+  <div class="container">
+  <div class="article" itemscope itemtype="http://schema.org/Article">
+    <div class="post">
+      <div class="bread">
+        <a href="/">小胡子哥的个人博客</a> »
+        <a href="/entry/">博客</a> »
+        
+	<a class="category-link" href="/blog/categories/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/前端杂烩/JavaScript/">JavaScript</a>
+
+
+      </div>
+      <div class="post-title-wrapper">
+        <h1 class="post-title" itemprop="name">构建一个安全的 JavaScript 沙箱<img src="https://game.weixin.qq.com/cgi-bin/comm/qrcode?s=10&m=1&d=http:http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/" alt="扫码分享" onerror="this.style.display='none';"></h1>
+        <a href="/about/"><img src="/blogimgs/avatar150.png" alt="小胡子哥" /></a>
+      </div>
+      <div class="post-info">
+        <span>作者: <a href="/about/" itemprop="author">小胡子哥</a></span>
+        <span>
+          <time itemprop="timeCreated" aria-hidden="true">2016-08-23 01:05:13</time>
+          <span class="aria-readonly">本文发布时间为2016年08月23日01时05分13秒</span>
+        </span>
+        <span>分类: 
+	<a class="category-link" href="/blog/categories/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/前端杂烩/JavaScript/">JavaScript</a>
+
+</span>
+        <span tabindex="0" aria-hidden="true">标签: 
+<a class="article-tag-link" href="/blog/tags/Javascript/">Javascript</a>, <a class="article-tag-link" href="/blog/tags/沙箱/">沙箱</a>
+</span>
+        <span class="aria-readonly">下面是正文内容</span>
+        <span tabindex="0" aria-hidden="true">评论数: <a href="#comments"
+                      class="ds-thread-count hash-to-comments disqus-comment-count"
+                      data-thread-key="javascript-sandbox"
+                      data-disqus-identifier="javascript-sandbox"></a></span>
+        <span tabindex="0" aria-hidden="true" id="busuanzi_container_site_pv">热度: <span id="busuanzi_value_page_pv"></span></span>
+      </div>
+      <div class="post-content" itemprop="articleBody">
+        <div class="shit-spider" title="防爬虫不注明出处" tabindex="0" aria-hidden="true">
+          <p>原文地址：<a href="http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/">http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/</a>，<a href="http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/#comments">参与评论</a></p>
+          <img src="//www.barretlee.com/blogimgs/avatar150.png">
+        </div>
+        <p><img src="http://ww1.sinaimg.cn/large/6c0378f8gw1f730uldkfrj20p00dwaf1.jpg" alt="Sandbox for Addies Birthday!! from //homesteadroots.blogspot.com/2010/07/sandbox-for-addies-birthday-could-also.html"></p>
+<p>在 Node.js 中有一个模块叫做 VM，它提供了几个 API，允许代码在 V8 虚拟机上下文中运行，如：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> vm = <span class="built_in">require</span>(<span class="string">'vm'</span>);</div><div class="line"><span class="keyword">const</span> sandbox = &#123; <span class="attr">a</span>: <span class="number">1</span>, <span class="attr">b</span>: <span class="number">2</span> &#125;;</div><div class="line"><span class="keyword">const</span> script = <span class="keyword">new</span> vm.Script(<span class="string">'a + b'</span>);</div><div class="line"><span class="keyword">const</span> context = <span class="keyword">new</span> vm.createContext(sandbox);</div><div class="line">script.runInContext(context);</div></pre></td></tr></table></figure>
+<p><code>vm.Script</code> 中的代码是预编译好的，通过 <code>vm.createContext</code> 将代码加载到一个上下文环境中，置入沙箱（sandbox），然后通过 <code>script.runInContext</code> 执行代码，整个操作都在封闭的 VM 中进行。这是 Node.js 提供给我们的便捷功能，那么，在浏览器环境中呢？是否也能做到将代码运行在沙箱中？本文带着大家来探索一番。</p>
+<a id="more"></a>
+<h3 id="代码编译工具"><a href="#代码编译工具" class="headerlink" title="代码编译工具"></a>代码编译工具</h3><p><strong>邪恶的 <code>eval</code></strong></p>
+<p><code>eval</code> 函数可以将一个 Javascript 字符串视作代码片段执行，不过它存在诸多问题，如调试困难、性能问题等，并且它在运行时可以访问闭包环境和全局作用域，存在代码注入的安全风险，作为沙箱，这也是我们不期望看到的。<code>eval</code> 虽然好用，但是经常被滥用，在这里我们不多讨论它。</p>
+<p><strong><code>new Function</code></strong></p>
+<p>Function 构造函数会创建一个新的函数对象，它可以作为 <code>eval</code> 的替代品:</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">fn = <span class="keyword">new</span> <span class="built_in">Function</span>(...args, <span class="string">'functionBody'</span>);</div></pre></td></tr></table></figure>
+<p>返回的 <code>fn</code> 是一个定义好的函数，最后一个参数为函数体。它和 <code>eval</code> 不太一样：</p>
+<ul>
+<li><code>fn</code> 是一段编译好的代码，可以直接执行，而 <code>eval</code> 需要编译一次</li>
+<li><code>fn</code> 没有对所在闭包的作用域访问权限，不过它依然能够访问全局作用域</li>
+</ul>
+<p>如何阻止它访问全局作用域呢？</p>
+<h3 id="with-关键词"><a href="#with-关键词" class="headerlink" title="with 关键词"></a><code>with</code> 关键词</h3><p><code>with</code> 是阻止程序访问上一级作用域的一道防火墙：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">compileCode</span>(<span class="params">code</span>) </span>&#123;</div><div class="line">  code = <span class="string">'with (sandbox) &#123;'</span> + code + <span class="string">'&#125;'</span>;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'sandbox'</span>, code);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如上代码，<code>code</code> 被执行时，首先会寻找 <code>sandbox</code> 中的变量，如果不存在，会往上追溯 <code>global</code> 对象，虽然有一道防火墙，但是依然不能阻止 fn 访问全局作用域。</p>
+<p>似乎在 ECMAScript 5 中掌握的知识已经不足以解决 <code>code</code> 逃逸沙箱的问题了，此时我们可以把焦点放在 ES6 提供的新特性上。</p>
+<h3 id="ES6-Proxy"><a href="#ES6-Proxy" class="headerlink" title="ES6 Proxy"></a>ES6 Proxy</h3><p>ES6 中提供了一个 Proxy 函数，它是访问对象前的一个拦截器，下面举一个简单的栗子：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> p = <span class="keyword">new</span> <span class="built_in">Proxy</span>(&#123;&#125;, &#123;</div><div class="line">  get(target, key) &#123;</div><div class="line">    <span class="keyword">if</span>(key === <span class="string">'a'</span>) &#123;</div><div class="line">      <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">Reflect</span>.get(target, key);</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line">p.a <span class="comment">// 1</span></div><div class="line">p.s <span class="comment">// undefined</span></div></pre></td></tr></table></figure>
+<p>代码中，<code>Proxy</code> 给 <code>{}</code> 设置了属性访问拦截器，倘若访问的属性为 <code>a</code> 则返回 1，否则走正常程序。</p>
+<p>这里我们可以使用 <code>proxy</code> 对访问做拦截处理，<code>sandbox</code> 本不存在的属性会追溯到全局变量上访问，此时我们可以欺骗程序，告诉它这个「不存在的属性」是存在的，于是有了下面的代码：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">compileCode</span>(<span class="params">code</span>) </span>&#123;</div><div class="line">  code = <span class="string">'with (sandbox) &#123;'</span> + code + <span class="string">'&#125;'</span>;</div><div class="line">  <span class="keyword">const</span> fn = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'sandbox'</span>, code);</div><div class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">sandbox</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(sandbox, &#123;</div><div class="line">      has(target, key) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// 欺骗，告知属性存在</span></div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> fn(proxy);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>似乎这么做就可以了，但既然用到了 ES6 的特性，我们便不能忽略 ES6 中一个可以控制 <code>with</code> 关键词行为的变量。</p>
+<h3 id="Symbol-unscopables"><a href="#Symbol-unscopables" class="headerlink" title="Symbol.unscopables"></a>Symbol.unscopables</h3><p><code>Symbol</code> 是 JS 的第七种数据类型，它能够产生一个唯一的值，同时也具备一些内建属性，这些属性可以用来进行元编程（meta programming），即对语言本身编程，影响语言行为。其中一个内建属性 <code>Symbol.unscopables</code>，通过它可以影响 <code>with</code> 的行为。</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> foo = <span class="function"><span class="params">()</span> =&gt;</span> <span class="string">'global'</span>;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</div><div class="line">  foo() &#123; <span class="keyword">return</span> <span class="string">'clourse'</span>; &#125;</div><div class="line">  get [<span class="built_in">Symbol</span>.unscopables]() &#123;</div><div class="line">    <span class="keyword">return</span> &#123;</div><div class="line">      <span class="attr">foo</span>: <span class="literal">true</span> <span class="comment">// 不允许访问对象的 foo，直接到上层</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="keyword">with</span>(A.prototype) &#123;</div><div class="line">  foo(); <span class="comment">// 'global'</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面对 A 设置做了 <code>Symbol.unscopables</code> 的设定，声明 <code>foo</code> 属性在 A 上是不存在的，从而使得代码从 <code>with</code> 中逃逸。对此，我们需要对它做一层加固：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">compileCode</span>(<span class="params">code</span>) </span>&#123;</div><div class="line">  code = <span class="string">'with (sandbox) &#123;'</span> + code + <span class="string">'&#125;'</span>;</div><div class="line">  <span class="keyword">const</span> fn = <span class="keyword">new</span> <span class="built_in">Function</span>(<span class="string">'sandbox'</span>, code);</div><div class="line">  <span class="keyword">return</span> <span class="function">(<span class="params">sandbox</span>) =&gt;</span> &#123;</div><div class="line">    <span class="keyword">const</span> proxy = <span class="keyword">new</span> <span class="built_in">Proxy</span>(sandbox, &#123;</div><div class="line">      has(target, key) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>; <span class="comment">// 欺骗，告知属性存在</span></div><div class="line">      &#125;</div><div class="line">      get(target, key, receiver) &#123;</div><div class="line">        <span class="comment">// 加固，防止逃逸</span></div><div class="line">        <span class="keyword">if</span> (key === <span class="built_in">Symbol</span>.unscopables) &#123;</div><div class="line">          <span class="keyword">return</span> <span class="literal">undefined</span>; </div><div class="line">        &#125;</div><div class="line">        <span class="built_in">Reflect</span>.get(target, key, receiver);</div><div class="line">      &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> fn(proxy);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="存在的漏洞"><a href="#存在的漏洞" class="headerlink" title="存在的漏洞"></a>存在的漏洞</h3><p>不过，这里还存在两个逻辑漏洞：</p>
+<ul>
+<li><code>code</code> 中可以提前关闭 <code>sandbox</code> 的 <code>with</code> 语境，如 <code>&#39;} alert(this); {&#39;</code>；</li>
+<li><code>code</code> 中可以使用 <code>eval</code> 和 <code>new Function</code> 直接逃逸</li>
+</ul>
+<p>对于第一个问题，我们可以通过堆栈深度检测：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">let</span> stack = <span class="number">0</span>;</div><div class="line"><span class="keyword">for</span> (<span class="keyword">let</span> char <span class="keyword">of</span> code) &#123;</div><div class="line">  <span class="keyword">if</span> (char === <span class="string">'&#123;'</span>) &#123;</div><div class="line">    stack++;</div><div class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (char === <span class="string">'&#125;'</span>) &#123;</div><div class="line">    <span class="keyword">if</span> (stack === <span class="number">0</span>) &#123;</div><div class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">'Syntax Error.'</span>);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      stack--;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>事实上，这样做依然不严谨，比如代码注释中出现花括号问题，如 <code>/*{*/&#39;} alert(this); {&#39;/*}*/</code>；而对于第二个问题，暂时还没有什么好的办法，尤其是 <code>Function</code>，它可以通过很多方式构造出来：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line">(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125;).constructor(<span class="string">"alert(this)"</span>)();</div><div class="line"><span class="regexp">/2/</span>.constructor.constructor(<span class="string">"alert(this)"</span>)();</div></pre></td></tr></table></figure>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>灵活是 Javascript 这门语言的特性，也是它难以被掌控的主要原因，这点可以从文中各种沙箱逃逸方式就能看出。ES6 提供了很多新的特性，本文以沙箱为切入点，带着大家学习了几个函数和属性，希望读者有些收获。</p>
+<p>本文没有得到一个完美的答案，但是这个问题依然值得思考和研究。</p>
+<p>有一个比较不错的思路是，通过 iframe 执行代码，执行的结果通过 <code>postMessage</code> 函数通讯传输给操作者。并且 iframe 还提供了很多可供设置的安全参数，如 <code>allow-scripts</code>, <code>allow-forms</code>, <code>allow-same-origin</code>, <code>allow-top-navigation</code> 等等，方便我们对沙箱做安全控制。</p>
+<h3 id="更多阅读"><a href="#更多阅读" class="headerlink" title="更多阅读"></a>更多阅读</h3><ul>
+<li><a href="http://www.html5rocks.com/en/tutorials/security/sandboxed-iframes/" target="_blank" rel="external">Play safely in sandboxed IFrames</a></li>
+<li><a href="https://blog.risingstack.com/writing-a-javascript-framework-sandboxed-code-evaluation/" target="_blank" rel="external">Writing a JavaScript framework - Sandboxed code evaluation</a></li>
+</ul>
+<hr>
+<p>题图：<a href="http://homesteadroots.blogspot.com/2010/07/sandbox-for-addies-birthday-could-also.html" target="_blank" rel="external">Sandbox for Addies Birthday</a></p>
+
+        <!--<p class="article-info">文/<a href="/about/"><img src="/avatar150.png">李靖</a>　微信公众号：barretlee_com</p><p class="this-page-link" aria-hidden="true">本文链接：<a href="http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/">http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/</a></p>
+        <p><a class="to-comments" href="http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/#comments" aria-hidden="true">☞ 参与评论</a></p> -->
+      </div>
+    </div>
+    
+    <div class="share-article clearfix">
+      
+      <div class="ds-share" data-thread-key="javascript-sandbox" data-title="构建一个安全的 JavaScript 沙箱" data-images="" data-content="在 Node.js 中有一个模块叫做 VM，它提供了几个 API，允许代码在 V8 虚拟机上下文中运行，如：const vm = require('vm');const sandbox = &#123; a: 1, b: 2 &#125;;const script = new vm.Script('a + b');const context = new vm.createContext(sandbox);script.runInContext(context);vm.Script 中的代码是预编译好的，通过 vm.createContext 将代码加载到一个上下文环境中，置入沙箱（sandbox），然后通过 script.runInContext 执行代码，整个操作都在封闭的 VM 中进行。这是 Node.js 提供给我们的便捷功能，那么，在浏览器环境中呢？是否也能做到将代码运行在沙箱中？本文带着大家来探索一番。" data-url="http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/">
+        <div class="ds-share-inline" tabindex="0" aria-hidden="true">
+  <ul  class="ds-share-icons-16">
+    <li><a class="ds-more" href="javascript:void(0);" data-service="weibo">分享到：</a></li>
+    <li> <a class="ds-google" href="javascript:void(0);" data-service="google">Google+</a> </li>
+    <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo">新浪微博</a> </li>
+    <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a> </li>
+  </ul>
+  <div class="ds-share-icons-more">
+  </div>
+</div>
+      </div>
+    </div>
+    <!-- <div class="secretCircle">
+  <a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank"><img src="/circle.jpg" alt="前端进阶小圈子"></a>
+  <p>嗯，我新建了一个「前端进阶」的小圈子。</p>
+  <p>最近找我提问的人数飙涨的厉害，精力有限没能都回复。建了一个圈子，这个圈子里可以提问，关于前端成长和进阶的话题，我会抽空回答，也会邀请一些前端朋友进来交流，问答会沉淀在圈子里。<b>付费圈子，时限一年。</b></p>
+  <p><a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank">在这里</a>，你可以：</p>
+  <ul>
+    <li>✅ 提出你在前端学习中的疑问，</li>
+    <li>✅ 谈谈你学习的方法和经验，</li>
+    <li>✅ 了解前端，深入前端</li>
+  </ul>
+  <p>在这里，更加注重方法论的交流。</p>
+  <strong>付费圈子，时限一年</strong>
+</div>
+ -->
+    <!-- <div class="follow-wechat"><img src="/follow.jpg"></div> -->
+
+<div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
+	<!-- <a href="/about/#support" class="supportme">赏</a> -->
+	<ul>
+		<li>作者:  <a href="/about/" itemprop="name">小胡子哥 (Barret Lee)</a></li>
+		<li>发表日期:  2016-08-23 01:05:13</li>
+		<li>文章分类: 
+	<a class="category-link" href="/blog/categories/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/前端杂烩/JavaScript/">JavaScript</a>
+
+</li>
+		<li>文章标签: 
+<a class="article-tag-link" href="/blog/tags/Javascript/">Javascript</a>, <a class="article-tag-link" href="/blog/tags/沙箱/">沙箱</a>
+</li>
+		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
+		<li>最后编辑时间: 2016-08-23 17:47:01</li>
+		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
+	</ul>
+	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
+</div>
+
+    <em class="arrow-expend icon" tabindex="0" aria-hidden="true">&#xe618;
+      <ul>
+        <li><a href="/entry/">博客</a></li>
+        <li><a href="/message/">问答</a></li>
+        <li><a href="/about/">关于</a></li>
+        <li><a href="/demo/">实验室</a></li>
+        <li><a href="/comments/">最近评论</a></li>
+        <li><a href="/friends/">友情链接</a></li>
+      </ul>
+    </em>
+  </div>
+  <div class="post-relative">
+<div class="page-relative">
+  
+    <a href="/blog/2016/08/25/pac-file/" class="post-prev">
+      <i class="icon" tabindex="0" aria-hidden="true">&#x261c;</i>
+      <span class="aria-readonly">上一篇文章</span>
+      
+        <b>详解代理自动配置 PAC</b>
+      
+    </a>
+  
+  
+    <a href="/blog/2016/08/11/algorithms-of-sort/" class="post-next">
+      <span class="aria-readonly">下一篇文章</span>
+      <b>聊一聊排序算法</b>
+      <i class="icon" tabindex="0" aria-hidden="true">&#xe602;</i>
+    </a>
+  
+</div>
+
+
+<div class="page-relative-fixed" tabindex="0" aria-hidden="true">
+  
+  <a href="/blog/2016/08/25/pac-file/" class="prev" title="详解代理自动配置 PAC">
+    <i class="icon">&#xe600;</i>
+    
+    <b>详解代理自动配置 PAC</b>
+    
+  </a>
+  
+  
+  <a href="/blog/2016/08/11/algorithms-of-sort/" class="next" title="聊一聊排序算法">
+    <i class="icon">&#x261e;</i>
+    <b>聊一聊排序算法</b>
+  </a>
+  
+</div>
+</div>
+</div>
+<div class="sidebar" tabindex="0" aria-hidden="true">
+	<div class="func-btns func-btns-up">
+    <span class="func-item">
+        <i class="func-nav icon">&#xe618;<span>目录</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="javascript:void(0);" onclick="return false;">显示目录</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-font icon">&#xe604;<span>设置</span></i>
+        <div class="font-choose-box">
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <div class="font-choose bg-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-sun font-type-song"><i class="icon">&#xe61a;</i></a>
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-moon font-type-hei"><i class="icon">&#xe619;</i></a>
+          </div>
+          <div class="font-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-song">黑体</a>
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-hei">宋体</a>
+          </div>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="http://weibo.com/173248656" target="_blank"><i class="func-fb icon">博<span>分享</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator sharecanvas"><a href="javascript: void(0);">截屏分享</a></p>
+          <p><a href="http://weibo.com/173248656" target="_blank">微博关注</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-about icon">&#x263b;<span>关于</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p><a href="/about/" class="func-about-link" target="_blank">关于作者</a></p>
+          <div id="followMeOnWeibo"></div>
+        </div>
+    </span>
+	</div>
+	<div class="func-btns">
+    <span class="func-item">
+        <a href="http://demo.barretlee.com" target="_blank"><i class="func-rss icon">&#xe603;<span>实验</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="http://demo.barretlee.com" target="_blank">Demo平台</a></p>
+          <p><a href="http://snippets.barretlee.com" target="_blank">Snippet应用</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-fb icon">&#x2121;<span>留言</span></i>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="/message/" target="_blank">给我留言</a></p>
+          <p><a href="/comments/" target="_blank">近期留言</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/friends/" target="_blank"><i class="func-rss icon">&#xe601;<span>友链</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="/friends/" target="_blank">友情链接</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/rss2.xml" target="_blank"><i class="func-rss icon">&#x25c8;<span>订阅</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i><a href="/rss2.xml" target="_blank">订阅我吧！</a></div>
+    </span>
+	</div>
+</div>
+
+<div class="single-page-footer">
+<div class="footer">
+	<div class="footer-wraper">
+		<div class="footer-content">
+			<div class="footer-nav">
+	<a href="javascript: void(0);" class="ds-thread-count disqus-comment-count"
+	   data-thread-key="javascript-sandbox"
+	   data-disqus-identifier="javascript-sandbox" tabindex="0" aria-hidden="true">评论内容</a>
+	<a href="javascript: void(0);" id="comments">相关文章</a>
+	<a href="/friends/" tabindex="0" aria-hidden="true">友情链接</a>
+</div>
+<div class="nav-detail">
+	<div tabindex="0" aria-hidden="true">
+		
+
+
+
+<div class="ds-thread" tabindex="0" aria-hidden="true" data-thread-key="javascript-sandbox" data-title="构建一个安全的 JavaScript 沙箱" data-url="http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/" data-name="barretlee">
+	<div class="ds-loading">
+		<img src="/blogimgs/loading.gif" alt="loading..."/>
+		<p>这网速真是弱爆了...客官稍等,评论还在加载~</p>
+	</div>
+</div>
+
+
+
+
+
+	</div>
+	<div style="display:block;">
+		<div class="relative-to-comment" tabindex="0" aria-hidden="true"><span>（点击评论）</span>古今多少事，都付笑谈中！</div>
+		<div class="relative-wrapper">
+	<div class="relative-article">
+		
+		<ul>
+			<li>
+				<span><font aria-hidden="true">2017-02-04 »</font> </span>
+				<a href="/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/">聊聊设计模式（2）：享元模式</a>
+				<span class="aria-readonly">发表时间为2017年02月04日</span>
+				<div class="relative-box">
+          <a href="/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/" class="relative-img-wrapper" style="background-image:url(http://ww1.sinaimg.cn/large/6c0378f8ly1fcemcdy783j20p00dwaeb);"></a>
+          <span class="aria-readonly">文章概要 </span>如何理解享元模式，“享”是共享的意思，“元”指的是元件，也就是小颗粒的东西，享元顾名思义便是共享小部件，很多系统或者程序包含大量对象，但是这些对象绝大多数都是差不多的，除了一些极个别的属性外。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2017-01-16 »</font> </span>
+				<a href="/blog/2017/01/16/the-bridge-pattern-in-design-patterns/">聊聊设计模式（1）：桥接模式</a>
+				<span class="aria-readonly">发表时间为2017年01月16日</span>
+				<div class="relative-box">
+          <a href="/blog/2017/01/16/the-bridge-pattern-in-design-patterns/" class="relative-img-wrapper" style="background-image:url(http://ww3.sinaimg.cn/large/6c0378f8gw1fbsrsfhduuj20p00dw776.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>桥接模式（Bridge Pattern），也有很多地方称之为桥连模式，不管怎么叫，记得有个桥（bridge）就行了，重点要理解这个「桥」是如何连接的，什么场景下需要使用桥接模式。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-09-28 »</font> </span>
+				<a href="/blog/2016/09/28/ieee754-operation-in-js/">揭秘 0.1 + 0.2 != 0.3</a>
+				<span class="aria-readonly">发表时间为2016年09月28日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/09/28/ieee754-operation-in-js/" class="relative-img-wrapper" style="background-image:url(http://ww4.sinaimg.cn/large/6c0378f8gw1f89pd8hm96j20p00dwacm.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>“0.1 + 0.2 = ?”，这道题如果给小学生，他会立马告诉你答案是 0.3，但是交给一些程序去计算，结果就不是那么简单了。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-04 »</font> </span>
+				<a href="/blog/2016/08/04/funning-gitlog/">有意思的 git-log</a>
+				<span class="aria-readonly">发表时间为2016年08月04日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/04/funning-gitlog/" class="relative-img-wrapper" style="background-image:url(//ww4.sinaimg.cn/large/6c0378f8gw1f6imxm25vtj21kw16p7wh.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>之前写过几篇 git 相关的文章，内容很基础，git版本回退操作git切换到远程分支git版本管理策略及相关技巧(A)但发现最近被搜索引擎检索的量还比较大，最近正好在阅读 git 相关的资料，准备将不错的几个点，详细地说一说，记录下来写出来分享给大家。今天要说的便是常用的 git log 命令。
+        </div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+
+		<a href="/entry/" class="relative-to-comment-wrapper" tabindex="0" aria-hidden="true"><div class="relative-to-comment">回到首页</div></a>
+	</div>
+	<div class="friends-box">
+		<ul>
+			
+			<li><a href="http://hustskyking.cnblogs.com" target="_blank">旧博客</a> <font aria-hidden="true">»</font> <span>我的旧博客（博客园荣誉博客）</span></li>
+			
+			<li><a href="http://www.zhangmengxue.com" target="_blank">大额</a> <font aria-hidden="true">»</font> <span>大额大额哼歌等日落</span></li>
+			
+			<li><a href="http://www.zhangxinxu.com" target="_blank">张鑫旭</a> <font aria-hidden="true">»</font> <span>原来大学我俩一个团队的~</span></li>
+			
+			<li><a href="http://web-tinker.com" target="_blank">次碳酸钴</a> <font aria-hidden="true">»</font> <span>深度交流的一个好朋友</span></li>
+			
+			<li><a href="http://imququ.com" target="_blank">屈屈</a> <font aria-hidden="true">»</font> <span>好吧，蛐蛐同学</span></li>
+			
+			<li><a href="http://www.ruanyifeng.com" target="_blank">阮一峰</a> <font aria-hidden="true">»</font> <span>阮老师,哈哈,第一次设计博客就是抄的你的样式</span></li>
+			
+			<li><a href="http://annn.me" target="_blank">安记</a> <font aria-hidden="true">»</font> <span>阿安同学</span></li>
+			
+			<li><a href="http://mouto.org/" target="_blank">卜卜口</a> <font aria-hidden="true">»</font> <span>二次元化身</span></li>
+			
+			<li><a href="/friends/">更多列表 <font aria-hidden="true">»</font></a></li>
+		</ul>
+	</div>
+</div>
+			<div class="website-info" aria-hidden="true">
+	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
+	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
+</div>
+
+		</div>
+	</div>
+</div>
+</div>
+<div class="tools-wrapper" tabindex="0" aria-hidden="true">
+	<a class="gotop icon" href="#" title="回到顶部">&#x2191;</a>
+	<!-- <a class="wechart icon">&#xe60d;<span><img src="/wechart.png" title="扫码添加小胡子哥微信"/> </span></a> -->
+	<a class="hash-to-comments icon" title="我要评论">&#x2121;</a>
+</div>
+<div class="fixerr" tabindex="0" aria-hidden="true">纠错模式</div>
+
+</body>
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/socket.io.js"></script>
+<script>
+  window.onerror = function(e) {
+    window.console && window.console.log && window.console.log(e);
+    return true;
+  };
+</script>
+<script src="/public/js/aplayer.js"></script>
+<script src="/public/js/main.js?v=20160728"></script>
+</script>
+</html>

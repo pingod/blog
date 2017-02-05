@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>揭秘 0.1 + 0.2 != 0.3 | 小胡子哥的个人网站</title>
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,user-scalable=0">
+  <meta name="author" content="https://plus.google.com/112634278852964994392?hl=zh-cn">
+  <meta name="email" content="barret.china@gmail.com">
+  <meta name="description" content="在采用 IEEE754 浮点数标准的语言中，0.1 + 0.2 都不会等于 0.3，但是 0.2 + 0.3 却等于 0.5，这是为何？想必这类问题也困扰着不少程序员。">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="揭秘 0.1 + 0.2 != 0.3 | 小胡子哥的个人网站">
+  <meta property="og:url" content="http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/">
+  <meta property="og:site_name" content="揭秘 0.1 + 0.2 != 0.3">
+  <meta property="og:description" content="在采用 IEEE754 浮点数标准的语言中，0.1 + 0.2 都不会等于 0.3，但是 0.2 + 0.3 却等于 0.5，这是为何？想必这类问题也困扰着不少程序员。">
+  <meta name="generator" content="https://hexo.io" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <link href="http://www.barretlee.com/blogimgs/app-icon.png" rel="apple-touch-icon-precomposed">
+  <link rel="shoticon" href="http://www.barretlee.com/favicon.ico" type="image/x-icon">
+  <link rel="alternate" type="application/rss+xml" href="http://www.barretlee.com/rss2.xml" title="小胡子哥的个人网站" />
+  <link rel="prev" href="http://www.barretlee.com/blog/2016/10/21/my-growth-at-alibaba/" title="谈一谈我在阿里的成长" />
+  <link rel="next" href="http://www.barretlee.com/blog/2016/09/27/how-to-be-a-excellent-intern/" title="如何做好一名实习生" />
+  <link rel="start" href="http://www.barretlee.com/entry/" title="Blog Entry" />
+  <link rel="stylesheet" href="/public/css/style.css?v=20160728">
+</head>
+<span class="aria-readonly" tabindex="0" aria-hidden="true">小胡子哥的博客良好支持读屏软件阅读，请放心使用。</span>
+
+
+<body>
+  <div class="rainbow"></div>
+  <div class="container">
+  <div class="article" itemscope itemtype="http://schema.org/Article">
+    <div class="post">
+      <div class="bread">
+        <a href="/">小胡子哥的个人博客</a> »
+        <a href="/entry/">博客</a> »
+        
+	<a class="category-link" href="/blog/categories/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/前端杂烩/JavaScript/">JavaScript</a>
+
+
+      </div>
+      <div class="post-title-wrapper">
+        <h1 class="post-title" itemprop="name">揭秘 0.1 + 0.2 != 0.3<img src="https://game.weixin.qq.com/cgi-bin/comm/qrcode?s=10&m=1&d=http:http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/" alt="扫码分享" onerror="this.style.display='none';"></h1>
+        <a href="/about/"><img src="/blogimgs/avatar150.png" alt="小胡子哥" /></a>
+      </div>
+      <div class="post-info">
+        <span>作者: <a href="/about/" itemprop="author">小胡子哥</a></span>
+        <span>
+          <time itemprop="timeCreated" aria-hidden="true">2016-09-28 23:05:23</time>
+          <span class="aria-readonly">本文发布时间为2016年09月28日23时05分23秒</span>
+        </span>
+        <span>分类: 
+	<a class="category-link" href="/blog/categories/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/前端杂烩/JavaScript/">JavaScript</a>
+
+</span>
+        <span tabindex="0" aria-hidden="true">标签: 
+<a class="article-tag-link" href="/blog/tags/IEEE754/">IEEE754</a>
+</span>
+        <span class="aria-readonly">下面是正文内容</span>
+        <span tabindex="0" aria-hidden="true">评论数: <a href="#comments"
+                      class="ds-thread-count hash-to-comments disqus-comment-count"
+                      data-thread-key="ieee754-operation-in-js"
+                      data-disqus-identifier="ieee754-operation-in-js"></a></span>
+        <span tabindex="0" aria-hidden="true" id="busuanzi_container_site_pv">热度: <span id="busuanzi_value_page_pv"></span></span>
+      </div>
+      <div class="post-content" itemprop="articleBody">
+        <div class="shit-spider" title="防爬虫不注明出处" tabindex="0" aria-hidden="true">
+          <p>原文地址：<a href="http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/">http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/</a>，<a href="http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/#comments">参与评论</a></p>
+          <img src="//www.barretlee.com/blogimgs/avatar150.png">
+        </div>
+        <p>“0.1 + 0.2 = ?”，这道题如果给小学生，他会立马告诉你答案是 0.3，但是交给一些程序去计算，结果就不是那么简单了。</p>
+<p><img src="http://ww4.sinaimg.cn/large/6c0378f8gw1f89pd8hm96j20p00dwacm.jpg" alt="math"></p>
+<a id="more"></a>
+<p>事实上，不仅仅是 JS，在其他采用 IEEE754 浮点数标准的语言中，0.1 + 0.2 都不会等于 0.3，但是 0.2 + 0.3 却等于 0.5，这是为何？想必这类问题也困扰着不少程序员。</p>
+<h3 id="IEEE754-浮点数的演算"><a href="#IEEE754-浮点数的演算" class="headerlink" title="IEEE754 浮点数的演算"></a>IEEE754 浮点数的演算</h3><p>我们知道，科学计数法中 30000 可以写成 3x10<sup>4</sup>，以 10 为底数 4 为指数的科学计数法。在 IEEE754 标准中是比较类似的，只不过它是二进制数，底数也为 2。</p>
+<p>IEEE 754 中最常用的浮点数值表示法是：单精确度（32位）和双精确度（64位），JavaScript 采用的是后者。举个例子，十进制数 150，使用双精度浮点数表示法，表示如下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// D 表示十进制，B 表示二进制</span></div><div class="line"><span class="number">150</span>D = <span class="number">2</span>^<span class="number">8</span> * <span class="number">0.1001011</span>B <span class="comment">// 后面省略了 46 个 0</span></div></pre></td></tr></table></figure>
+<p>可以通过短除法计算：</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><div class="line"><span class="code">   150   余数位</span></div><div class="line"><span class="section">÷    2</span></div><div class="line">---------------</div><div class="line"><span class="code">    75     0   </span></div><div class="line"><span class="section">÷    2</span></div><div class="line">---------------</div><div class="line"><span class="code">    37     1</span></div><div class="line"><span class="section">÷    2</span></div><div class="line">---------------</div><div class="line"><span class="code">    18     1</span></div><div class="line"><span class="section">÷    2</span></div><div class="line">---------------</div><div class="line"><span class="code">     9     0</span></div><div class="line"><span class="section">÷    2</span></div><div class="line">---------------</div><div class="line"><span class="code">     4     1</span></div><div class="line"><span class="section">÷    2</span></div><div class="line">---------------</div><div class="line"><span class="code">     2     0</span></div><div class="line"><span class="section">÷    2</span></div><div class="line">---------------</div><div class="line"><span class="code">     1     0</span></div><div class="line"><span class="section">÷    2</span></div><div class="line">---------------</div><div class="line"><span class="code">     0     1</span></div></pre></td></tr></table></figure>
+<p>最后一个余数为高位值，于是拿到 150 对应的二进制数位 <code>1001011</code>，也就等于 <code>2^8 * 0.1001011</code>。</p>
+<p>上面是整数的表示法，而小数的表示法采用的是乘二取整，如 0.1，它的二进制表示为：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// (0011) 表示循环</span></div><div class="line"><span class="number">0.1</span>D = <span class="number">2</span>^<span class="number">-3</span> * <span class="number">0.110011</span>(<span class="number">0011</span>)</div></pre></td></tr></table></figure>
+<p>其演算方法如下：</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><div class="line"><span class="code">    0.1   整数位</span></div><div class="line"><span class="section">×     2</span></div><div class="line">---------------</div><div class="line"><span class="code">    0.2     0 </span></div><div class="line"><span class="section">×     2</span></div><div class="line">---------------</div><div class="line"><span class="code">    0.4     0   * ↓</span></div><div class="line"><span class="section">×     2</span></div><div class="line">---------------</div><div class="line"><span class="code">    0.8     0 </span></div><div class="line"><span class="section">×     2</span></div><div class="line">---------------</div><div class="line"><span class="code">    1.6     1 </span></div><div class="line"><span class="section">×     2</span></div><div class="line">---------------</div><div class="line"><span class="code">    1.2     1</span></div><div class="line"><span class="section">×     2</span></div><div class="line">---------------</div><div class="line"><span class="code">    0.4     0   * ↑</span></div><div class="line"><span class="code">             (0011循环)</span></div></pre></td></tr></table></figure>
+<p>与整数不同的是，第一个计算得到的整数位为最高位，故 0.1 对应的二进制数为 <code>0.000110011(0011)</code>，也就等于 <code>2^-3 0.1100110011(0011)</code>。</p>
+<p>如果一个数既包含整数部分，又包含小数部分，其表示法的计算，需要分拆为整数和小数两部分，然后相加得到结果。</p>
+<h3 id="IEEE754-浮点数精度丢失"><a href="#IEEE754-浮点数精度丢失" class="headerlink" title="IEEE754 浮点数精度丢失"></a>IEEE754 浮点数精度丢失</h3><p>IEEE754 浮点数表示法的数据格式如下图：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 下图采用大端表示，高位在左，低位在右。</span></div><div class="line"></div><div class="line">sign  exponent         fraction</div><div class="line">+---+----------+---------------------+</div><div class="line">| <span class="number">1</span> |   <span class="number">2</span>~<span class="number">12</span>   |         <span class="number">13</span>~<span class="number">64</span>       |</div><div class="line">+---+----------+---------------------+</div></pre></td></tr></table></figure>
+<ul>
+<li>符号位：高位第 1 位，如图 sign 部分</li>
+<li>指数位：高位第 2~12 位，如图 exponent 部分</li>
+<li>尾数位：剩下的 fraction 部分</li>
+</ul>
+<p>从上面小数的乘二取整演算中可以看到，有些小数对应的二进制数是无法写全的，比如 0.1，而 fraction 尾数部分有要求，只允许 52 位，超过部分进一舍零。</p>
+<p>那么，我们就可以得到：</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><div class="line">0.1D </div><div class="line"><span class="section">= 2^-4 * 1.10011(0011)B</span></div><div class="line"><span class="section">= 2^-4 * 1.10011(0011 repeat 12 times)0011B // ← 最后一位为 1，进 1</span></div><div class="line"><span class="section">= 2^-4 * 1.10011(0011 repeat 12 times)010B</span></div></pre></td></tr></table></figure>
+<h3 id="揭秘-0-1-0-2"><a href="#揭秘-0-1-0-2" class="headerlink" title="揭秘 0.1 + 0.2"></a>揭秘 0.1 + 0.2</h3><p>根据上面我们了解到的知识，我们可以很容易算出这些值：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="number">0.1</span>D = <span class="number">2</span>^<span class="number">-4</span> * <span class="number">1.1001100110011001100110011001100110011001100110011010</span>B</div><div class="line"><span class="number">0.2</span>D = <span class="number">2</span>^<span class="number">-3</span> * <span class="number">1.1001100110011001100110011001100110011001100110011010</span>B</div><div class="line"><span class="number">0.3</span>D = <span class="number">2</span>^<span class="number">-2</span> * <span class="number">1.0011001100110011001100110011001100110011001100110011</span>B</div></pre></td></tr></table></figure>
+<p><code>0.1 + 0.2</code> 时，先将两者指数统一为 -3，故 0.1 小数点向左移一位，于是：</p>
+<figure class="highlight asciidoc"><table><tr><td class="code"><pre><div class="line"><span class="code">   0.1100110011001100110011001100110011001100110011001101B</span></div><div class="line"><span class="section">+  1.1001100110011001100110011001100110011001100110011010B</span></div><div class="line">------------------------------------------------------------</div><div class="line"><span class="section">= 10.0110011001100110011001100110011001100110011001100111B</span></div></pre></td></tr></table></figure>
+<p>得到的二进制数为：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line">10<span class="selector-class">.0110011001100110011001100110011001100110011001100111B</span></div></pre></td></tr></table></figure>
+<p>小数点往左移一位使得整数部分为 1，此时尾数部分为 53 位，进一舍零，于是得到最后的值是：</p>
+<figure class="highlight lsl"><table><tr><td class="code"><pre><div class="line"><span class="number">2</span>^<span class="number">-2</span> * <span class="number">1.0011001100110011001100110011001100110011001100110100</span></div></pre></td></tr></table></figure>
+<p>这个值转化成真值，结果为：<code>0.30000000000000004</code>。那么 <code>0.1 + 0.2 = 0.30000000000000004</code> 的推演到这里就结束了。</p>
+<h3 id="相关验证"><a href="#相关验证" class="headerlink" title="相关验证"></a>相关验证</h3><p>毕竟咱们手动计算可能存在笔误，可以通过一个叫做 <code>double-bits</code> 的 npm 进行推演，我写了一个小 demo，感兴趣的可以玩耍下：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> db = <span class="built_in">require</span>(<span class="string">'double-bits'</span>);</div><div class="line"><span class="keyword">const</span> pad = <span class="built_in">require</span>(<span class="string">'pad'</span>);</div><div class="line"></div><div class="line"><span class="comment">// [lo, hi] where lo is a 32 bit integer and hi is a 20 bit integer.</span></div><div class="line"><span class="keyword">const</span> base2Str = <span class="function">(<span class="params">n</span>) =&gt;</span> &#123;</div><div class="line">  <span class="keyword">const</span> f = db.fraction(n);</div><div class="line">  <span class="keyword">const</span> s = db.sign(n) ? <span class="string">'-'</span> : <span class="string">''</span>;</div><div class="line">  <span class="keyword">const</span> e = <span class="string">`2^<span class="subst">$&#123;db.exponent(n) + <span class="number">1</span>&#125;</span>`</span>;</div><div class="line">  <span class="keyword">const</span> t = <span class="string">`0.<span class="subst">$&#123;pad(f[<span class="number">1</span>].toString(<span class="number">2</span>), <span class="number">20</span>, <span class="string">'0'</span>)&#125;</span><span class="subst">$&#123;pad(f[<span class="number">0</span>].toString(<span class="number">2</span>), <span class="number">32</span>, <span class="string">'0'</span>)&#125;</span>`</span>;</div><div class="line">  <span class="keyword">return</span> <span class="string">`<span class="subst">$&#123;s&#125;</span><span class="subst">$&#123;e&#125;</span> * <span class="subst">$&#123;t&#125;</span>`</span>;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="built_in">console</span>.log(base2Str(<span class="number">0.1</span>).toString(<span class="number">2</span>));</div><div class="line"><span class="built_in">console</span>.log(base2Str(<span class="number">0.2</span>).toString(<span class="number">2</span>));</div><div class="line"><span class="built_in">console</span>.log(base2Str(<span class="number">0.3</span>).toString(<span class="number">2</span>));</div><div class="line"><span class="built_in">console</span>.log(base2Str(<span class="number">1.2</span>).toString(<span class="number">2</span>));</div></pre></td></tr></table></figure>
+<p>上面输出结果为：</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="number">2</span>^<span class="number">-3</span> * <span class="number">0.11001100110011001100110011001100110011001100110011010</span></div><div class="line"><span class="number">2</span>^<span class="number">-2</span> * <span class="number">0.11001100110011001100110011001100110011001100110011010</span></div><div class="line"><span class="number">2</span>^<span class="number">-1</span> * <span class="number">0.10011001100110011001111001100110011001100110011001100</span></div><div class="line"><span class="number">2</span>^<span class="number">1</span> * <span class="number">0.10011001100110011001111001100110011001100110011001100</span></div></pre></td></tr></table></figure>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>为了按照计算机的思维，IEEE754 的标准来计算 <code>0.1 + 0.2</code>，又重新复习了一遍大学计算机基础的知识，原码、反码、补码，以及除二取余、乘二取整计算法，最后能够推演出来，也算是一个胜利吧~</p>
+<h3 id="更多阅读"><a href="#更多阅读" class="headerlink" title="更多阅读"></a>更多阅读</h3><ul>
+<li><a href="http://www.h-schmidt.net/FloatConverter/IEEE754.html" target="_blank" rel="external">IEEE 754 Converter</a></li>
+<li><a href="https://zh.wikipedia.org/wiki/IEEE_754" target="_blank" rel="external">维基百科 IEEE 754</a></li>
+</ul>
+<hr>
+<p>题图：<a href="https://unsplash.com/search/math?photo=5mZ_M06Fc9g" target="_blank" rel="external">math</a> by Roman Mager</p>
+<p><strong><em>笔耕不辍，欢迎关注微信公众号小胡子哥（barretlee_com），分享生活，分享技术，我在那里等你。</em></strong></p>
+
+        <!--<p class="article-info">文/<a href="/about/"><img src="/avatar150.png">李靖</a>　微信公众号：barretlee_com</p><p class="this-page-link" aria-hidden="true">本文链接：<a href="http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/">http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/</a></p>
+        <p><a class="to-comments" href="http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/#comments" aria-hidden="true">☞ 参与评论</a></p> -->
+      </div>
+    </div>
+    
+    <div class="share-article clearfix">
+      
+      <div class="ds-share" data-thread-key="ieee754-operation-in-js" data-title="揭秘 0.1 + 0.2 != 0.3" data-images="" data-content="“0.1 + 0.2 = ?”，这道题如果给小学生，他会立马告诉你答案是 0.3，但是交给一些程序去计算，结果就不是那么简单了。" data-url="http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/">
+        <div class="ds-share-inline" tabindex="0" aria-hidden="true">
+  <ul  class="ds-share-icons-16">
+    <li><a class="ds-more" href="javascript:void(0);" data-service="weibo">分享到：</a></li>
+    <li> <a class="ds-google" href="javascript:void(0);" data-service="google">Google+</a> </li>
+    <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo">新浪微博</a> </li>
+    <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a> </li>
+  </ul>
+  <div class="ds-share-icons-more">
+  </div>
+</div>
+      </div>
+    </div>
+    <!-- <div class="secretCircle">
+  <a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank"><img src="/circle.jpg" alt="前端进阶小圈子"></a>
+  <p>嗯，我新建了一个「前端进阶」的小圈子。</p>
+  <p>最近找我提问的人数飙涨的厉害，精力有限没能都回复。建了一个圈子，这个圈子里可以提问，关于前端成长和进阶的话题，我会抽空回答，也会邀请一些前端朋友进来交流，问答会沉淀在圈子里。<b>付费圈子，时限一年。</b></p>
+  <p><a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank">在这里</a>，你可以：</p>
+  <ul>
+    <li>✅ 提出你在前端学习中的疑问，</li>
+    <li>✅ 谈谈你学习的方法和经验，</li>
+    <li>✅ 了解前端，深入前端</li>
+  </ul>
+  <p>在这里，更加注重方法论的交流。</p>
+  <strong>付费圈子，时限一年</strong>
+</div>
+ -->
+    <!-- <div class="follow-wechat"><img src="/follow.jpg"></div> -->
+
+<div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
+	<!-- <a href="/about/#support" class="supportme">赏</a> -->
+	<ul>
+		<li>作者:  <a href="/about/" itemprop="name">小胡子哥 (Barret Lee)</a></li>
+		<li>发表日期:  2016-09-28 23:05:23</li>
+		<li>文章分类: 
+	<a class="category-link" href="/blog/categories/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/前端杂烩/JavaScript/">JavaScript</a>
+
+</li>
+		<li>文章标签: 
+<a class="article-tag-link" href="/blog/tags/IEEE754/">IEEE754</a>
+</li>
+		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
+		<li>最后编辑时间: 2016-10-17 11:14:33</li>
+		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
+	</ul>
+	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
+</div>
+
+    <em class="arrow-expend icon" tabindex="0" aria-hidden="true">&#xe618;
+      <ul>
+        <li><a href="/entry/">博客</a></li>
+        <li><a href="/message/">问答</a></li>
+        <li><a href="/about/">关于</a></li>
+        <li><a href="/demo/">实验室</a></li>
+        <li><a href="/comments/">最近评论</a></li>
+        <li><a href="/friends/">友情链接</a></li>
+      </ul>
+    </em>
+  </div>
+  <div class="post-relative">
+<div class="page-relative">
+  
+    <a href="/blog/2016/10/21/my-growth-at-alibaba/" class="post-prev">
+      <i class="icon" tabindex="0" aria-hidden="true">&#x261c;</i>
+      <span class="aria-readonly">上一篇文章</span>
+      
+        <b>谈一谈我在阿里的成长</b>
+      
+    </a>
+  
+  
+    <a href="/blog/2016/09/27/how-to-be-a-excellent-intern/" class="post-next">
+      <span class="aria-readonly">下一篇文章</span>
+      <b>如何做好一名实习生</b>
+      <i class="icon" tabindex="0" aria-hidden="true">&#xe602;</i>
+    </a>
+  
+</div>
+
+
+<div class="page-relative-fixed" tabindex="0" aria-hidden="true">
+  
+  <a href="/blog/2016/10/21/my-growth-at-alibaba/" class="prev" title="谈一谈我在阿里的成长">
+    <i class="icon">&#xe600;</i>
+    
+    <b>谈一谈我在阿里的成长</b>
+    
+  </a>
+  
+  
+  <a href="/blog/2016/09/27/how-to-be-a-excellent-intern/" class="next" title="如何做好一名实习生">
+    <i class="icon">&#x261e;</i>
+    <b>如何做好一名实习生</b>
+  </a>
+  
+</div>
+</div>
+</div>
+<div class="sidebar" tabindex="0" aria-hidden="true">
+	<div class="func-btns func-btns-up">
+    <span class="func-item">
+        <i class="func-nav icon">&#xe618;<span>目录</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="javascript:void(0);" onclick="return false;">显示目录</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-font icon">&#xe604;<span>设置</span></i>
+        <div class="font-choose-box">
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <div class="font-choose bg-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-sun font-type-song"><i class="icon">&#xe61a;</i></a>
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-moon font-type-hei"><i class="icon">&#xe619;</i></a>
+          </div>
+          <div class="font-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-song">黑体</a>
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-hei">宋体</a>
+          </div>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="http://weibo.com/173248656" target="_blank"><i class="func-fb icon">博<span>分享</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator sharecanvas"><a href="javascript: void(0);">截屏分享</a></p>
+          <p><a href="http://weibo.com/173248656" target="_blank">微博关注</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-about icon">&#x263b;<span>关于</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p><a href="/about/" class="func-about-link" target="_blank">关于作者</a></p>
+          <div id="followMeOnWeibo"></div>
+        </div>
+    </span>
+	</div>
+	<div class="func-btns">
+    <span class="func-item">
+        <a href="http://demo.barretlee.com" target="_blank"><i class="func-rss icon">&#xe603;<span>实验</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="http://demo.barretlee.com" target="_blank">Demo平台</a></p>
+          <p><a href="http://snippets.barretlee.com" target="_blank">Snippet应用</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-fb icon">&#x2121;<span>留言</span></i>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="/message/" target="_blank">给我留言</a></p>
+          <p><a href="/comments/" target="_blank">近期留言</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/friends/" target="_blank"><i class="func-rss icon">&#xe601;<span>友链</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="/friends/" target="_blank">友情链接</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/rss2.xml" target="_blank"><i class="func-rss icon">&#x25c8;<span>订阅</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i><a href="/rss2.xml" target="_blank">订阅我吧！</a></div>
+    </span>
+	</div>
+</div>
+
+<div class="single-page-footer">
+<div class="footer">
+	<div class="footer-wraper">
+		<div class="footer-content">
+			<div class="footer-nav">
+	<a href="javascript: void(0);" class="ds-thread-count disqus-comment-count"
+	   data-thread-key="ieee754-operation-in-js"
+	   data-disqus-identifier="ieee754-operation-in-js" tabindex="0" aria-hidden="true">评论内容</a>
+	<a href="javascript: void(0);" id="comments">相关文章</a>
+	<a href="/friends/" tabindex="0" aria-hidden="true">友情链接</a>
+</div>
+<div class="nav-detail">
+	<div tabindex="0" aria-hidden="true">
+		
+
+
+
+<div class="ds-thread" tabindex="0" aria-hidden="true" data-thread-key="ieee754-operation-in-js" data-title="揭秘 0.1 + 0.2 != 0.3" data-url="http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/" data-name="barretlee">
+	<div class="ds-loading">
+		<img src="/blogimgs/loading.gif" alt="loading..."/>
+		<p>这网速真是弱爆了...客官稍等,评论还在加载~</p>
+	</div>
+</div>
+
+
+
+
+
+	</div>
+	<div style="display:block;">
+		<div class="relative-to-comment" tabindex="0" aria-hidden="true"><span>（点击评论）</span>古今多少事，都付笑谈中！</div>
+		<div class="relative-wrapper">
+	<div class="relative-article">
+		
+		<ul>
+			<li>
+				<span><font aria-hidden="true">2017-02-04 »</font> </span>
+				<a href="/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/">聊聊设计模式（2）：享元模式</a>
+				<span class="aria-readonly">发表时间为2017年02月04日</span>
+				<div class="relative-box">
+          <a href="/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/" class="relative-img-wrapper" style="background-image:url(http://ww1.sinaimg.cn/large/6c0378f8ly1fcemcdy783j20p00dwaeb);"></a>
+          <span class="aria-readonly">文章概要 </span>如何理解享元模式，“享”是共享的意思，“元”指的是元件，也就是小颗粒的东西，享元顾名思义便是共享小部件，很多系统或者程序包含大量对象，但是这些对象绝大多数都是差不多的，除了一些极个别的属性外。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2017-01-16 »</font> </span>
+				<a href="/blog/2017/01/16/the-bridge-pattern-in-design-patterns/">聊聊设计模式（1）：桥接模式</a>
+				<span class="aria-readonly">发表时间为2017年01月16日</span>
+				<div class="relative-box">
+          <a href="/blog/2017/01/16/the-bridge-pattern-in-design-patterns/" class="relative-img-wrapper" style="background-image:url(http://ww3.sinaimg.cn/large/6c0378f8gw1fbsrsfhduuj20p00dw776.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>桥接模式（Bridge Pattern），也有很多地方称之为桥连模式，不管怎么叫，记得有个桥（bridge）就行了，重点要理解这个「桥」是如何连接的，什么场景下需要使用桥接模式。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-23 »</font> </span>
+				<a href="/blog/2016/08/23/javascript-sandbox/">构建一个安全的 JavaScript 沙箱</a>
+				<span class="aria-readonly">发表时间为2016年08月23日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/23/javascript-sandbox/" class="relative-img-wrapper" style="background-image:url(http://ww1.sinaimg.cn/large/6c0378f8gw1f730uldkfrj20p00dwaf1.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>在 Node.js 中有一个模块叫做 VM，它提供了几个 API，允许代码在 V8 虚拟机上下文中运行，如：const vm = require('vm');const sandbox = &#123; a: 1, b: 2 &#125;;const script = new vm.Script('a + b');const context = new vm.createContext(sandbox);script.runInContext(context);vm.Script 中的代码是预编译好的，通过 vm.createContext 将代码加载到一个上下文环境中，置入沙箱（sandbox），然后通过 script.runInContext 执行代码，整个操作都在封闭的 VM 中进行。这是 Node.js 提供给我们的便捷功能，那么，在浏览器环境中呢？是否也能做到将代码运行在沙箱中？本文带着大家来探索一番。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-04 »</font> </span>
+				<a href="/blog/2016/08/04/funning-gitlog/">有意思的 git-log</a>
+				<span class="aria-readonly">发表时间为2016年08月04日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/04/funning-gitlog/" class="relative-img-wrapper" style="background-image:url(//ww4.sinaimg.cn/large/6c0378f8gw1f6imxm25vtj21kw16p7wh.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>之前写过几篇 git 相关的文章，内容很基础，git版本回退操作git切换到远程分支git版本管理策略及相关技巧(A)但发现最近被搜索引擎检索的量还比较大，最近正好在阅读 git 相关的资料，准备将不错的几个点，详细地说一说，记录下来写出来分享给大家。今天要说的便是常用的 git log 命令。
+        </div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+
+		<a href="/entry/" class="relative-to-comment-wrapper" tabindex="0" aria-hidden="true"><div class="relative-to-comment">回到首页</div></a>
+	</div>
+	<div class="friends-box">
+		<ul>
+			
+			<li><a href="http://hustskyking.cnblogs.com" target="_blank">旧博客</a> <font aria-hidden="true">»</font> <span>我的旧博客（博客园荣誉博客）</span></li>
+			
+			<li><a href="http://www.zhangmengxue.com" target="_blank">大额</a> <font aria-hidden="true">»</font> <span>大额大额哼歌等日落</span></li>
+			
+			<li><a href="http://www.zhangxinxu.com" target="_blank">张鑫旭</a> <font aria-hidden="true">»</font> <span>原来大学我俩一个团队的~</span></li>
+			
+			<li><a href="http://web-tinker.com" target="_blank">次碳酸钴</a> <font aria-hidden="true">»</font> <span>深度交流的一个好朋友</span></li>
+			
+			<li><a href="http://imququ.com" target="_blank">屈屈</a> <font aria-hidden="true">»</font> <span>好吧，蛐蛐同学</span></li>
+			
+			<li><a href="http://www.ruanyifeng.com" target="_blank">阮一峰</a> <font aria-hidden="true">»</font> <span>阮老师,哈哈,第一次设计博客就是抄的你的样式</span></li>
+			
+			<li><a href="http://annn.me" target="_blank">安记</a> <font aria-hidden="true">»</font> <span>阿安同学</span></li>
+			
+			<li><a href="http://mouto.org/" target="_blank">卜卜口</a> <font aria-hidden="true">»</font> <span>二次元化身</span></li>
+			
+			<li><a href="/friends/">更多列表 <font aria-hidden="true">»</font></a></li>
+		</ul>
+	</div>
+</div>
+			<div class="website-info" aria-hidden="true">
+	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
+	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
+</div>
+
+		</div>
+	</div>
+</div>
+</div>
+<div class="tools-wrapper" tabindex="0" aria-hidden="true">
+	<a class="gotop icon" href="#" title="回到顶部">&#x2191;</a>
+	<!-- <a class="wechart icon">&#xe60d;<span><img src="/wechart.png" title="扫码添加小胡子哥微信"/> </span></a> -->
+	<a class="hash-to-comments icon" title="我要评论">&#x2121;</a>
+</div>
+<div class="fixerr" tabindex="0" aria-hidden="true">纠错模式</div>
+
+</body>
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/socket.io.js"></script>
+<script>
+  window.onerror = function(e) {
+    window.console && window.console.log && window.console.log(e);
+    return true;
+  };
+</script>
+<script src="/public/js/aplayer.js"></script>
+<script src="/public/js/main.js?v=20160728"></script>
+</script>
+</html>

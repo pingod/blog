@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>简述 OAuth 2.0 的运作流程 | 小胡子哥的个人网站</title>
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,user-scalable=0">
+  <meta name="author" content="https://plus.google.com/112634278852964994392?hl=zh-cn">
+  <meta name="email" content="barret.china@gmail.com">
+  <meta name="description" content="本文将以用户使用 github 登录网站留言为例，简述 OAuth 2.0 的运作流程。">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="简述 OAuth 2.0 的运作流程 | 小胡子哥的个人网站">
+  <meta property="og:url" content="http://www.barretlee.com/blog/2016/01/10/oauth2-introduce/">
+  <meta property="og:site_name" content="简述 OAuth 2.0 的运作流程">
+  <meta property="og:description" content="本文将以用户使用 github 登录网站留言为例，简述 OAuth 2.0 的运作流程。">
+  <meta name="generator" content="https://hexo.io" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <link href="http://www.barretlee.com/blogimgs/app-icon.png" rel="apple-touch-icon-precomposed">
+  <link rel="shoticon" href="http://www.barretlee.com/favicon.ico" type="image/x-icon">
+  <link rel="alternate" type="application/rss+xml" href="http://www.barretlee.com/rss2.xml" title="小胡子哥的个人网站" />
+  <link rel="prev" href="http://www.barretlee.com/blog/2016/01/14/update-your-browser/" title="2016，低版本浏览器活不过这一年" />
+  <link rel="next" href="http://www.barretlee.com/blog/2016/01/08/share-in-team/" title="简述淘宝团队的技术沉淀和对外分享" />
+  <link rel="start" href="http://www.barretlee.com/entry/" title="Blog Entry" />
+  <link rel="stylesheet" href="/public/css/style.css?v=20160728">
+</head>
+<span class="aria-readonly" tabindex="0" aria-hidden="true">小胡子哥的博客良好支持读屏软件阅读，请放心使用。</span>
+
+
+<body>
+  <div class="rainbow"></div>
+  <div class="container">
+  <div class="article" itemscope itemtype="http://schema.org/Article">
+    <div class="post">
+      <div class="bread">
+        <a href="/">小胡子哥的个人博客</a> »
+        <a href="/entry/">博客</a> »
+        
+	<a class="category-link" href="/blog/categories/网络交互/">网络交互</a>
+
+
+      </div>
+      <div class="post-title-wrapper">
+        <h1 class="post-title" itemprop="name">简述 OAuth 2.0 的运作流程<img src="https://game.weixin.qq.com/cgi-bin/comm/qrcode?s=10&m=1&d=http:http://www.barretlee.com/blog/2016/01/10/oauth2-introduce/" alt="扫码分享" onerror="this.style.display='none';"></h1>
+        <a href="/about/"><img src="/blogimgs/avatar150.png" alt="小胡子哥" /></a>
+      </div>
+      <div class="post-info">
+        <span>作者: <a href="/about/" itemprop="author">小胡子哥</a></span>
+        <span>
+          <time itemprop="timeCreated" aria-hidden="true">2016-01-10 23:56:33</time>
+          <span class="aria-readonly">本文发布时间为2016年01月10日23时56分33秒</span>
+        </span>
+        <span>分类: 
+	<a class="category-link" href="/blog/categories/网络交互/">网络交互</a>
+
+</span>
+        <span tabindex="0" aria-hidden="true">标签: 
+<a class="article-tag-link" href="/blog/tags/OAuth2/">OAuth2</a>
+</span>
+        <span class="aria-readonly">下面是正文内容</span>
+        <span tabindex="0" aria-hidden="true">评论数: <a href="#comments"
+                      class="ds-thread-count hash-to-comments disqus-comment-count"
+                      data-thread-key="oauth2-introduce"
+                      data-disqus-identifier="oauth2-introduce"></a></span>
+        <span tabindex="0" aria-hidden="true" id="busuanzi_container_site_pv">热度: <span id="busuanzi_value_page_pv"></span></span>
+      </div>
+      <div class="post-content" itemprop="articleBody">
+        <div class="shit-spider" title="防爬虫不注明出处" tabindex="0" aria-hidden="true">
+          <p>原文地址：<a href="http://www.barretlee.com/blog/2016/01/10/oauth2-introduce/">http://www.barretlee.com/blog/2016/01/10/oauth2-introduce/</a>，<a href="http://www.barretlee.com/blog/2016/01/10/oauth2-introduce/#comments">参与评论</a></p>
+          <img src="//www.barretlee.com/blogimgs/avatar150.png">
+        </div>
+        <p>本文将以用户使用 github 登录网站留言为例，简述 OAuth 2.0 的运作流程。</p>
+<a id="more"></a>
+<p>假如我有一个网站，你是我网站上的访客，看了文章想留言表示「朕已阅」，留言时发现有这个网站的帐号才能够留言，此时给了你两个选择：一个是在我的网站上注册拥有一个新账户，然后用注册的用户名来留言；一个是使用 github 帐号登录，使用你的 github 用户名来留言。前者你觉得过于繁琐，于是惯性地点击了 github 登录按钮，此时 OAuth 认证流程就开始了。</p>
+<p>需要明确的是，即使用户刚登录过 github，我的网站也不可能向 github 发一个什么请求便能够拿到访客信息，这显然是不安全的。就算用户允许你获取他在 github 上的信息，github 为了保障用户信息安全，也不会让你随意获取。所以操作之前，我的网站与 github 之间需要要有一个协商。</p>
+<h4 id="1-网站和-Github-之间的协商"><a href="#1-网站和-Github-之间的协商" class="headerlink" title="1. 网站和 Github 之间的协商"></a>1. 网站和 Github 之间的协商</h4><p>Github 会对用户的权限做分类，比如读取仓库信息的权限、写入仓库的权限、读取用户信息的权限、修改用户信息的权限等等。如果我想获取用户的信息，Github 会要求我，先在它的平台上注册一个应用，在申请的时候标明需要获取用户信息的哪些权限，用多少就申请多少，并且在申请的时候填写你的网站域名，Github 只允许在这个域名中获取用户信息。</p>
+<p>此时我的网站已经和 Github 之间达成了共识，Github 也给我发了两张门票，一张门票叫做 Client Id，另一张门票叫做 Client Secret。</p>
+<h4 id="2-用户和-Github-之间的协商"><a href="#2-用户和-Github-之间的协商" class="headerlink" title="2. 用户和 Github 之间的协商"></a>2. 用户和 Github 之间的协商</h4><p>用户进入我的网站，点击 github 登录按钮的时候，我的网站会把上面拿到的 Client Id 交给用户，让他进入到 Github 的授权页面，Github 看到了用户手中的门票，就知道这是我的网站让他过来的，于是它就把我的网站想要获取的权限摆出来，并询问用户是否允许我获取这些权限。</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 用户登录 github，协商</span></div><div class="line">GET <span class="comment">//github.com/login/oauth/authorize</span></div><div class="line"></div><div class="line"><span class="comment">// 协商凭证</span></div><div class="line">params = &#123;</div><div class="line"><span class="symbol">  client_id:</span> <span class="string">"xxxx"</span>,</div><div class="line"><span class="symbol">  redirect_uri:</span> <span class="string">"http://my-website.com"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果用户觉得我的网站要的权限太多，或者压根就不想我知道他这些信息，选择了拒绝的话，整个 OAuth 2.0 的认证就结束了，认证也以失败告终。如果用户觉得 OK，在授权页面点击了确认授权后，页面会跳转到我预先设定的 <code>redirect_uri</code> 并附带一个盖了章的门票 code。</p>
+<figure class="highlight groovy"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 协商成功后带着盖了章的 code</span></div><div class="line"><span class="string">Location:</span> <span class="string">http:</span><span class="comment">//my-website.com?code=xxx</span></div></pre></td></tr></table></figure>
+<p>这个时候，用户和 Github 之间的协商就已经完成，Github 也会在自己的系统中记录这次协商，表示该用户已经允许在我的网站访问上直接操作和使用他的部分资源。</p>
+<h4 id="3-告诉-Github-我的网站要来拜访了"><a href="#3-告诉-Github-我的网站要来拜访了" class="headerlink" title="3. 告诉 Github 我的网站要来拜访了"></a>3. 告诉 Github 我的网站要来拜访了</h4><p>第二步中，我们已经拿到了盖过章的门票 code，但这个 code 只能表明，用户允许我的网站从 github 上获取该用户的数据，如果我直接拿这个 code 去 github 访问数据一定会被拒绝，因为任何人都可以持有 code，github 并不知道 code 持有方就是我本人。</p>
+<p>还记得之前申请应用的时候 github 给我的两张门票么，Client Id 在上一步中已经用过了，接下来轮到另一张门票 Client Secret。</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 网站和 github 之间的协商</span></div><div class="line">POST <span class="comment">//github.com/login/oauth/access_token</span></div><div class="line"></div><div class="line"><span class="comment">// 协商凭证包括 github 给用户盖的章和 github 发给我的门票</span></div><div class="line">params = &#123;</div><div class="line"><span class="symbol">  code:</span> <span class="string">"xxx"</span>,</div><div class="line"><span class="symbol">  client_id:</span> <span class="string">"xxx"</span>,</div><div class="line"><span class="symbol">  client_secret:</span> <span class="string">"xxx"</span>,</div><div class="line"><span class="symbol">  redirect_uri:</span> <span class="string">"http://my-website.com"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>拿着用户盖过章的 code 和能够标识个人身份的 client_id、client_secret 去拜访 github，拿到最后的绿卡 access_token。</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 拿到最后的绿卡</span></div><div class="line">response = &#123;</div><div class="line"><span class="symbol">  access_token:</span> <span class="string">"e72e16c7e42f292c6912e7710c838347ae178b4a"</span></div><div class="line"><span class="symbol">  scope:</span> <span class="string">"user,gist"</span></div><div class="line"><span class="symbol">  token_type:</span> <span class="string">"bearer"</span>,</div><div class="line"><span class="symbol">  refresh_token:</span> <span class="string">"xxxx"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="4-用户开始使用-github-帐号在我的页面上留言"><a href="#4-用户开始使用-github-帐号在我的页面上留言" class="headerlink" title="4. 用户开始使用 github 帐号在我的页面上留言"></a>4. 用户开始使用 github 帐号在我的页面上留言</h4><figure class="highlight 1c"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 访问用户数据</span></div><div class="line">GET <span class="comment">//api.github.com/user?access_token=e72e16c7e42f292c6912e7710c838347ae178b4a</span></div></pre></td></tr></table></figure>
+<p>上一步 github 已经把最后的绿卡 access_token 给我了，通过 github 提供的 API 加绿卡就能够访问用户的信息了，能获取用户的哪些权限在 response 中也给了明确的说明，scope 为 user 和 gist，也就是只能获取 user 组和 gist 组两个小组的权限，user 组中就包含了用户的名字和邮箱等信息了。</p>
+<figure class="highlight dts"><table><tr><td class="code"><pre><div class="line"><span class="comment">// 告诉我用户的名字和邮箱</span></div><div class="line">response = &#123;</div><div class="line"><span class="symbol">  username:</span> <span class="string">"barretlee"</span>,</div><div class="line"><span class="symbol">  email:</span> <span class="string">"barret.china@gmail.com"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>整个 OAuth2 流程在这里也基本完成了，文章中的表述很粗糙，比如 access_token 这个绿卡是有过期时间的，如果过期了需要使用 refresh_token 重新签证。重点是让读者理解整个流程，细节部分可以阅读 <a href="http://www.rfcreader.com/#rfc6749" target="_blank" rel="external">RFC6749 文档</a>。</p>
+<p>希望对你理解 OAuth 2.0 有帮助。（本文完）</p>
+
+        <!--<p class="article-info">文/<a href="/about/"><img src="/avatar150.png">李靖</a>　微信公众号：barretlee_com</p><p class="this-page-link" aria-hidden="true">本文链接：<a href="http://www.barretlee.com/blog/2016/01/10/oauth2-introduce/">http://www.barretlee.com/blog/2016/01/10/oauth2-introduce/</a></p>
+        <p><a class="to-comments" href="http://www.barretlee.com/blog/2016/01/10/oauth2-introduce/#comments" aria-hidden="true">☞ 参与评论</a></p> -->
+      </div>
+    </div>
+    
+    <div class="share-article clearfix">
+      
+      <div class="ds-share" data-thread-key="oauth2-introduce" data-title="简述 OAuth 2.0 的运作流程" data-images="" data-content="本文将以用户使用 github 登录网站留言为例，简述 OAuth 2.0 的运作流程。" data-url="http://www.barretlee.com/blog/2016/01/10/oauth2-introduce/">
+        <div class="ds-share-inline" tabindex="0" aria-hidden="true">
+  <ul  class="ds-share-icons-16">
+    <li><a class="ds-more" href="javascript:void(0);" data-service="weibo">分享到：</a></li>
+    <li> <a class="ds-google" href="javascript:void(0);" data-service="google">Google+</a> </li>
+    <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo">新浪微博</a> </li>
+    <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a> </li>
+  </ul>
+  <div class="ds-share-icons-more">
+  </div>
+</div>
+      </div>
+    </div>
+    <!-- <div class="secretCircle">
+  <a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank"><img src="/circle.jpg" alt="前端进阶小圈子"></a>
+  <p>嗯，我新建了一个「前端进阶」的小圈子。</p>
+  <p>最近找我提问的人数飙涨的厉害，精力有限没能都回复。建了一个圈子，这个圈子里可以提问，关于前端成长和进阶的话题，我会抽空回答，也会邀请一些前端朋友进来交流，问答会沉淀在圈子里。<b>付费圈子，时限一年。</b></p>
+  <p><a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank">在这里</a>，你可以：</p>
+  <ul>
+    <li>✅ 提出你在前端学习中的疑问，</li>
+    <li>✅ 谈谈你学习的方法和经验，</li>
+    <li>✅ 了解前端，深入前端</li>
+  </ul>
+  <p>在这里，更加注重方法论的交流。</p>
+  <strong>付费圈子，时限一年</strong>
+</div>
+ -->
+    <!-- <div class="follow-wechat"><img src="/follow.jpg"></div> -->
+
+<div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
+	<!-- <a href="/about/#support" class="supportme">赏</a> -->
+	<ul>
+		<li>作者:  <a href="/about/" itemprop="name">小胡子哥 (Barret Lee)</a></li>
+		<li>发表日期:  2016-01-10 23:56:33</li>
+		<li>文章分类: 
+	<a class="category-link" href="/blog/categories/网络交互/">网络交互</a>
+
+</li>
+		<li>文章标签: 
+<a class="article-tag-link" href="/blog/tags/OAuth2/">OAuth2</a>
+</li>
+		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
+		<li>最后编辑时间: 2016-07-26 10:23:14</li>
+		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
+	</ul>
+	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
+</div>
+
+    <em class="arrow-expend icon" tabindex="0" aria-hidden="true">&#xe618;
+      <ul>
+        <li><a href="/entry/">博客</a></li>
+        <li><a href="/message/">问答</a></li>
+        <li><a href="/about/">关于</a></li>
+        <li><a href="/demo/">实验室</a></li>
+        <li><a href="/comments/">最近评论</a></li>
+        <li><a href="/friends/">友情链接</a></li>
+      </ul>
+    </em>
+  </div>
+  <div class="post-relative">
+<div class="page-relative">
+  
+    <a href="/blog/2016/01/14/update-your-browser/" class="post-prev">
+      <i class="icon" tabindex="0" aria-hidden="true">&#x261c;</i>
+      <span class="aria-readonly">上一篇文章</span>
+      
+        <b>2016，低版本浏览器活不过这一年</b>
+      
+    </a>
+  
+  
+    <a href="/blog/2016/01/08/share-in-team/" class="post-next">
+      <span class="aria-readonly">下一篇文章</span>
+      <b>简述淘宝团队的技术沉淀和对外分享</b>
+      <i class="icon" tabindex="0" aria-hidden="true">&#xe602;</i>
+    </a>
+  
+</div>
+
+
+<div class="page-relative-fixed" tabindex="0" aria-hidden="true">
+  
+  <a href="/blog/2016/01/14/update-your-browser/" class="prev" title="2016，低版本浏览器活不过这一年">
+    <i class="icon">&#xe600;</i>
+    
+    <b>2016，低版本浏览器活不过这一年</b>
+    
+  </a>
+  
+  
+  <a href="/blog/2016/01/08/share-in-team/" class="next" title="简述淘宝团队的技术沉淀和对外分享">
+    <i class="icon">&#x261e;</i>
+    <b>简述淘宝团队的技术沉淀和对外分享</b>
+  </a>
+  
+</div>
+</div>
+</div>
+<div class="sidebar" tabindex="0" aria-hidden="true">
+	<div class="func-btns func-btns-up">
+    <span class="func-item">
+        <i class="func-nav icon">&#xe618;<span>目录</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="javascript:void(0);" onclick="return false;">显示目录</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-font icon">&#xe604;<span>设置</span></i>
+        <div class="font-choose-box">
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <div class="font-choose bg-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-sun font-type-song"><i class="icon">&#xe61a;</i></a>
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-moon font-type-hei"><i class="icon">&#xe619;</i></a>
+          </div>
+          <div class="font-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-song">黑体</a>
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-hei">宋体</a>
+          </div>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="http://weibo.com/173248656" target="_blank"><i class="func-fb icon">博<span>分享</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator sharecanvas"><a href="javascript: void(0);">截屏分享</a></p>
+          <p><a href="http://weibo.com/173248656" target="_blank">微博关注</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-about icon">&#x263b;<span>关于</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p><a href="/about/" class="func-about-link" target="_blank">关于作者</a></p>
+          <div id="followMeOnWeibo"></div>
+        </div>
+    </span>
+	</div>
+	<div class="func-btns">
+    <span class="func-item">
+        <a href="http://demo.barretlee.com" target="_blank"><i class="func-rss icon">&#xe603;<span>实验</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="http://demo.barretlee.com" target="_blank">Demo平台</a></p>
+          <p><a href="http://snippets.barretlee.com" target="_blank">Snippet应用</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-fb icon">&#x2121;<span>留言</span></i>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="/message/" target="_blank">给我留言</a></p>
+          <p><a href="/comments/" target="_blank">近期留言</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/friends/" target="_blank"><i class="func-rss icon">&#xe601;<span>友链</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="/friends/" target="_blank">友情链接</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/rss2.xml" target="_blank"><i class="func-rss icon">&#x25c8;<span>订阅</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i><a href="/rss2.xml" target="_blank">订阅我吧！</a></div>
+    </span>
+	</div>
+</div>
+
+<div class="single-page-footer">
+<div class="footer">
+	<div class="footer-wraper">
+		<div class="footer-content">
+			<div class="footer-nav">
+	<a href="javascript: void(0);" class="ds-thread-count disqus-comment-count"
+	   data-thread-key="oauth2-introduce"
+	   data-disqus-identifier="oauth2-introduce" tabindex="0" aria-hidden="true">评论内容</a>
+	<a href="javascript: void(0);" id="comments">相关文章</a>
+	<a href="/friends/" tabindex="0" aria-hidden="true">友情链接</a>
+</div>
+<div class="nav-detail">
+	<div tabindex="0" aria-hidden="true">
+		
+
+
+
+<div class="ds-thread" tabindex="0" aria-hidden="true" data-thread-key="oauth2-introduce" data-title="简述 OAuth 2.0 的运作流程" data-url="http://www.barretlee.com/blog/2016/01/10/oauth2-introduce/" data-name="barretlee">
+	<div class="ds-loading">
+		<img src="/blogimgs/loading.gif" alt="loading..."/>
+		<p>这网速真是弱爆了...客官稍等,评论还在加载~</p>
+	</div>
+</div>
+
+
+
+
+
+	</div>
+	<div style="display:block;">
+		<div class="relative-to-comment" tabindex="0" aria-hidden="true"><span>（点击评论）</span>古今多少事，都付笑谈中！</div>
+		<div class="relative-wrapper">
+	<div class="relative-article">
+		
+		<ul>
+			<li>
+				<span><font aria-hidden="true">2016-12-26 »</font> </span>
+				<a href="/blog/2016/12/26/how-to-design-webhook/">如何设计友好的 WebHook</a>
+				<span class="aria-readonly">发表时间为2016年12月26日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/12/26/how-to-design-webhook/" class="relative-img-wrapper" style="background-image:url(http://img.alicdn.com/tfs/TB19mqDOVXXXXceapXXXXXXXXXX-580-283.png);"></a>
+          <span class="aria-readonly">文章概要 </span>在一些工具流的设计中，经常遇到一个体验非常不好的情况：每次都需要采用长轮询或者隔一段时间再尝试的方式获取结果。其原因可能有两个：调用方（Client）没有一个稳定的在线服务，Server 无法主动联系 ClientServer 并没有考虑主动 Push 消息
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-11-19 »</font> </span>
+				<a href="/blog/2016/11/19/nginx-configuration-start/">Nginx 配置简述</a>
+				<span class="aria-readonly">发表时间为2016年11月19日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/11/19/nginx-configuration-start/" class="relative-img-wrapper" style="background-image:url(http://ww4.sinaimg.cn/large/6c0378f8gw1f9yyq7qehrj20p00dwt94.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>不论是本地开发，还是远程到 Server 开发，还是给提供 demo 给人看效果，我们时常需要对 Nginx 做配置，Nginx 的配置项相当多，如果考虑性能配置起来会比较麻烦。不过，我们往往只是需要一个静态 Server，或者一个反向代理 Server，这对 Nginx 来说小菜一碟。本文将给大家介绍 Nginx 配置的基本知识，不想细看的同学可以直接跳到最后一个例子。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-25 »</font> </span>
+				<a href="/blog/2016/08/25/pac-file/">详解代理自动配置 PAC</a>
+				<span class="aria-readonly">发表时间为2016年08月25日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/25/pac-file/" class="relative-img-wrapper" style="background-image:url(http://ww4.sinaimg.cn/large/6c0378f8gw1f75co9fseuj20p00dwwhk.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>最近一直在做跨域中华局域网的工作，了解了很多代理知识和基础概念，很零散，也很细碎。希望通过一段时间的学习，能够自由地穿梭在国际互联网和中华局域网之间。后续会写一系列文章记录我了解到的知识点，本文要说的是我们平时接触比较多的 PAC，全名为 proxy auto-config。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-03 »</font> </span>
+				<a href="/blog/2016/08/03/shadowsocks/">Shadowsocks 原理简介及安装指南</a>
+				<span class="aria-readonly">发表时间为2016年08月03日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/03/shadowsocks/" class="relative-img-wrapper" style="background-image:url(http://ww2.sinaimg.cn/large/6c0378f8gw1f6gx28ymtqj20p00dwdg3.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>对 Shadowsocks 早有耳闻，当时我还在用 HTTP 代理、VPN 服务等翻墙，感觉它是个比较高大上的东西，也一直没有碰它。最近 GreenVPN 抽风，Mac 一直连接不上，害得我折腾了很久，最后还是买了一台国外的 VPS，于是开始折腾起 Shadowsocks，部署之前，对它做了一个简单的了解，下面先介绍下。
+        </div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+
+		<a href="/entry/" class="relative-to-comment-wrapper" tabindex="0" aria-hidden="true"><div class="relative-to-comment">回到首页</div></a>
+	</div>
+	<div class="friends-box">
+		<ul>
+			
+			<li><a href="http://hustskyking.cnblogs.com" target="_blank">旧博客</a> <font aria-hidden="true">»</font> <span>我的旧博客（博客园荣誉博客）</span></li>
+			
+			<li><a href="http://www.zhangmengxue.com" target="_blank">大额</a> <font aria-hidden="true">»</font> <span>大额大额哼歌等日落</span></li>
+			
+			<li><a href="http://www.zhangxinxu.com" target="_blank">张鑫旭</a> <font aria-hidden="true">»</font> <span>原来大学我俩一个团队的~</span></li>
+			
+			<li><a href="http://web-tinker.com" target="_blank">次碳酸钴</a> <font aria-hidden="true">»</font> <span>深度交流的一个好朋友</span></li>
+			
+			<li><a href="http://imququ.com" target="_blank">屈屈</a> <font aria-hidden="true">»</font> <span>好吧，蛐蛐同学</span></li>
+			
+			<li><a href="http://www.ruanyifeng.com" target="_blank">阮一峰</a> <font aria-hidden="true">»</font> <span>阮老师,哈哈,第一次设计博客就是抄的你的样式</span></li>
+			
+			<li><a href="http://annn.me" target="_blank">安记</a> <font aria-hidden="true">»</font> <span>阿安同学</span></li>
+			
+			<li><a href="http://mouto.org/" target="_blank">卜卜口</a> <font aria-hidden="true">»</font> <span>二次元化身</span></li>
+			
+			<li><a href="/friends/">更多列表 <font aria-hidden="true">»</font></a></li>
+		</ul>
+	</div>
+</div>
+			<div class="website-info" aria-hidden="true">
+	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
+	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
+</div>
+
+		</div>
+	</div>
+</div>
+</div>
+<div class="tools-wrapper" tabindex="0" aria-hidden="true">
+	<a class="gotop icon" href="#" title="回到顶部">&#x2191;</a>
+	<!-- <a class="wechart icon">&#xe60d;<span><img src="/wechart.png" title="扫码添加小胡子哥微信"/> </span></a> -->
+	<a class="hash-to-comments icon" title="我要评论">&#x2121;</a>
+</div>
+<div class="fixerr" tabindex="0" aria-hidden="true">纠错模式</div>
+
+</body>
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/socket.io.js"></script>
+<script>
+  window.onerror = function(e) {
+    window.console && window.console.log && window.console.log(e);
+    return true;
+  };
+</script>
+<script src="/public/js/aplayer.js"></script>
+<script src="/public/js/main.js?v=20160728"></script>
+</script>
+</html>

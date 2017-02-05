@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="UTF-8">
+  <title>多 SSH Key 管理技巧与 Git 多账户登录问题 | 小胡子哥的个人网站</title>
+  <meta name="HandheldFriendly" content="True" />
+  <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1,user-scalable=0">
+  <meta name="author" content="https://plus.google.com/112634278852964994392?hl=zh-cn">
+  <meta name="email" content="barret.china@gmail.com">
+  <meta name="description" content="对很多开发者，尤其是手握几台甚至几十台机器的同学而言，登录到远程机器处理事务应该是家常便饭。如果你也是其中一员，悄悄问一句，你平时是如何记住一堆帐号、机器地址以及一些附加登录选项的呢？或许你也是这么干的...">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="多 SSH Key 管理技巧与 Git 多账户登录问题 | 小胡子哥的个人网站">
+  <meta property="og:url" content="http://www.barretlee.com/blog/2016/03/09/config-in-ssh-after-troubling-git-connection/">
+  <meta property="og:site_name" content="多 SSH Key 管理技巧与 Git 多账户登录问题">
+  <meta property="og:description" content="对很多开发者，尤其是手握几台甚至几十台机器的同学而言，登录到远程机器处理事务应该是家常便饭。如果你也是其中一员，悄悄问一句，你平时是如何记住一堆帐号、机器地址以及一些附加登录选项的呢？或许你也是这么干的...">
+  <meta name="generator" content="https://hexo.io" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="renderer" content="webkit">
+  <link href="http://www.barretlee.com/blogimgs/app-icon.png" rel="apple-touch-icon-precomposed">
+  <link rel="shoticon" href="http://www.barretlee.com/favicon.ico" type="image/x-icon">
+  <link rel="alternate" type="application/rss+xml" href="http://www.barretlee.com/rss2.xml" title="小胡子哥的个人网站" />
+  <link rel="prev" href="http://www.barretlee.com/blog/2016/03/19/problem-debugging/" title="对系统链路问题排查的一些看法" />
+  <link rel="next" href="http://www.barretlee.com/blog/2016/03/05/steps-of-web-content-accessibility/" title="认识网页无障碍" />
+  <link rel="start" href="http://www.barretlee.com/entry/" title="Blog Entry" />
+  <link rel="stylesheet" href="/public/css/style.css?v=20160728">
+</head>
+<span class="aria-readonly" tabindex="0" aria-hidden="true">小胡子哥的博客良好支持读屏软件阅读，请放心使用。</span>
+
+
+<body>
+  <div class="rainbow"></div>
+  <div class="container">
+  <div class="article" itemscope itemtype="http://schema.org/Article">
+    <div class="post">
+      <div class="bread">
+        <a href="/">小胡子哥的个人博客</a> »
+        <a href="/entry/">博客</a> »
+        
+	<a class="category-link" href="/blog/categories/工具/">工具</a>,<a class="category-link" href="/blog/categories/工具/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/工具/前端杂烩/网络交互/">网络交互</a>
+
+
+      </div>
+      <div class="post-title-wrapper">
+        <h1 class="post-title" itemprop="name">多 SSH Key 管理技巧与 Git 多账户登录问题<img src="https://game.weixin.qq.com/cgi-bin/comm/qrcode?s=10&m=1&d=http:http://www.barretlee.com/blog/2016/03/09/config-in-ssh-after-troubling-git-connection/" alt="扫码分享" onerror="this.style.display='none';"></h1>
+        <a href="/about/"><img src="/blogimgs/avatar150.png" alt="小胡子哥" /></a>
+      </div>
+      <div class="post-info">
+        <span>作者: <a href="/about/" itemprop="author">小胡子哥</a></span>
+        <span>
+          <time itemprop="timeCreated" aria-hidden="true">2016-03-09 19:59:06</time>
+          <span class="aria-readonly">本文发布时间为2016年03月09日19时59分06秒</span>
+        </span>
+        <span>分类: 
+	<a class="category-link" href="/blog/categories/工具/">工具</a>,<a class="category-link" href="/blog/categories/工具/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/工具/前端杂烩/网络交互/">网络交互</a>
+
+</span>
+        <span tabindex="0" aria-hidden="true">标签: 
+<a class="article-tag-link" href="/blog/tags/GIT/">GIT</a>, <a class="article-tag-link" href="/blog/tags/SSH/">SSH</a>
+</span>
+        <span class="aria-readonly">下面是正文内容</span>
+        <span tabindex="0" aria-hidden="true">评论数: <a href="#comments"
+                      class="ds-thread-count hash-to-comments disqus-comment-count"
+                      data-thread-key="config-in-ssh-after-troubling-git-connection"
+                      data-disqus-identifier="config-in-ssh-after-troubling-git-connection"></a></span>
+        <span tabindex="0" aria-hidden="true" id="busuanzi_container_site_pv">热度: <span id="busuanzi_value_page_pv"></span></span>
+      </div>
+      <div class="post-content" itemprop="articleBody">
+        <div class="shit-spider" title="防爬虫不注明出处" tabindex="0" aria-hidden="true">
+          <p>原文地址：<a href="http://www.barretlee.com/blog/2016/03/09/config-in-ssh-after-troubling-git-connection/">http://www.barretlee.com/blog/2016/03/09/config-in-ssh-after-troubling-git-connection/</a>，<a href="http://www.barretlee.com/blog/2016/03/09/config-in-ssh-after-troubling-git-connection/#comments">参与评论</a></p>
+          <img src="//www.barretlee.com/blogimgs/avatar150.png">
+        </div>
+        <p>对很多开发者，尤其是手握几台甚至几十台机器的同学而言，登录到远程机器处理事务应该是家常便饭。如果你也是其中一员，悄悄问一句，你平时是如何记住一堆帐号、机器地址以及一些附加登录选项的呢？或许你也是这么干的：</p>
+<a id="more"></a>
+<p>倘若你有一个远程服务器，地址为 <code>test.server.com</code>, 防止人为攻击，你将 ssh 的端口号从 22 改成了 8892，当你需要登录到这台机器时，需要这么做：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">➜  ~ ssh YOURNAME@test.server.com -p 8892</div><div class="line">password: *******</div></pre></td></tr></table></figure>
+<p>尚好。如果你先前已经将已经注册了一个公钥/私钥对，并且正确的部署到了远程机器，你可以省却输入密码这个环节（推荐学习 <code>ssh-copy-id</code> 命令）。</p>
+<p>为了可以再懒一点，索性将这一串代码添加一个 alias：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">➜  ~ <span class="built_in">alias</span> <span class="built_in">test</span>=<span class="string">'ssh YOURNAME@test.server.com -p 8892'</span></div><div class="line">➜  ~ <span class="built_in">test</span></div></pre></td></tr></table></figure>
+<p>一条 <code>test</code> 命令即可让你登录到服务器，对于只有一两台远程机器的你，应该算是特别便捷了。</p>
+<h3 id="多-SSH-Key-的管理"><a href="#多-SSH-Key-的管理" class="headerlink" title="多 SSH Key 的管理"></a>多 SSH Key 的管理</h3><p>SSH 连接建立之前，会在系统中寻找它的配置，一般有两个位置。</p>
+<ul>
+<li><code>/etc/ssh/ssh_config</code> 这里是对所有用户适用的全局配置</li>
+<li><code>~/.ssh/config</code> 或者 <code>$HOME/.ssh/config</code> 这是用户的个人配置，这些配置会覆盖全局配置</li>
+</ul>
+<p>注意：一般来说，我们给 <code>~/.ssh</code> 文件夹赋予的权限为 <code>0700</code>。</p>
+<p>配置格式比较简单，以下配置等同于上面我们的登录命令设置：</p>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line">Host test</div><div class="line">  HostName test.server.com</div><div class="line">  <span class="keyword">User</span> <span class="title">YOURNAME</span></div><div class="line">  Port <span class="number">8892</span></div></pre></td></tr></table></figure>
+<p>可以是 <code>param value</code> 也可以为 <code>param=value</code>，其中 param 对大小写不敏感，value 对大小写敏感。</p>
+<p>使用 <code>ssh test</code> 即可完成登录，当我们有稍微麻烦点配置的时候，如数据库的 3306 端口对外不开放，可以开放另一个接口，然后内部跳转到 3306，使用命令行的写法是：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">ssh <span class="_">-f</span> -N -L 8999:127.0.0.1:3306 <span class="built_in">test</span>@database.server.com</div></pre></td></tr></table></figure>
+<p>大串的命令行，过多的参数，实在是有点不好记。而在 config 文件中的配置就一目了然：</p>
+<figure class="highlight css"><table><tr><td class="code"><pre><div class="line"><span class="selector-tag">Host</span> <span class="selector-tag">test</span></div><div class="line">  <span class="selector-tag">HostName</span> <span class="selector-tag">test</span><span class="selector-class">.server</span><span class="selector-class">.com</span></div><div class="line">  <span class="selector-tag">User</span> <span class="selector-tag">YOURNAME</span></div><div class="line">  <span class="selector-tag">LocalForward</span> 8999 127<span class="selector-class">.0</span><span class="selector-class">.0</span><span class="selector-class">.1</span><span class="selector-pseudo">:3306</span></div></pre></td></tr></table></figure>
+<p>当你有多台远程终端的时候，config 文件的优势就更加明显了：</p>
+<figure class="highlight crmsh"><table><tr><td class="code"><pre><div class="line"><span class="comment"># serverlist </span></div><div class="line">Host list</div><div class="line">  HostName *.serverlist.com</div><div class="line">  <span class="keyword">User</span> <span class="title">YOURNAME</span></div><div class="line">  IdentityFile ~/.ssh/serverlist.com.key</div><div class="line"></div><div class="line"><span class="comment"># personal server  </span></div><div class="line">Host personal</div><div class="line">  HostName proxy1.barretlee.com proxy2.barretlee.com</div><div class="line">  <span class="keyword">User</span> <span class="title">barretlee</span></div><div class="line">  IdentityFile ~/.ssh/proxy.barretlee.com.key</div><div class="line"></div><div class="line"><span class="comment"># school</span></div><div class="line">HostName <span class="number">222.20</span>.<span class="number">74.89</span></div><div class="line">  <span class="keyword">User</span> <span class="title">school</span></div><div class="line">  LocalForward <span class="number">8999</span> <span class="number">127.0</span>.<span class="number">0.1</span>:<span class="number">3306</span></div><div class="line">  IdentityFile ~/.ssh/school.key</div><div class="line"><span class="comment"># and so on.</span></div></pre></td></tr></table></figure>
+<p>这里常用的的 param 也不是很多：</p>
+<ul>
+<li><code>Host</code>，SSH 连接名</li>
+<li><code>HostName</code>，如上所示，可以是通配符，可以是 IP，也可以是域名等</li>
+<li><code>User</code>，登录的用户名</li>
+<li><code>IdentifyFile</code>，version 1 协议下默认是 <code>~/.ssh/identify</code>，version 2 协议下，默认是依次匹配：<code>~/.ssh/id_dsa</code>，<code>~/.ssh/id_ecdsa</code>，<code>~/.ssh/id_rsa</code>，还有 version 2 兼容模式。</li>
+<li><code>LocalForward</code> 端口的内部跳转</li>
+<li><code>Port</code>，端口设置，默认 SSH 的端口是 22</li>
+<li><code>Protocal</code>，协议版本号，1 或者 2</li>
+</ul>
+<h3 id="Git-多账户登录问题"><a href="#Git-多账户登录问题" class="headerlink" title="Git 多账户登录问题"></a>Git 多账户登录问题</h3><p>向仓库 push 代码之前，我们都会做一番设置，简单归纳为如下几步：</p>
+<ul>
+<li>注册获取用户名 barretlee</li>
+<li>创建仓库 <code>barretlee/test.git</code></li>
+<li>创建密钥，<code>ssh-keygen -t rsa -C &quot;barret.china@gmail.com&quot;</code></li>
+<li>将公钥 id_rsa.pub 填到 Git Server 上（如果没有可视化界面，还需要登录到 Server 命令行操作推送）</li>
+<li>本地通过 ssh-agent 将密钥添加到 session 中，<code>ssh-add id_rsa</code>，部分终端中还需要手动开启 ssh-agent</li>
+<li>然后测试连接，如 github 中， <code>ssh -T git@git.github.com</code></li>
+<li>看到了 ‘welcome barretlee…’ 的提示，开始 push 你的代码</li>
+</ul>
+<p>突然有一天，你又注册了一个帐号 xiaohuzige，也走了一遍上面的流程，发现死活也连接不上，服务器总是提示：<code>You have no permission to access this repo</code>，这是怎么回事呢？</p>
+<p>这个时候，你可以输入这个命令，看看是哪个环节出了问题：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">➜  ~ ssh -vT git@github.com</div><div class="line">OpenSSH_6.9p1, LibreSSL 2.1.7</div><div class="line">debug1: Reading configuration data /Users/barretlee/.ssh/config</div><div class="line">debug1: /Users/barretlee/.ssh/config line 2: Applying options <span class="keyword">for</span> *</div><div class="line">debug1: Reading configuration data /etc/ssh/ssh_config</div><div class="line">debug1: /etc/ssh/ssh_config line 20: Applying options <span class="keyword">for</span> *</div><div class="line">debug1: /etc/ssh/ssh_config line 102: Applying options <span class="keyword">for</span> *</div><div class="line">debug1: Connecting to github.com [192.30.252.128] port 22.</div><div class="line">debug1: Connection established.</div><div class="line">debug1: key_load_public: No such file or directory</div><div class="line">debug1: identity file /Users/barretlee/.ssh/id_rsa <span class="built_in">type</span> -1</div><div class="line">debug1: key_load_public: No such file or directory</div><div class="line">debug1: identity file /Users/barretlee/.ssh/id_rsa-cert <span class="built_in">type</span> -1</div><div class="line">debug1: key_load_public: No such file or directory</div><div class="line">debug1: identity file /Users/barretlee/.ssh/id_dsa <span class="built_in">type</span> -1</div><div class="line">debug1: key_load_public: No such file or directory</div><div class="line">debug1: identity file /Users/barretlee/.ssh/id_dsa-cert <span class="built_in">type</span> -1</div><div class="line">debug1: key_load_public: No such file or directory</div><div class="line">debug1: identity file /Users/barretlee/.ssh/id_ecdsa <span class="built_in">type</span> -1</div><div class="line">debug1: key_load_public: No such file or directory</div><div class="line">debug1: identity file /Users/barretlee/.ssh/id_ecdsa-cert <span class="built_in">type</span> -1</div><div class="line">debug1: key_load_public: No such file or directory</div><div class="line">debug1: identity file /Users/barretlee/.ssh/id_ed25519 <span class="built_in">type</span> -1</div><div class="line">debug1: key_load_public: No such file or directory</div><div class="line">debug1: identity file /Users/barretlee/.ssh/id_ed25519-cert <span class="built_in">type</span> -1</div><div class="line">debug1: Enabling compatibility mode <span class="keyword">for</span> protocol 2.0</div><div class="line">debug1: Local version string SSH-2.0-OpenSSH_6.9</div><div class="line">debug1: Remote protocol version 2.0, remote software version libssh-0.7.0</div><div class="line">debug1: no match: libssh-0.7.0</div><div class="line">debug1: Authenticating to github.com:22 as <span class="string">'git'</span></div><div class="line">debug1: SSH2_MSG_KEXINIT sent</div><div class="line">debug1: SSH2_MSG_KEXINIT received</div><div class="line">debug1: kex: server-&gt;client chacha20-poly1305@openssh.com &lt;implicit&gt; none</div><div class="line">debug1: kex: client-&gt;server chacha20-poly1305@openssh.com &lt;implicit&gt; none</div><div class="line">debug1: expecting SSH2_MSG_KEX_ECDH_REPLY</div><div class="line">debug1: Server host key: ssh-rsa SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8</div><div class="line">debug1: Host <span class="string">'github.com'</span> is known and matches the RSA host key.</div><div class="line">debug1: Found key <span class="keyword">in</span> /Users/barretlee/.ssh/known_hosts:4</div><div class="line">Warning: Permanently added the RSA host key <span class="keyword">for</span> IP address <span class="string">'192.30.252.128'</span> to the list of known hosts.</div><div class="line">debug1: SSH2_MSG_NEWKEYS sent</div><div class="line">debug1: expecting SSH2_MSG_NEWKEYS</div><div class="line">debug1: SSH2_MSG_NEWKEYS received</div><div class="line">debug1: Roaming not allowed by server</div><div class="line">debug1: SSH2_MSG_SERVICE_REQUEST sent</div><div class="line">debug1: SSH2_MSG_SERVICE_ACCEPT received</div><div class="line">debug1: Authentications that can <span class="built_in">continue</span>: publickey</div><div class="line">debug1: Next authentication method: publickey</div><div class="line">debug1: Trying private key: /Users/barretlee/.ssh/id_rsa</div><div class="line">debug1: Trying private key: /Users/barretlee/.ssh/id_dsa</div><div class="line">debug1: Trying private key: /Users/barretlee/.ssh/id_ecdsa</div><div class="line">debug1: Trying private key: /Users/barretlee/.ssh/id_ed25519</div><div class="line">debug1: No more authentication methods to try.</div><div class="line">Permission denied (publickey).</div></pre></td></tr></table></figure>
+<p>不加 v 参数，输出的内容很简洁：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">➜  ~ ssh -T git@github.com</div><div class="line">Warning: Permanently added the RSA host key <span class="keyword">for</span> IP address <span class="string">'192.30.252.129'</span> to the list of known hosts.</div><div class="line">Permission denied (publickey).</div></pre></td></tr></table></figure>
+<p>好吧，我知道你看不懂上面一长串的内容，也没心情看下去，但是你可以把焦点落到重复的那几段：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">debug1: ...</div><div class="line">debug1: xxx, No such file or directory</div><div class="line">debug1: ...</div><div class="line">debug1: Trying private key: /Users/barretlee/.ssh/xxx</div><div class="line">debug1: ...</div></pre></td></tr></table></figure>
+<p>之前我们提到了 Protocal Version 1 和 Version 2，不同的版本号，默认的私钥地址不一样，所以程序会不断去尝试寻找默认的地址，如果没找到，最后会提示，授权失败，禁止访问。</p>
+<p>我们可以在 push 代码之前，使用 ssh-agent 来管理私钥的 session，如：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">➜  ~ ssh-add .ssh/coding_barretlee</div><div class="line">Identity added: ~/.ssh/coding_barretlee (coding_barretlee)</div><div class="line">➜  ~ ssh-add .ssh/github_barretlee</div><div class="line">Identity added: ~/.ssh/github_barretlee (github_barretlee)</div></pre></td></tr></table></figure>
+<p>那么当程序寻找私钥的时候，就会优先到 ssh-agent 添加的 session 中寻找。session 的生命周期不是很长，当你重启电脑之后它就没了。如果你有遇到了 <code>Permission Denied</code> 的提示，请重新执行 ssh-add 命令。</p>
+<p>当你在某个 Git 服务器上有多个帐号的时候，可能某个帐号总是提示：<code>Permission Denied</code>。拿 <code>coding.net</code> 上来说，我有两个账户，一个是 barretlee，另一个是 taobaofed，由于先前我一直用的 barretlee 账户，后来者 taobaofed 的代码死活推不上去。反反复复地检查配置，反反复复地检查上传的公钥，反反复复地使用 <code>ssh -T git@git.coding.net</code> 测试，没看到哪里不对，然而 taobaofed 的代码就是推不上去，这是怎么回事呢？</p>
+<p>当然，上面 SSH 介绍了那么多，其简明易懂的配置在这里也是可以用上的：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment">### default for all ##</span></div><div class="line">Host *</div><div class="line">     ForwardAgent no</div><div class="line">     ForwardX11 no</div><div class="line">     ForwardX11Trusted yes</div><div class="line">     User nixcraft</div><div class="line">     Port 22</div><div class="line">     Protocol 2</div><div class="line">     ServerAliveInterval 60</div><div class="line">     ServerAliveCountMax 30</div><div class="line"></div><div class="line"><span class="comment">## barretlee coding ##</span></div><div class="line">Host coding-barretlee</div><div class="line">     HostName git.coding.net</div><div class="line">     User barretlee</div><div class="line">     IdentityFile ~/.ssh/coding_barretlee</div><div class="line"></div><div class="line"><span class="comment">## taobaofed coding ##</span></div><div class="line">Host coding-taobaofed</div><div class="line">     HostName git.coding.net</div><div class="line">     User taobaofed</div><div class="line">     IdentityFile ~/.ssh/coding_taobaofed</div></pre></td></tr></table></figure>
+<p>使用这种配置，我们可以避免使用 ssh-agent 添加 session 操作。可是，我就是按照上面的方式配置的呀，依然不行！</p>
+<p>这里的问题在于，我们的 User 项不正确，每次推送代码的时候，git 会读取上次的的 User 配置，而我的配置是 barretlee，那么下次提交代码的时候虽然 IdentityFile 用对了，但是 User 不是 taobaofed，所以死活也推不动代码。</p>
+<p>解决的方案很简单，如果在下载代码之前就已经设置好了两个帐号，你可以通过如下命令克隆代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">➜  ~ git <span class="built_in">clone</span> git@coding-taobaofed:taobaofed/blog.git</div></pre></td></tr></table></figure>
+<p>如果是在已有的仓库中，其默认 origin 配置会是：<code>//git.coding.net/taobaofed/blog.git</code> 或者 <code>git@git.coding.net:taobaofed/blog.git</code>，你可以将仓库下的 <code>.git/config</code> 文件修改下：</p>
+<figure class="highlight elixir"><table><tr><td class="code"><pre><div class="line">[remote <span class="string">"origin"</span>]</div><div class="line">  url = git<span class="variable">@coding</span>-<span class="symbol">taobaofed:</span>taobaofed/blog.git</div><div class="line">  fetch = +refs/heads/*<span class="symbol">:refs/remotes/origin/*</span></div></pre></td></tr></table></figure>
+<p>防止克隆其他仓库代码也出现问题，我们可以将 <code>~/.ssh/config</code> 稍加修改：</p>
+<figure class="highlight clean"><table><tr><td class="code"><pre><div class="line">## barretlee coding ##</div><div class="line">Host git.coding.net coding-barretlee</div><div class="line">     HostName git.coding.net</div><div class="line">     User barretlee</div><div class="line">     IdentityFile ~/.ssh/coding_barretlee</div><div class="line"></div><div class="line">## taobaofed coding ##</div><div class="line">Host coding-taobaofed</div><div class="line">     HostName git.coding.net</div><div class="line">     User taobaofed</div><div class="line">     IdentityFile ~/.ssh/coding_taobaofed</div></pre></td></tr></table></figure>
+<p>那么，通过正常的 clone（如<code>git clone git@git.coding.net:barretlee/blog.git</code>）就不会出现 <code>Permission Denied</code> 的提示了。</p>
+<p><strong>需要引起注意的一点：在寻找配置的时候，ssh 会优先查看 ssh-agent session 中的配置，然后才是 config 文件，如果你 ssh-add 添加过 key，建议执行如下操作：</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line">➜  ~ ssh-add -D <span class="comment"># 删除所有的 session</span></div></pre></td></tr></table></figure>
+<h3 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h3><p>撰写本文之前，我已经踩坑三小时，花了三个小时，摸索出来这么些东西，感觉以后妈妈再也不用担心我的 Git/SSH 的配置问题了。</p>
+<p>最主要的手段依然是通过 <code>ssh -vT</code> 查看 SSH 交互过程中出现了什么障碍，debug 信息还是很有考究价值的！</p>
+
+        <!--<p class="article-info">文/<a href="/about/"><img src="/avatar150.png">李靖</a>　微信公众号：barretlee_com</p><p class="this-page-link" aria-hidden="true">本文链接：<a href="http://www.barretlee.com/blog/2016/03/09/config-in-ssh-after-troubling-git-connection/">http://www.barretlee.com/blog/2016/03/09/config-in-ssh-after-troubling-git-connection/</a></p>
+        <p><a class="to-comments" href="http://www.barretlee.com/blog/2016/03/09/config-in-ssh-after-troubling-git-connection/#comments" aria-hidden="true">☞ 参与评论</a></p> -->
+      </div>
+    </div>
+    
+    <div class="share-article clearfix">
+      
+      <div class="ds-share" data-thread-key="config-in-ssh-after-troubling-git-connection" data-title="多 SSH Key 管理技巧与 Git 多账户登录问题" data-images="" data-content="对很多开发者，尤其是手握几台甚至几十台机器的同学而言，登录到远程机器处理事务应该是家常便饭。如果你也是其中一员，悄悄问一句，你平时是如何记住一堆帐号、机器地址以及一些附加登录选项的呢？或许你也是这么干的：" data-url="http://www.barretlee.com/blog/2016/03/09/config-in-ssh-after-troubling-git-connection/">
+        <div class="ds-share-inline" tabindex="0" aria-hidden="true">
+  <ul  class="ds-share-icons-16">
+    <li><a class="ds-more" href="javascript:void(0);" data-service="weibo">分享到：</a></li>
+    <li> <a class="ds-google" href="javascript:void(0);" data-service="google">Google+</a> </li>
+    <li> <a class="ds-weibo" href="javascript:void(0);" data-service="weibo">新浪微博</a> </li>
+    <li> <a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a> </li>
+  </ul>
+  <div class="ds-share-icons-more">
+  </div>
+</div>
+      </div>
+    </div>
+    <!-- <div class="secretCircle">
+  <a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank"><img src="/circle.jpg" alt="前端进阶小圈子"></a>
+  <p>嗯，我新建了一个「前端进阶」的小圈子。</p>
+  <p>最近找我提问的人数飙涨的厉害，精力有限没能都回复。建了一个圈子，这个圈子里可以提问，关于前端成长和进阶的话题，我会抽空回答，也会邀请一些前端朋友进来交流，问答会沉淀在圈子里。<b>付费圈子，时限一年。</b></p>
+  <p><a href="https://wx.xiaomiquan.com/mweb/views/joingroup/join_group.html?group_id=4512888248&secret=pqswxhb8fni6t9imw1j9ewb77hv5ks70&extra=afbdcd6a4cee551edc3b9a2cff7cedb2410e735bd4119ff43bd8975088283608" target="_blank">在这里</a>，你可以：</p>
+  <ul>
+    <li>✅ 提出你在前端学习中的疑问，</li>
+    <li>✅ 谈谈你学习的方法和经验，</li>
+    <li>✅ 了解前端，深入前端</li>
+  </ul>
+  <p>在这里，更加注重方法论的交流。</p>
+  <strong>付费圈子，时限一年</strong>
+</div>
+ -->
+    <!-- <div class="follow-wechat"><img src="/follow.jpg"></div> -->
+
+<div class="copyright" itemscope itemtype="http://schema.org/ProfilePage" tabindex="0" aria-hidden="true">
+	<!-- <a href="/about/#support" class="supportme">赏</a> -->
+	<ul>
+		<li>作者:  <a href="/about/" itemprop="name">小胡子哥 (Barret Lee)</a></li>
+		<li>发表日期:  2016-03-09 19:59:06</li>
+		<li>文章分类: 
+	<a class="category-link" href="/blog/categories/工具/">工具</a>,<a class="category-link" href="/blog/categories/工具/前端杂烩/">前端杂烩</a>,<a class="category-link" href="/blog/categories/工具/前端杂烩/网络交互/">网络交互</a>
+
+</li>
+		<li>文章标签: 
+<a class="article-tag-link" href="/blog/tags/GIT/">GIT</a>, <a class="article-tag-link" href="/blog/tags/SSH/">SSH</a>
+</li>
+		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
+		<li>最后编辑时间: 2016-07-26 10:23:14</li>
+		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
+	</ul>
+	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
+</div>
+
+    <em class="arrow-expend icon" tabindex="0" aria-hidden="true">&#xe618;
+      <ul>
+        <li><a href="/entry/">博客</a></li>
+        <li><a href="/message/">问答</a></li>
+        <li><a href="/about/">关于</a></li>
+        <li><a href="/demo/">实验室</a></li>
+        <li><a href="/comments/">最近评论</a></li>
+        <li><a href="/friends/">友情链接</a></li>
+      </ul>
+    </em>
+  </div>
+  <div class="post-relative">
+<div class="page-relative">
+  
+    <a href="/blog/2016/03/19/problem-debugging/" class="post-prev">
+      <i class="icon" tabindex="0" aria-hidden="true">&#x261c;</i>
+      <span class="aria-readonly">上一篇文章</span>
+      
+        <b>对系统链路问题排查的一些看法</b>
+      
+    </a>
+  
+  
+    <a href="/blog/2016/03/05/steps-of-web-content-accessibility/" class="post-next">
+      <span class="aria-readonly">下一篇文章</span>
+      <b>认识网页无障碍</b>
+      <i class="icon" tabindex="0" aria-hidden="true">&#xe602;</i>
+    </a>
+  
+</div>
+
+
+<div class="page-relative-fixed" tabindex="0" aria-hidden="true">
+  
+  <a href="/blog/2016/03/19/problem-debugging/" class="prev" title="对系统链路问题排查的一些看法">
+    <i class="icon">&#xe600;</i>
+    
+    <b>对系统链路问题排查的一些看法</b>
+    
+  </a>
+  
+  
+  <a href="/blog/2016/03/05/steps-of-web-content-accessibility/" class="next" title="认识网页无障碍">
+    <i class="icon">&#x261e;</i>
+    <b>认识网页无障碍</b>
+  </a>
+  
+</div>
+</div>
+</div>
+<div class="sidebar" tabindex="0" aria-hidden="true">
+	<div class="func-btns func-btns-up">
+    <span class="func-item">
+        <i class="func-nav icon">&#xe618;<span>目录</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="javascript:void(0);" onclick="return false;">显示目录</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-font icon">&#xe604;<span>设置</span></i>
+        <div class="font-choose-box">
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <div class="font-choose bg-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-sun font-type-song"><i class="icon">&#xe61a;</i></a>
+            <a href="javascript:void(0)" onclick="return false;" class="bg-type bg-type-moon font-type-hei"><i class="icon">&#xe619;</i></a>
+          </div>
+          <div class="font-choose">
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-song">黑体</a>
+            <a href="javascript:void(0)" onclick="return false;" class="font-type font-type-hei">宋体</a>
+          </div>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="http://weibo.com/173248656" target="_blank"><i class="func-fb icon">博<span>分享</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator sharecanvas"><a href="javascript: void(0);">截屏分享</a></p>
+          <p><a href="http://weibo.com/173248656" target="_blank">微博关注</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-about icon">&#x263b;<span>关于</span></i>
+        <div>
+          <i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p><a href="/about/" class="func-about-link" target="_blank">关于作者</a></p>
+          <div id="followMeOnWeibo"></div>
+        </div>
+    </span>
+	</div>
+	<div class="func-btns">
+    <span class="func-item">
+        <a href="http://demo.barretlee.com" target="_blank"><i class="func-rss icon">&#xe603;<span>实验</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="http://demo.barretlee.com" target="_blank">Demo平台</a></p>
+          <p><a href="http://snippets.barretlee.com" target="_blank">Snippet应用</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <i class="func-fb icon">&#x2121;<span>留言</span></i>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <p class="seperator"><a href="/message/" target="_blank">给我留言</a></p>
+          <p><a href="/comments/" target="_blank">近期留言</a></p>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/friends/" target="_blank"><i class="func-rss icon">&#xe601;<span>友链</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i>
+          <a href="/friends/" target="_blank">友情链接</a>
+        </div>
+    </span>
+    <span class="func-item">
+        <a href="/rss2.xml" target="_blank"><i class="func-rss icon">&#x25c8;<span>订阅</span></i></a>
+        <div><i class="left-arrow"></i><i class="left-arrow-clone"></i><a href="/rss2.xml" target="_blank">订阅我吧！</a></div>
+    </span>
+	</div>
+</div>
+
+<div class="single-page-footer">
+<div class="footer">
+	<div class="footer-wraper">
+		<div class="footer-content">
+			<div class="footer-nav">
+	<a href="javascript: void(0);" class="ds-thread-count disqus-comment-count"
+	   data-thread-key="config-in-ssh-after-troubling-git-connection"
+	   data-disqus-identifier="config-in-ssh-after-troubling-git-connection" tabindex="0" aria-hidden="true">评论内容</a>
+	<a href="javascript: void(0);" id="comments">相关文章</a>
+	<a href="/friends/" tabindex="0" aria-hidden="true">友情链接</a>
+</div>
+<div class="nav-detail">
+	<div tabindex="0" aria-hidden="true">
+		
+
+
+
+<div class="ds-thread" tabindex="0" aria-hidden="true" data-thread-key="config-in-ssh-after-troubling-git-connection" data-title="多 SSH Key 管理技巧与 Git 多账户登录问题" data-url="http://www.barretlee.com/blog/2016/03/09/config-in-ssh-after-troubling-git-connection/" data-name="barretlee">
+	<div class="ds-loading">
+		<img src="/blogimgs/loading.gif" alt="loading..."/>
+		<p>这网速真是弱爆了...客官稍等,评论还在加载~</p>
+	</div>
+</div>
+
+
+
+
+
+	</div>
+	<div style="display:block;">
+		<div class="relative-to-comment" tabindex="0" aria-hidden="true"><span>（点击评论）</span>古今多少事，都付笑谈中！</div>
+		<div class="relative-wrapper">
+	<div class="relative-article">
+		
+		<ul>
+			<li>
+				<span><font aria-hidden="true">2016-12-26 »</font> </span>
+				<a href="/blog/2016/12/26/how-to-design-webhook/">如何设计友好的 WebHook</a>
+				<span class="aria-readonly">发表时间为2016年12月26日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/12/26/how-to-design-webhook/" class="relative-img-wrapper" style="background-image:url(http://img.alicdn.com/tfs/TB19mqDOVXXXXceapXXXXXXXXXX-580-283.png);"></a>
+          <span class="aria-readonly">文章概要 </span>在一些工具流的设计中，经常遇到一个体验非常不好的情况：每次都需要采用长轮询或者隔一段时间再尝试的方式获取结果。其原因可能有两个：调用方（Client）没有一个稳定的在线服务，Server 无法主动联系 ClientServer 并没有考虑主动 Push 消息
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-04 »</font> </span>
+				<a href="/blog/2016/08/04/funning-gitlog/">有意思的 git-log</a>
+				<span class="aria-readonly">发表时间为2016年08月04日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/04/funning-gitlog/" class="relative-img-wrapper" style="background-image:url(//ww4.sinaimg.cn/large/6c0378f8gw1f6imxm25vtj21kw16p7wh.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>之前写过几篇 git 相关的文章，内容很基础，git版本回退操作git切换到远程分支git版本管理策略及相关技巧(A)但发现最近被搜索引擎检索的量还比较大，最近正好在阅读 git 相关的资料，准备将不错的几个点，详细地说一说，记录下来写出来分享给大家。今天要说的便是常用的 git log 命令。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-08-03 »</font> </span>
+				<a href="/blog/2016/08/03/shadowsocks/">Shadowsocks 原理简介及安装指南</a>
+				<span class="aria-readonly">发表时间为2016年08月03日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/08/03/shadowsocks/" class="relative-img-wrapper" style="background-image:url(http://ww2.sinaimg.cn/large/6c0378f8gw1f6gx28ymtqj20p00dwdg3.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>对 Shadowsocks 早有耳闻，当时我还在用 HTTP 代理、VPN 服务等翻墙，感觉它是个比较高大上的东西，也一直没有碰它。最近 GreenVPN 抽风，Mac 一直连接不上，害得我折腾了很久，最后还是买了一台国外的 VPS，于是开始折腾起 Shadowsocks，部署之前，对它做了一个简单的了解，下面先介绍下。
+        </div>
+			</li>
+			
+			<li>
+				<span><font aria-hidden="true">2016-07-14 »</font> </span>
+				<a href="/blog/2016/07/14/codes-in-wechat/">在公众号中优雅地呈现代码</a>
+				<span class="aria-readonly">发表时间为2016年07月14日</span>
+				<div class="relative-box">
+          <a href="/blog/2016/07/14/codes-in-wechat/" class="relative-img-wrapper" style="background-image:url(//ww1.sinaimg.cn/large/6c0378f8gw1f5spwap82oj20p00dwacl.jpg);"></a>
+          <span class="aria-readonly">文章概要 </span>这几天有不少朋友在我的微信公众号留言，问我是如何在公众号页面中整齐摆放代码的，今天就分享下我的方法，事实上我也折腾了好一会儿。
+        </div>
+			</li>
+			
+		</ul>
+	</div>
+</div>
+
+		<a href="/entry/" class="relative-to-comment-wrapper" tabindex="0" aria-hidden="true"><div class="relative-to-comment">回到首页</div></a>
+	</div>
+	<div class="friends-box">
+		<ul>
+			
+			<li><a href="http://hustskyking.cnblogs.com" target="_blank">旧博客</a> <font aria-hidden="true">»</font> <span>我的旧博客（博客园荣誉博客）</span></li>
+			
+			<li><a href="http://www.zhangmengxue.com" target="_blank">大额</a> <font aria-hidden="true">»</font> <span>大额大额哼歌等日落</span></li>
+			
+			<li><a href="http://www.zhangxinxu.com" target="_blank">张鑫旭</a> <font aria-hidden="true">»</font> <span>原来大学我俩一个团队的~</span></li>
+			
+			<li><a href="http://web-tinker.com" target="_blank">次碳酸钴</a> <font aria-hidden="true">»</font> <span>深度交流的一个好朋友</span></li>
+			
+			<li><a href="http://imququ.com" target="_blank">屈屈</a> <font aria-hidden="true">»</font> <span>好吧，蛐蛐同学</span></li>
+			
+			<li><a href="http://www.ruanyifeng.com" target="_blank">阮一峰</a> <font aria-hidden="true">»</font> <span>阮老师,哈哈,第一次设计博客就是抄的你的样式</span></li>
+			
+			<li><a href="http://annn.me" target="_blank">安记</a> <font aria-hidden="true">»</font> <span>阿安同学</span></li>
+			
+			<li><a href="http://mouto.org/" target="_blank">卜卜口</a> <font aria-hidden="true">»</font> <span>二次元化身</span></li>
+			
+			<li><a href="/friends/">更多列表 <font aria-hidden="true">»</font></a></li>
+		</ul>
+	</div>
+</div>
+			<div class="website-info" aria-hidden="true">
+	<span>&copy;2013-2017 <small><a href="http://www.miitbeian.gov.cn/" about="_blank">湘ICP备14007107号-1</a></small></span>
+	本站由 <a href="/">小胡子哥</a> 纯手工打造 | <a href="/about#contact">联系方式</a> | 总热度：<em id="busuanzi_value_site_pv"></em>
+</div>
+
+		</div>
+	</div>
+</div>
+</div>
+<div class="tools-wrapper" tabindex="0" aria-hidden="true">
+	<a class="gotop icon" href="#" title="回到顶部">&#x2191;</a>
+	<!-- <a class="wechart icon">&#xe60d;<span><img src="/wechart.png" title="扫码添加小胡子哥微信"/> </span></a> -->
+	<a class="hash-to-comments icon" title="我要评论">&#x2121;</a>
+</div>
+<div class="fixerr" tabindex="0" aria-hidden="true">纠错模式</div>
+
+</body>
+<script src="/public/js/jquery.js"></script>
+<script src="/public/js/socket.io.js"></script>
+<script>
+  window.onerror = function(e) {
+    window.console && window.console.log && window.console.log(e);
+    return true;
+  };
+</script>
+<script src="/public/js/aplayer.js"></script>
+<script src="/public/js/main.js?v=20160728"></script>
+</script>
+</html>

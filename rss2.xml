@@ -1,0 +1,435 @@
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/css" href="/public/css/rss.css" ?>
+<rss version="2.0"
+  xmlns:atom="http://www.w3.org/2005/Atom"
+  xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title><![CDATA[小胡子哥的个人网站]]></title>
+    <link>http://www.barretlee.com/</link>
+    <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
+    <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
+    <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
+    <pubDate>Sat Feb 04 2017 18:44:13 GMT+0800 (CST)</pubDate>
+    <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[聊聊设计模式（2）：享元模式]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/</guid>
+      <pubDate>Sat Feb 04 2017 18:31:44 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[如何理解享元模式，“享”是共享的意思，“元”指的是元件，也就是小颗粒的东西，享元顾名思义便是共享小部件，很多系统或者程序包含大量对象，但是这些对象绝大多数都是差不多的，除了一些极个别的属性外。]]>
+      
+      </description>
+      <content:encoded><![CDATA[如何理解享元模式，“享”是共享的意思，“元”指的是元件，也就是小颗粒的东西，享元顾名思义便是共享小部件，很多系统或者程序包含大量对象，但是这些对象绝大多数都是差不多的，除了一些极个别的属性外。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/04/the-flyweight-pattern-in-design-patterns/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[聊聊设计模式（1）：桥接模式]]></title>
+      <link>http://www.barretlee.com/blog/2017/01/16/the-bridge-pattern-in-design-patterns/</link>
+      <guid>http://www.barretlee.com/blog/2017/01/16/the-bridge-pattern-in-design-patterns/</guid>
+      <pubDate>Mon Jan 16 2017 20:57:09 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[桥接模式（Bridge Pattern），也有很多地方称之为桥连模式，不管怎么叫，记得有个桥（bridge）就行了，重点要理解这个「桥」是如何连接的，什么场景下需要使用桥接模式。]]>
+      
+      </description>
+      <content:encoded><![CDATA[桥接模式（Bridge Pattern），也有很多地方称之为桥连模式，不管怎么叫，记得有个桥（bridge）就行了，重点要理解这个「桥」是如何连接的，什么场景下需要使用桥接模式。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/01/16/the-bridge-pattern-in-design-patterns/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[如何设计友好的 WebHook]]></title>
+      <link>http://www.barretlee.com/blog/2016/12/26/how-to-design-webhook/</link>
+      <guid>http://www.barretlee.com/blog/2016/12/26/how-to-design-webhook/</guid>
+      <pubDate>Mon Dec 26 2016 12:39:59 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[随着应用的复杂度提升，系统解耦变得越来越重要，WebHook 作为一种通用的交互方案，在设计上多留一个心眼，十分有意义！]]>
+      
+      </description>
+      <content:encoded><![CDATA[随着应用的复杂度提升，系统解耦变得越来越重要，WebHook 作为一种通用的交互方案，在设计上多留一个心眼，十分有意义！]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/12/26/how-to-design-webhook/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[Nginx 配置简述]]></title>
+      <link>http://www.barretlee.com/blog/2016/11/19/nginx-configuration-start/</link>
+      <guid>http://www.barretlee.com/blog/2016/11/19/nginx-configuration-start/</guid>
+      <pubDate>Sat Nov 19 2016 23:51:46 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[不论是本地开发，还是远程到 Server 开发，还是给提供 demo 给人看效果，我们时常需要对 Nginx 做配置，Nginx 的配置项相当多，配置起来也比较麻烦。不过，我们往往只是需要一个静态 Server，或者一个反向代理 Server，这对 Nginx 来说小菜一碟。]]>
+      
+      </description>
+      <content:encoded><![CDATA[不论是本地开发，还是远程到 Server 开发，还是给提供 demo 给人看效果，我们时常需要对 Nginx 做配置，Nginx 的配置项相当多，配置起来也比较麻烦。不过，我们往往只是需要一个静态 Server，或者一个反向代理 Server，这对 Nginx 来说小菜一碟。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/11/19/nginx-configuration-start/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[谈一谈我在阿里的成长]]></title>
+      <link>http://www.barretlee.com/blog/2016/10/21/my-growth-at-alibaba/</link>
+      <guid>http://www.barretlee.com/blog/2016/10/21/my-growth-at-alibaba/</guid>
+      <pubDate>Fri Oct 21 2016 03:22:50 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[昨天受阿里通信的同事邀请，分享了一个关于成长的话题。其实我不太热衷于分享此类话题，作为一个技术人，分享那些没有技术干货的内容总感觉有些怪怪的，无奈，还是拟下了这个话题——《谈一谈我在阿里的成长》，所以本文主要是分享的 PPT 简述。]]>
+      
+      </description>
+      <content:encoded><![CDATA[昨天受阿里通信的同事邀请，分享了一个关于成长的话题。其实我不太热衷于分享此类话题，作为一个技术人，分享那些没有技术干货的内容总感觉有些怪怪的，无奈，还是拟下了这个话题——《谈一谈我在阿里的成长》，所以本文主要是分享的 PPT 简述。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/10/21/my-growth-at-alibaba/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[揭秘 0.1 + 0.2 != 0.3]]></title>
+      <link>http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/</link>
+      <guid>http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/</guid>
+      <pubDate>Wed Sep 28 2016 23:05:23 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[在采用 IEEE754 浮点数标准的语言中，0.1 + 0.2 都不会等于 0.3，但是 0.2 + 0.3 却等于 0.5，这是为何？想必这类问题也困扰着不少程序员。]]>
+      
+      </description>
+      <content:encoded><![CDATA[在采用 IEEE754 浮点数标准的语言中，0.1 + 0.2 都不会等于 0.3，但是 0.2 + 0.3 却等于 0.5，这是为何？想必这类问题也困扰着不少程序员。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/09/28/ieee754-operation-in-js/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[如何做好一名实习生]]></title>
+      <link>http://www.barretlee.com/blog/2016/09/27/how-to-be-a-excellent-intern/</link>
+      <guid>http://www.barretlee.com/blog/2016/09/27/how-to-be-a-excellent-intern/</guid>
+      <pubDate>Tue Sep 27 2016 00:59:23 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[最近看到有几个同事准备着转正，想借此机会聊一下实习生相关的话题——如何成为一名优秀的实习生。]]>
+      
+      </description>
+      <content:encoded><![CDATA[最近看到有几个同事准备着转正，想借此机会聊一下实习生相关的话题——如何成为一名优秀的实习生。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/09/27/how-to-be-a-excellent-intern/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[详解代理自动配置 PAC]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/25/pac-file/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/25/pac-file/</guid>
+      <pubDate>Thu Aug 25 2016 01:31:50 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[PAC，一个自动代理配置脚本，包含了很多使用 JavaScript 编写的规则，它能够决定网络流量走默认通道还是代理服务器通道，控制的流量类型包括：HTTP、HTTPS 和 FTP。]]>
+      
+      </description>
+      <content:encoded><![CDATA[PAC，一个自动代理配置脚本，包含了很多使用 JavaScript 编写的规则，它能够决定网络流量走默认通道还是代理服务器通道，控制的流量类型包括：HTTP、HTTPS 和 FTP。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/25/pac-file/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[构建一个安全的 JavaScript 沙箱]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/</guid>
+      <pubDate>Tue Aug 23 2016 01:05:13 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[灵活是 Javascript 这门语言的特性，也是它难以被掌控的主要原因，这点可以从文中各种沙箱逃逸方式就能看出。ES6 提供了很多新的特性，本文以沙箱为切入点，带着大家学习了几个函数和属性，希望读者有些收获。]]>
+      
+      </description>
+      <content:encoded><![CDATA[灵活是 Javascript 这门语言的特性，也是它难以被掌控的主要原因，这点可以从文中各种沙箱逃逸方式就能看出。ES6 提供了很多新的特性，本文以沙箱为切入点，带着大家学习了几个函数和属性，希望读者有些收获。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/23/javascript-sandbox/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[聊一聊排序算法]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/11/algorithms-of-sort/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/11/algorithms-of-sort/</guid>
+      <pubDate>Thu Aug 11 2016 20:24:40 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[两月前花了些时间，将大学里学过的排序算法都复习了一遍，代码放在 github 上。没有整理，今天翻了翻代码，重新 review 了一遍，也顺便做了点记录。]]>
+      
+      </description>
+      <content:encoded><![CDATA[两月前花了些时间，将大学里学过的排序算法都复习了一遍，代码放在 github 上。没有整理，今天翻了翻代码，重新 review 了一遍，也顺便做了点记录。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/11/algorithms-of-sort/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[有意思的 git-log]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/04/funning-gitlog/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/04/funning-gitlog/</guid>
+      <pubDate>Thu Aug 04 2016 22:54:09 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[之前写过几篇 git 相关的文章，内容很基础，但发现最近被搜索引擎检索的量还比较大，最近正好在阅读 git 相关的资料，准备将不错的几个点，详细地说一说，记录下来写出来分享给大家。今天要说的便是常用的 `git log` 命令。]]>
+      
+      </description>
+      <content:encoded><![CDATA[之前写过几篇 git 相关的文章，内容很基础，但发现最近被搜索引擎检索的量还比较大，最近正好在阅读 git 相关的资料，准备将不错的几个点，详细地说一说，记录下来写出来分享给大家。今天要说的便是常用的 `git log` 命令。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/04/funning-gitlog/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[Shadowsocks 原理简介及安装指南]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/03/shadowsocks/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/03/shadowsocks/</guid>
+      <pubDate>Wed Aug 03 2016 21:08:40 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[对 Shadowsocks 早有耳闻，当时我还在用 HTTP 代理、VPN 服务等翻墙，感觉它是个比较高大上的东西，也一直没有碰它。最近 GreenVPN 抽风，Mac 一直连接不上，害得我折腾了很久，最后还是买了一台国外的 VPS，于是开始折腾起 Shadowsocks，部署之前，对它做了一个简单的了解，下面先介绍下。]]>
+      
+      </description>
+      <content:encoded><![CDATA[对 Shadowsocks 早有耳闻，当时我还在用 HTTP 代理、VPN 服务等翻墙，感觉它是个比较高大上的东西，也一直没有碰它。最近 GreenVPN 抽风，Mac 一直连接不上，害得我折腾了很久，最后还是买了一台国外的 VPS，于是开始折腾起 Shadowsocks，部署之前，对它做了一个简单的了解，下面先介绍下。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/03/shadowsocks/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[入 linode 之前]]></title>
+      <link>http://www.barretlee.com/blog/2016/08/02/before-purchase-linode/</link>
+      <guid>http://www.barretlee.com/blog/2016/08/02/before-purchase-linode/</guid>
+      <pubDate>Tue Aug 02 2016 01:02:30 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[之前购买的 GreenVPN 最近死活越不了墙，在阿里云上尝试用 wget 下载资源，貌似能够连接上。于是尝试在阿里云上配置 shadowsocks，配置时提示需要使用 pip，而使用 pip 就得升级 Python(≥2.6)，折腾了一番，升级了 Python 也安装了 pip，最后却发现下载速度奇慢。]]>
+      
+      </description>
+      <content:encoded><![CDATA[之前购买的 GreenVPN 最近死活越不了墙，在阿里云上尝试用 wget 下载资源，貌似能够连接上。于是尝试在阿里云上配置 shadowsocks，配置时提示需要使用 pip，而使用 pip 就得升级 Python(≥2.6)，折腾了一番，升级了 Python 也安装了 pip，最后却发现下载速度奇慢。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/08/02/before-purchase-linode/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[工作五年，后面四年重复着第一年的活儿？]]></title>
+      <link>http://www.barretlee.com/blog/2016/07/21/donnot-repeat-yourself/</link>
+      <guid>http://www.barretlee.com/blog/2016/07/21/donnot-repeat-yourself/</guid>
+      <pubDate>Thu Jul 21 2016 22:29:37 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[当我们沉浸在旺盛的需求之中时，整个人便会成为一台工作的机器，切着类似的页面，写着同样的逻辑，重复着昨天或者上个月做的事情，时间久了，觉得腻味，没有什么创新，也没有明显的成长。用一句通俗的话来讲：工作五年，后面四年重复着第一年的活儿。]]>
+      
+      </description>
+      <content:encoded><![CDATA[当我们沉浸在旺盛的需求之中时，整个人便会成为一台工作的机器，切着类似的页面，写着同样的逻辑，重复着昨天或者上个月做的事情，时间久了，觉得腻味，没有什么创新，也没有明显的成长。用一句通俗的话来讲：工作五年，后面四年重复着第一年的活儿。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/07/21/donnot-repeat-yourself/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[向小胡子哥提问]]></title>
+      <link>http://www.barretlee.com/blog/2016/07/14/question-and-answer/</link>
+      <guid>http://www.barretlee.com/blog/2016/07/14/question-and-answer/</guid>
+      <pubDate>Thu Jul 14 2016 09:56:09 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[欢迎向小胡子哥提问，由于个人精力有限，并不是每一个问题都会去回答。但是你可以这么做。]]>
+      
+      </description>
+      <content:encoded><![CDATA[欢迎向小胡子哥提问，由于个人精力有限，并不是每一个问题都会去回答。但是你可以这么做。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/07/14/question-and-answer/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[在公众号中优雅地呈现代码]]></title>
+      <link>http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/</link>
+      <guid>http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/</guid>
+      <pubDate>Thu Jul 14 2016 00:00:01 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[这几天有不少朋友在我的微信公众号留言，问我是如何在公众号页面中整齐摆放代码的，今天就分享下我的方法，事实上我也折腾了好一会儿。]]>
+      
+      </description>
+      <content:encoded><![CDATA[这几天有不少朋友在我的微信公众号留言，问我是如何在公众号页面中整齐摆放代码的，今天就分享下我的方法，事实上我也折腾了好一会儿。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/07/14/codes-in-wechat/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[我需要学习 ECMAScript 6 么？]]></title>
+      <link>http://www.barretlee.com/blog/2016/07/13/why-i-learning-es6/</link>
+      <guid>http://www.barretlee.com/blog/2016/07/13/why-i-learning-es6/</guid>
+      <pubDate>Wed Jul 13 2016 00:15:49 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[前几天翻译了一篇 ECMAScript 6 的入门文章，看到几则评论说 JavaScript 越来越像 Java 了，我暗暗地笑了笑。也有同学很疑惑是否有必要学习 ES6，使用 TypeScript 的同学也有类似的疑惑。]]>
+      
+      </description>
+      <content:encoded><![CDATA[前几天翻译了一篇 ECMAScript 6 的入门文章，看到几则评论说 JavaScript 越来越像 Java 了，我暗暗地笑了笑。也有同学很疑惑是否有必要学习 ES6，使用 TypeScript 的同学也有类似的疑惑。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/07/13/why-i-learning-es6/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[谈谈我这三年在技术上的成长]]></title>
+      <link>http://www.barretlee.com/blog/2016/07/11/learning-recent-years/</link>
+      <guid>http://www.barretlee.com/blog/2016/07/11/learning-recent-years/</guid>
+      <pubDate>Mon Jul 11 2016 02:29:35 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[前些时候把微信 id 开放了出去，有很多朋友加我微信，其中大部分都是前端学习者。一些同学在学习的时候遇到了困难，或者说瓶颈吧，询问我处理办法，有的希望我讲述下学习经验。考虑到有些话题偏大，我没有详细回复，事实上我也不知道从何说起，今天思量了一番，记录下来。]]>
+      
+      </description>
+      <content:encoded><![CDATA[前些时候把微信 id 开放了出去，有很多朋友加我微信，其中大部分都是前端学习者。一些同学在学习的时候遇到了困难，或者说瓶颈吧，询问我处理办法，有的希望我讲述下学习经验。考虑到有些话题偏大，我没有详细回复，事实上我也不知道从何说起，今天思量了一番，记录下来。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/07/11/learning-recent-years/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[ECMAScript 6 扫盲]]></title>
+      <link>http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/</link>
+      <guid>http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/</guid>
+      <pubDate>Sat Jul 09 2016 14:30:40 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[ECMAScript 6 目前基本成为业界标准，它的普及速度比 ES5 要快很多，主要原因是现代浏览器对 ES6 的支持相当迅速，尤其是 Chrome 和 Firefox 浏览器，已经支持 ES6 中绝大多数的特性。]]>
+      
+      </description>
+      <content:encoded><![CDATA[ECMAScript 6 目前基本成为业界标准，它的普及速度比 ES5 要快很多，主要原因是现代浏览器对 ES6 的支持相当迅速，尤其是 Chrome 和 Firefox 浏览器，已经支持 ES6 中绝大多数的特性。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[招行香港一卡通办理和使用]]></title>
+      <link>http://www.barretlee.com/blog/2016/07/07/hongkong-cmbchina/</link>
+      <guid>http://www.barretlee.com/blog/2016/07/07/hongkong-cmbchina/</guid>
+      <pubDate>Thu Jul 07 2016 19:44:39 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[最近办了一张招行香港一卡通，流程比较长，遇到的问题也很多，趁着自己还记得比较清楚，写下来备忘。]]>
+      
+      </description>
+      <content:encoded><![CDATA[最近办了一张招行香港一卡通，流程比较长，遇到的问题也很多，趁着自己还记得比较清楚，写下来备忘。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/07/07/hongkong-cmbchina/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[谈一谈越来越难做的前端]]></title>
+      <link>http://www.barretlee.com/blog/2016/06/13/talk-about-front-end/</link>
+      <guid>http://www.barretlee.com/blog/2016/06/13/talk-about-front-end/</guid>
+      <pubDate>Mon Jun 13 2016 00:10:34 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[我接触前端的时间不长也不短，13 年入门，14 年初在百度实习，14 中正式参加工作，掐指一算 4 年整。然而这四年间前端的变化已经让很多人摸不着头脑。]]>
+      
+      </description>
+      <content:encoded><![CDATA[我接触前端的时间不长也不短，13 年入门，14 年初在百度实习，14 中正式参加工作，掐指一算 4 年整。然而这四年间前端的变化已经让很多人摸不着头脑。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/06/13/talk-about-front-end/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[聊一聊淘宝首页和它背后的一套]]></title>
+      <link>http://www.barretlee.com/blog/2016/06/02/thing-about-taobao-homepage/</link>
+      <guid>http://www.barretlee.com/blog/2016/06/02/thing-about-taobao-homepage/</guid>
+      <pubDate>Thu Jun 02 2016 12:00:00 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[从 14 年双十二结束开始接手淘宝首页，到如今差不多 1 年半时间，不久前完成了首页相关工作的交接。期间经历了两次改版和一次从 PHP 到 Node 的迁移，还是颇有感受，下面给大家分享下。]]>
+      
+      </description>
+      <content:encoded><![CDATA[从 14 年双十二结束开始接手淘宝首页，到如今差不多 1 年半时间，不久前完成了首页相关工作的交接。期间经历了两次改版和一次从 PHP 到 Node 的迁移，还是颇有感受，下面给大家分享下。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/06/02/thing-about-taobao-homepage/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[H5 Crash 研究]]></title>
+      <link>http://www.barretlee.com/blog/2016/05/30/h5-crash-research/</link>
+      <guid>http://www.barretlee.com/blog/2016/05/30/h5-crash-research/</guid>
+      <pubDate>Mon May 30 2016 00:30:12 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[我们知道，支撑页面在 webview 上良好运转的前提是具备一个高效并且稳定的 webview 容器，而容器的高效稳定不仅仅由容器提供方来保障，也需要容器使用者遵守一些基本准则，否则就有可能出现页面 Crash 的情况，这些准则是什么？什么样的上层代码会引起容器异常退出？这是本文需要阐述的内容]]>
+      
+      </description>
+      <content:encoded><![CDATA[我们知道，支撑页面在 webview 上良好运转的前提是具备一个高效并且稳定的 webview 容器，而容器的高效稳定不仅仅由容器提供方来保障，也需要容器使用者遵守一些基本准则，否则就有可能出现页面 Crash 的情况，这些准则是什么？什么样的上层代码会引起容器异常退出？这是本文需要阐述的内容]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/05/30/h5-crash-research/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[Kindle 电子书生成工具]]></title>
+      <link>http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/</link>
+      <guid>http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/</guid>
+      <pubDate>Fri May 20 2016 12:01:20 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[本项目旨在写一个 Kindle 电子书的构建工具，从互联网上抓取数据，合并整合都生成一本小巧的 `.mobi` 电子书。而使用这个工具，你只需要编辑下配置文件，或者直接运行命令行工具。]]>
+      
+      </description>
+      <content:encoded><![CDATA[本项目旨在写一个 Kindle 电子书的构建工具，从互联网上抓取数据，合并整合都生成一本小巧的 `.mobi` 电子书。而使用这个工具，你只需要编辑下配置文件，或者直接运行命令行工具。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[JavaScript 代码执行效率对比工具]]></title>
+      <link>http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/</link>
+      <guid>http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/</guid>
+      <pubDate>Thu Apr 28 2016 20:00:23 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[JavaScript 代码执行效率对比工具，对比多个程序在一段时间内执行的次数，和性能差异。]]>
+      
+      </description>
+      <content:encoded><![CDATA[JavaScript 代码执行效率对比工具，对比多个程序在一段时间内执行的次数，和性能差异。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[元素选择器 - Mini Query]]></title>
+      <link>http://www.barretlee.com/blog/2016/04/28/mini-query/</link>
+      <guid>http://www.barretlee.com/blog/2016/04/28/mini-query/</guid>
+      <pubDate>Thu Apr 28 2016 12:00:00 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[寥寥几行代码，实现一个简单的元素选择器，兼容低版本 IE。]]>
+      
+      </description>
+      <content:encoded><![CDATA[寥寥几行代码，实现一个简单的元素选择器，兼容低版本 IE。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/04/28/mini-query/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[细说 CA 和证书]]></title>
+      <link>http://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/</link>
+      <guid>http://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/</guid>
+      <pubDate>Sun Apr 24 2016 00:56:47 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[看了不少文章，对 CA 和证书相关的知识做了一些总结，可能不全面，也可能存在表述错误或者知识性错误，欢迎拍砖！]]>
+      
+      </description>
+      <content:encoded><![CDATA[看了不少文章，对 CA 和证书相关的知识做了一些总结，可能不全面，也可能存在表述错误或者知识性错误，欢迎拍砖！]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[JavaScript 被忽视的细节]]></title>
+      <link>http://www.barretlee.com/blog/2016/04/18/javascript-detail/</link>
+      <guid>http://www.barretlee.com/blog/2016/04/18/javascript-detail/</guid>
+      <pubDate>Mon Apr 18 2016 00:51:12 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[《JavaScript 权威指南》这本书从第四版开始，一直到第六版，每个版本我都逐字逐句读过几遍，然而每一遍下来的感受却完全不一样。上上周的周一，再次翻开了这本犀牛书，这一次我是带着批判精神和研究精神过来的，所以看的时候也写下了一些感受和笔记，都是些容易被忽略的点，部分内容犀牛书上不一定有提到。之前都发在微博上，稍微整理了一番，放在这里，方便阅读。]]>
+      
+      </description>
+      <content:encoded><![CDATA[《JavaScript 权威指南》这本书从第四版开始，一直到第六版，每个版本我都逐字逐句读过几遍，然而每一遍下来的感受却完全不一样。上上周的周一，再次翻开了这本犀牛书，这一次我是带着批判精神和研究精神过来的，所以看的时候也写下了一些感受和笔记，都是些容易被忽略的点，部分内容犀牛书上不一定有提到。之前都发在微博上，稍微整理了一番，放在这里，方便阅读。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/04/18/javascript-detail/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[Unix/Linux 系统中的 Operation Not Permitted 问题]]></title>
+      <link>http://www.barretlee.com/blog/2016/04/06/operation-not-permitted-problem-in-linux-or-unix-system/</link>
+      <guid>http://www.barretlee.com/blog/2016/04/06/operation-not-permitted-problem-in-linux-or-unix-system/</guid>
+      <pubDate>Wed Apr 06 2016 12:20:20 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[多次在 Mac 使用过程中遇到 Operation Not Permitted 问题，之前都是略过，今天好好摸索了一把，搞明白了道理，记录下来。]]>
+      
+      </description>
+      <content:encoded><![CDATA[多次在 Mac 使用过程中遇到 Operation Not Permitted 问题，之前都是略过，今天好好摸索了一把，搞明白了道理，记录下来。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/04/06/operation-not-permitted-problem-in-linux-or-unix-system/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[淘宝首页性能优化实践]]></title>
+      <link>http://www.barretlee.com/blog/2016/04/01/optimization-in-taobao-homepage/</link>
+      <guid>http://www.barretlee.com/blog/2016/04/01/optimization-in-taobao-homepage/</guid>
+      <pubDate>Fri Apr 01 2016 20:11:00 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[代码的性能优化是一个精细活，如果你要在一个庞大的未经优化的页面上做性能优化，可能会面临一次重构代码。本文从淘宝首页个性化引出的问题出发，从微观到宏观讲述了页面的优化实践，提出了几条可以借鉴的「黄金法则」，希望对你有所启发，后续会继续给大家带来淘宝首页稳定性保障的分享。]]>
+      
+      </description>
+      <content:encoded><![CDATA[代码的性能优化是一个精细活，如果你要在一个庞大的未经优化的页面上做性能优化，可能会面临一次重构代码。本文从淘宝首页个性化引出的问题出发，从微观到宏观讲述了页面的优化实践，提出了几条可以借鉴的「黄金法则」，希望对你有所启发，后续会继续给大家带来淘宝首页稳定性保障的分享。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/04/01/optimization-in-taobao-homepage/#comments</comments>
+    </item>
+    
+  </channel>
+</rss>
