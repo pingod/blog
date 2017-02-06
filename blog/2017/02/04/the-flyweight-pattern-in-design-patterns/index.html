@@ -88,7 +88,7 @@
 <p>设备的借还信息和其他信息，通过 <code>DeviceManager</code> 来管理：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">DeviceManager</span> </span>&#123;</div><div class="line">    deviceManager = &#123;&#125;;</div><div class="line">    <span class="comment">// 借出时，添加借出记录</span></div><div class="line">    checkout (id, type, xxx, ...) &#123;</div><div class="line">        <span class="keyword">const</span> device = <span class="keyword">new</span> DevicePool.create(type, xxx, ...);</div><div class="line">        deviceManager[id] = &#123;</div><div class="line">            <span class="attr">device</span>: device,</div><div class="line">            hasCheckedOut = <span class="literal">true</span>,</div><div class="line">            checkoutDate = <span class="keyword">new</span> <span class="built_in">Date</span>();</div><div class="line">        &#125;;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 归还时，删除借出记录</span></div><div class="line">    giveback(id, type) &#123;</div><div class="line">        deviceManager[id].hasCheckedOut = <span class="literal">false</span>;</div><div class="line">        deviceManager[id].checkoutDate = <span class="literal">null</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>小喜看了看内存，设备对象从 50Mb 下降到了 2Mb，小喜激动得一晚上没睡着。</p>
-<h3 id="问题解析"><a href="#问题解析" class="headerlink" title="问题解析"></a>问题解析</h3><p>小天当时告诉小喜，可以通过想办法减少内存中重复的内容，同一类型的设备描述是相同的，没必要在每个对象中都保存一份，可以通过单例模式储存设备元信息（<code>Device</code> 类），通过工厂模式复用一个类型的设备描述信息（<code>DevicePool</code> 类）。小喜一下子就懂了。</p>
+<h3 id="问题解析"><a href="#问题解析" class="headerlink" title="问题解析"></a>问题解析</h3><p>小天当时告诉小喜，可以想办法减少内存中重复的内容，同一类型的设备描述是相同的，没必要在每个对象中都保存一份。使用单例模式储存设备元信息（<code>Device</code> 类），使用工厂模式复用一个类型的设备描述信息（<code>DevicePool</code> 类）。小喜一下子就懂了。</p>
 <p>小喜通过 <code>DevicePool</code> 和 <code>DeviceManager</code> 将数据元信息和数据动态信息进行了有效的隔离，然后通过 <code>checkout</code> 和 <code>giveback</code> 两个方法灵活地组合了这两类信息，组合的时候，有效地控制了内存的无效复制。</p>
 <h3 id="享元模式"><a href="#享元模式" class="headerlink" title="享元模式"></a>享元模式</h3><p>享元模式的核心在于享元工厂类，享元工厂类的作用在于提供一个用于存储享元对象的享元池，用户需要对象时，首先从享元池中获取，如果享元池中不存在，则创建一个新的享元对象返回给用户，并在享元池中保存该新增对象。</p>
 <p>在享元模式中有两个比较重要的关键词，内部变量和外部变量；内部变量是可以共享的属性集，而外部变量是对象之间的差异部分，通过相同+不同的方式组合诸多对象，可以有效地节省系统空间，降低内存大小。</p>
@@ -146,7 +146,7 @@
 <a class="article-tag-link" href="/blog/tags/享元模式/">享元模式</a>, <a class="article-tag-link" href="/blog/tags/设计模式/">设计模式</a>
 </li>
 		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
-		<li>最后编辑时间: 2017-02-04 18:44:13</li>
+		<li>最后编辑时间: 2017-02-06 09:38:12</li>
 		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
 	</ul>
 	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
