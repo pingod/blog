@@ -8,8 +8,22 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Mon Feb 06 2017 09:38:12 GMT+0800 (CST)</pubDate>
+    <pubDate>Tue Feb 07 2017 08:43:01 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[聊聊设计模式（3）：门面模式]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/</guid>
+      <pubDate>Tue Feb 07 2017 08:35:03 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[Facade，中文译为门面、外观，所以本文要讲的 Facade Pattern 翻译时经常看到有两个名字，门面模式和外观模式。]]>
+      
+      </description>
+      <content:encoded><![CDATA[Facade，中文译为门面、外观，所以本文要讲的 Facade Pattern 翻译时经常看到有两个名字，门面模式和外观模式。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/#comments</comments>
+    </item>
     
     <item>
       <title><![CDATA[聊聊设计模式（2）：享元模式]]></title>
@@ -415,20 +429,6 @@
       <content:encoded><![CDATA[多次在 Mac 使用过程中遇到 Operation Not Permitted 问题，之前都是略过，今天好好摸索了一把，搞明白了道理，记录下来。]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2016/04/06/operation-not-permitted-problem-in-linux-or-unix-system/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[淘宝首页性能优化实践]]></title>
-      <link>http://www.barretlee.com/blog/2016/04/01/optimization-in-taobao-homepage/</link>
-      <guid>http://www.barretlee.com/blog/2016/04/01/optimization-in-taobao-homepage/</guid>
-      <pubDate>Fri Apr 01 2016 20:11:00 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[代码的性能优化是一个精细活，如果你要在一个庞大的未经优化的页面上做性能优化，可能会面临一次重构代码。本文从淘宝首页个性化引出的问题出发，从微观到宏观讲述了页面的优化实践，提出了几条可以借鉴的「黄金法则」，希望对你有所启发，后续会继续给大家带来淘宝首页稳定性保障的分享。]]>
-      
-      </description>
-      <content:encoded><![CDATA[代码的性能优化是一个精细活，如果你要在一个庞大的未经优化的页面上做性能优化，可能会面临一次重构代码。本文从淘宝首页个性化引出的问题出发，从微观到宏观讲述了页面的优化实践，提出了几条可以借鉴的「黄金法则」，希望对你有所启发，后续会继续给大家带来淘宝首页稳定性保障的分享。]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2016/04/01/optimization-in-taobao-homepage/#comments</comments>
     </item>
     
   </channel>

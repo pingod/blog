@@ -19,7 +19,7 @@
   <link href="http://www.barretlee.com/blogimgs/app-icon.png" rel="apple-touch-icon-precomposed">
   <link rel="shoticon" href="http://www.barretlee.com/favicon.ico" type="image/x-icon">
   <link rel="alternate" type="application/rss+xml" href="http://www.barretlee.com/rss2.xml" title="小胡子哥的个人网站" />
-  
+  <link rel="prev" href="http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/" title="聊聊设计模式（3）：门面模式" />
   <link rel="next" href="http://www.barretlee.com/blog/2017/01/16/the-bridge-pattern-in-design-patterns/" title="聊聊设计模式（1）：桥接模式" />
   <link rel="start" href="http://www.barretlee.com/entry/" title="Blog Entry" />
   <link rel="stylesheet" href="/public/css/style.css?v=20170205">
@@ -166,6 +166,14 @@
   <div class="post-relative">
 <div class="page-relative">
   
+    <a href="/blog/2017/02/07/the-facade-pattern-in-design-patterns/" class="post-prev">
+      <i class="icon" tabindex="0" aria-hidden="true">&#x261c;</i>
+      <span class="aria-readonly">上一篇文章</span>
+      
+        <b>聊聊设计模式（3）：门面模式</b>
+      
+    </a>
+  
   
     <a href="/blog/2017/01/16/the-bridge-pattern-in-design-patterns/" class="post-next">
       <span class="aria-readonly">下一篇文章</span>
@@ -177,6 +185,13 @@
 
 
 <div class="page-relative-fixed" tabindex="0" aria-hidden="true">
+  
+  <a href="/blog/2017/02/07/the-facade-pattern-in-design-patterns/" class="prev" title="聊聊设计模式（3）：门面模式">
+    <i class="icon">&#xe600;</i>
+    
+    <b>聊聊设计模式（3）：门面模式</b>
+    
+  </a>
   
   
   <a href="/blog/2017/01/16/the-bridge-pattern-in-design-patterns/" class="next" title="聊聊设计模式（1）：桥接模式">
@@ -290,6 +305,16 @@
 		
 		<ul>
 			<li>
+				<span><font aria-hidden="true">2017-02-07 »</font> </span>
+				<a href="/blog/2017/02/07/the-facade-pattern-in-design-patterns/">聊聊设计模式（3）：门面模式</a>
+				<span class="aria-readonly">发表时间为2017年02月07日</span>
+				<div class="relative-box">
+          <a href="/blog/2017/02/07/the-facade-pattern-in-design-patterns/" class="relative-img-wrapper" style="background-image:url(http://ww1.sinaimg.cn/large/6c0378f8gy1fchm1y9bubj20p00dw42z);"></a>
+          <span class="aria-readonly">文章概要 </span>Facade，中文译为门面、外观，所以本文要讲的 Facade Pattern 翻译时经常看到有两个名字，门面模式和外观模式。这是一个在 JavaScript 中被经常用到的设计模式：class modA() &#123;&#125;class modB() &#123;&#125;// 门面模式实例class Facade &#123;    init() &#123;        modA.initialize();        modB.init();    &#125;    run() &#123;        modA.start();        modB.run();    &#125;&#125;modA 和 modB 是客户端运行的两个依赖系统，例子中通过 Facade 类做了简单封装，客户端便可以使用少量代码快捷启动两个子系统，这里的 Facade 就是两个子系统的门面，客户端跟门面而不会直接与子系统打交道。
+        </div>
+			</li>
+			
+			<li>
 				<span><font aria-hidden="true">2017-01-16 »</font> </span>
 				<a href="/blog/2017/01/16/the-bridge-pattern-in-design-patterns/">聊聊设计模式（1）：桥接模式</a>
 				<span class="aria-readonly">发表时间为2017年01月16日</span>
@@ -316,16 +341,6 @@
 				<div class="relative-box">
           <a href="/blog/2016/08/23/javascript-sandbox/" class="relative-img-wrapper" style="background-image:url(http://ww1.sinaimg.cn/large/6c0378f8gw1f730uldkfrj20p00dwaf1.jpg);"></a>
           <span class="aria-readonly">文章概要 </span>在 Node.js 中有一个模块叫做 VM，它提供了几个 API，允许代码在 V8 虚拟机上下文中运行，如：const vm = require('vm');const sandbox = &#123; a: 1, b: 2 &#125;;const script = new vm.Script('a + b');const context = new vm.createContext(sandbox);script.runInContext(context);vm.Script 中的代码是预编译好的，通过 vm.createContext 将代码加载到一个上下文环境中，置入沙箱（sandbox），然后通过 script.runInContext 执行代码，整个操作都在封闭的 VM 中进行。这是 Node.js 提供给我们的便捷功能，那么，在浏览器环境中呢？是否也能做到将代码运行在沙箱中？本文带着大家来探索一番。
-        </div>
-			</li>
-			
-			<li>
-				<span><font aria-hidden="true">2016-08-04 »</font> </span>
-				<a href="/blog/2016/08/04/funning-gitlog/">有意思的 git-log</a>
-				<span class="aria-readonly">发表时间为2016年08月04日</span>
-				<div class="relative-box">
-          <a href="/blog/2016/08/04/funning-gitlog/" class="relative-img-wrapper" style="background-image:url(//ww4.sinaimg.cn/large/6c0378f8gw1f6imxm25vtj21kw16p7wh.jpg);"></a>
-          <span class="aria-readonly">文章概要 </span>之前写过几篇 git 相关的文章，内容很基础，git版本回退操作git切换到远程分支git版本管理策略及相关技巧(A)但发现最近被搜索引擎检索的量还比较大，最近正好在阅读 git 相关的资料，准备将不错的几个点，详细地说一说，记录下来写出来分享给大家。今天要说的便是常用的 git log 命令。
         </div>
 			</li>
 			
