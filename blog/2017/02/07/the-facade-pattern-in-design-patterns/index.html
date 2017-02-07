@@ -69,10 +69,11 @@
           <p>原文地址：<a href="http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/">http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/</a>，<a href="http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/#comments">参与评论</a></p>
           <img src="//www.barretlee.com/blogimgs/avatar150.png">
         </div>
-        <p>Facade，中文译为门面、外观，所以本文要讲的 Facade Pattern 翻译时经常看到有两个名字，门面模式和外观模式。这是一个在 JavaScript 中被经常用到的设计模式：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">modA</span>() </span>&#123;&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">modB</span>() </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="comment">// 门面模式实例</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Facade</span> </span>&#123;</div><div class="line">    init() &#123;</div><div class="line">        modA.initialize();</div><div class="line">        modB.init();</div><div class="line">    &#125;</div><div class="line">    run() &#123;</div><div class="line">        modA.start();</div><div class="line">        modB.run();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>modA</code> 和 <code>modB</code> 是客户端运行的两个依赖系统，例子中通过 <code>Facade</code> 类做了简单封装，客户端便可以使用少量代码快捷启动两个子系统，这里的 <code>Facade</code> 就是两个子系统的门面，客户端跟门面而不会直接与子系统打交道。</p>
+        <p>Facade，中文译为门面、外观，所以本文要讲的 Facade Pattern 翻译时经常看到有两个名字，门面模式和外观模式。</p>
 <p><img src="http://ww1.sinaimg.cn/large/6c0378f8gy1fchm1y9bubj20p00dw42z" alt="https://unsplash.com/search/facade?photo=5NArdqS7FW4 by Chris Barbalis"></p>
+<p>这是一个在 JavaScript 中被经常用到的设计模式：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">modA</span> </span>&#123;&#125;</div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">modB</span> </span>&#123;&#125;</div><div class="line"></div><div class="line"><span class="comment">// 门面模式实例</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Facade</span> </span>&#123;</div><div class="line">    init() &#123;</div><div class="line">        modA.initialize();</div><div class="line">        modB.init();</div><div class="line">    &#125;</div><div class="line">    run() &#123;</div><div class="line">        modA.start();</div><div class="line">        modB.run();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>modA</code> 和 <code>modB</code> 是客户端运行的两个依赖系统，例子中通过 <code>Facade</code> 类做了简单封装，客户端便可以使用少量代码快捷启动两个子系统，这里的 <code>Facade</code> 就是两个子系统的门面，客户端跟门面而不会直接与子系统打交道。</p>
 <a id="more"></a>
 <p>上面的例子比较抽象，还是有些晦涩的，下面看一个实际的场景。</p>
 <h3 id="场景复现"><a href="#场景复现" class="headerlink" title="场景复现"></a>场景复现</h3><p>小喜负责的业务增加了一些社交元素，不久之后业务方给小喜提了一个需求，要求在某类文章下方增加一个赞赏按钮，用户点击按钮时，调用 Z 平台的接口付款，然后将操作记录到后端，最后发送一个统计埋点，需要三天内上线。</p>
@@ -82,7 +83,7 @@
 <p>随着业务规模的扩大，SNS 相关需求量有所增加，其他业务上陆续也开始使用赞赏功能。同组的小天收到了类似的需求，但小天并不知道小喜之前做过，同样花了一天时间，采用了类似的方式实现了功能。</p>
 <p>一段时间后， Z 平台那边说需要提升安全防护，要求开发者对接口做调整，需要将 <code>interface-a</code> 调整为 <code>interface-b</code>，小喜和小天都收到了这个需求，他们相互瞪了对方一眼，然后默默地回去修改了。</p>
 <p>小苏在进行团队代码 review 的时候，看到了这个问题，为了减少团队在这一块的开销，他让小喜使用 NodeJS 做了一层封装，代码变动其实并不大，从客户端调用 HTTP 接口，变成了 Node 调用 HSF 接口：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Facade</span>() </span>&#123;</div><div class="line">    zan () &#123;</div><div class="line">        <span class="keyword">let</span> record = <span class="keyword">await</span> payWithZFB();</div><div class="line">        <span class="keyword">let</span> track = <span class="keyword">await</span> addRecord(record);</div><div class="line">        <span class="keyword">await</span> sendTrack(track);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Facade</span> </span>&#123;</div><div class="line">    zan () &#123;</div><div class="line">        <span class="keyword">let</span> record = <span class="keyword">await</span> payWithZFB();</div><div class="line">        <span class="keyword">let</span> track = <span class="keyword">await</span> addRecord(record);</div><div class="line">        <span class="keyword">await</span> sendTrack(track);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>然后小喜和小天在客户端的调用都变成了：</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><div class="line"><span class="keyword">const</span> facade = <span class="keyword">new</span> Facade();</div><div class="line">facade.zan();</div></pre></td></tr></table></figure>
 <p>这个调整带来的很大的便捷，不管 Z 平台、后端和日志平台的规则如何变化，小喜只需要修改 Node 提供的 <code>Facade</code> 服务就能解决问题，业务上不需要做任何发布。</p>
@@ -107,7 +108,7 @@
     
     <div class="share-article clearfix">
       
-      <div class="ds-share" data-thread-key="the-facade-pattern-in-design-patterns" data-title="聊聊设计模式（3）：门面模式" data-images="" data-content="Facade，中文译为门面、外观，所以本文要讲的 Facade Pattern 翻译时经常看到有两个名字，门面模式和外观模式。这是一个在 JavaScript 中被经常用到的设计模式：class modA() &#123;&#125;class modB() &#123;&#125;// 门面模式实例class Facade &#123;    init() &#123;        modA.initialize();        modB.init();    &#125;    run() &#123;        modA.start();        modB.run();    &#125;&#125;modA 和 modB 是客户端运行的两个依赖系统，例子中通过 Facade 类做了简单封装，客户端便可以使用少量代码快捷启动两个子系统，这里的 Facade 就是两个子系统的门面，客户端跟门面而不会直接与子系统打交道。" data-url="http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/">
+      <div class="ds-share" data-thread-key="the-facade-pattern-in-design-patterns" data-title="聊聊设计模式（3）：门面模式" data-images="" data-content="Facade，中文译为门面、外观，所以本文要讲的 Facade Pattern 翻译时经常看到有两个名字，门面模式和外观模式。这是一个在 JavaScript 中被经常用到的设计模式：class modA &#123;&#125;class modB &#123;&#125;// 门面模式实例class Facade &#123;    init() &#123;        modA.initialize();        modB.init();    &#125;    run() &#123;        modA.start();        modB.run();    &#125;&#125;modA 和 modB 是客户端运行的两个依赖系统，例子中通过 Facade 类做了简单封装，客户端便可以使用少量代码快捷启动两个子系统，这里的 Facade 就是两个子系统的门面，客户端跟门面而不会直接与子系统打交道。" data-url="http://www.barretlee.com/blog/2017/02/07/the-facade-pattern-in-design-patterns/">
         <div class="ds-share-inline" tabindex="0" aria-hidden="true">
   <ul  class="ds-share-icons-16">
     <li><a class="ds-more" href="javascript:void(0);" data-service="weibo">分享到：</a></li>
@@ -149,7 +150,7 @@
 <a class="article-tag-link" href="/blog/tags/设计模式/">设计模式</a>, <a class="article-tag-link" href="/blog/tags/门面模式/">门面模式</a>
 </li>
 		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
-		<li>最后编辑时间: 2017-02-07 08:43:01</li>
+		<li>最后编辑时间: 2017-02-07 08:46:49</li>
 		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
 	</ul>
 	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
