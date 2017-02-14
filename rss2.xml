@@ -8,8 +8,22 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Mon Feb 13 2017 09:39:53 GMT+0800 (CST)</pubDate>
+    <pubDate>Tue Feb 14 2017 08:55:56 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[聊聊设计模式（4）：装饰模式]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/14/the-decorator-pattern-in-design-patterns/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/14/the-decorator-pattern-in-design-patterns/</guid>
+      <pubDate>Tue Feb 14 2017 08:47:45 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[装饰模式，动态地给一个对象增加一些额外的职责 ( Responsibility )，就增加对象功能来说，装饰模式比生成子类实现更为灵活。]]>
+      
+      </description>
+      <content:encoded><![CDATA[装饰模式，动态地给一个对象增加一些额外的职责 ( Responsibility )，就增加对象功能来说，装饰模式比生成子类实现更为灵活。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/14/the-decorator-pattern-in-design-patterns/#comments</comments>
+    </item>
     
     <item>
       <title><![CDATA[因小程序卸载的软件，重新安装回来了么？]]></title>
@@ -415,20 +429,6 @@
       <content:encoded><![CDATA[看了不少文章，对 CA 和证书相关的知识做了一些总结，可能不全面，也可能存在表述错误或者知识性错误，欢迎拍砖！]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[JavaScript 被忽视的细节]]></title>
-      <link>http://www.barretlee.com/blog/2016/04/18/javascript-detail/</link>
-      <guid>http://www.barretlee.com/blog/2016/04/18/javascript-detail/</guid>
-      <pubDate>Mon Apr 18 2016 00:51:12 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[《JavaScript 权威指南》这本书从第四版开始，一直到第六版，每个版本我都逐字逐句读过几遍，然而每一遍下来的感受却完全不一样。上上周的周一，再次翻开了这本犀牛书，这一次我是带着批判精神和研究精神过来的，所以看的时候也写下了一些感受和笔记，都是些容易被忽略的点，部分内容犀牛书上不一定有提到。之前都发在微博上，稍微整理了一番，放在这里，方便阅读。]]>
-      
-      </description>
-      <content:encoded><![CDATA[《JavaScript 权威指南》这本书从第四版开始，一直到第六版，每个版本我都逐字逐句读过几遍，然而每一遍下来的感受却完全不一样。上上周的周一，再次翻开了这本犀牛书，这一次我是带着批判精神和研究精神过来的，所以看的时候也写下了一些感受和笔记，都是些容易被忽略的点，部分内容犀牛书上不一定有提到。之前都发在微博上，稍微整理了一番，放在这里，方便阅读。]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2016/04/18/javascript-detail/#comments</comments>
     </item>
     
   </channel>
