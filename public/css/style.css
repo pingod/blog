@@ -6184,7 +6184,9 @@ span.line {
   .tools-wrapper,
   .post-title-wrapper img,
   .bread,
-  .share-article {
+  .share-article,
+  .chatroom,
+  .post-relative {
     display: none !important;
   }
   a {
@@ -6193,6 +6195,9 @@ span.line {
   * {
     text-shadow: none !important;
     box-shadow: none !important;
+  }
+  .post-content img {
+    margin: 30px auto;
   }
 }
 .shareMode .post-info,
