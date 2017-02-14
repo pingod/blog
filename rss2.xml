@@ -8,8 +8,22 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Tue Feb 14 2017 08:55:56 GMT+0800 (CST)</pubDate>
+    <pubDate>Tue Feb 14 2017 14:20:27 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[情人节，你发微信黄金红包了么？]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/14/wechat-gold/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/14/wechat-gold/</guid>
+      <pubDate>Tue Feb 14 2017 13:18:44 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[2 月 14 日情人节，微信将单个红包上线从 200 调整到了 520，貌似去年也这么调整过。不一样的是，今年在这天开启了微信黄金红包的公测。]]>
+      
+      </description>
+      <content:encoded><![CDATA[2 月 14 日情人节，微信将单个红包上线从 200 调整到了 520，貌似去年也这么调整过。不一样的是，今年在这天开启了微信黄金红包的公测。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/14/wechat-gold/#comments</comments>
+    </item>
     
     <item>
       <title><![CDATA[聊聊设计模式（4）：装饰模式]]></title>
@@ -415,20 +429,6 @@
       <content:encoded><![CDATA[寥寥几行代码，实现一个简单的元素选择器，兼容低版本 IE。]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2016/04/28/mini-query/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[细说 CA 和证书]]></title>
-      <link>http://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/</link>
-      <guid>http://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/</guid>
-      <pubDate>Sun Apr 24 2016 00:56:47 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[看了不少文章，对 CA 和证书相关的知识做了一些总结，可能不全面，也可能存在表述错误或者知识性错误，欢迎拍砖！]]>
-      
-      </description>
-      <content:encoded><![CDATA[看了不少文章，对 CA 和证书相关的知识做了一些总结，可能不全面，也可能存在表述错误或者知识性错误，欢迎拍砖！]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2016/04/24/detail-about-ca-and-certs/#comments</comments>
     </item>
     
   </channel>
