@@ -6205,7 +6205,7 @@ span.line {
 .shareMode .chatroom,
 .shareMode .copyright,
 .shareMode .bread,
-.shareMode .post-title img {
+.shareMode .post-title-wrapper img {
   display: none !important;
 }
 .shareMode .follow-wechat {
