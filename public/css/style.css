@@ -3207,6 +3207,9 @@ div.recent-pic {
   word-break: break-all;
   word-wrap: break-word;
 }
+.post-content {
+  text-align: justify;
+}
 .post-content .line {
   margin-bottom: 0;
 }
@@ -6191,6 +6194,29 @@ span.line {
     text-shadow: none !important;
     box-shadow: none !important;
   }
+}
+.shareMode .post-info,
+.shareMode .tools-wrapper,
+.shareMode .share-article,
+.shareMode .post-relative,
+.shareMode .single-page-footer,
+.shareMode .sidebar,
+.shareMode #nmlist,
+.shareMode .chatroom,
+.shareMode .copyright,
+.shareMode .bread,
+.shareMode .post-title img {
+  display: none !important;
+}
+.shareMode .follow-wechat {
+  margin-top: 30px;
+}
+.shareMode .article,
+.shareMode .cate-wraper {
+  padding: 30px 20px;
+}
+.shareMode .post-content img {
+  margin: 30px auto;
 }
 .chatroom-feedback {
   position: absolute;
