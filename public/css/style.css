@@ -6199,6 +6199,9 @@ span.line {
   .post-content img {
     margin: 30px auto;
   }
+  .post-content hr {
+    border-top: 1px dashed #ccc;
+  }
 }
 .shareMode .post-info,
 .shareMode .tools-wrapper,

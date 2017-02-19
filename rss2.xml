@@ -8,8 +8,22 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Tue Feb 14 2017 14:20:27 GMT+0800 (CST)</pubDate>
+    <pubDate>Sun Feb 19 2017 21:41:51 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[心流，从工作中找到快感]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/19/make-your-heart-comfortable/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/19/make-your-heart-comfortable/</guid>
+      <pubDate>Sun Feb 19 2017 21:41:03 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[今天学到一个词，心流，指的是当人们沉浸在当下的某件事情时，全神贯注、全情投入并享受其中从而体验到的一种幸福的精神状态。]]>
+      
+      </description>
+      <content:encoded><![CDATA[今天学到一个词，心流，指的是当人们沉浸在当下的某件事情时，全神贯注、全情投入并享受其中从而体验到的一种幸福的精神状态。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/19/make-your-heart-comfortable/#comments</comments>
+    </item>
     
     <item>
       <title><![CDATA[情人节，你发微信黄金红包了么？]]></title>
@@ -415,20 +429,6 @@
       <content:encoded><![CDATA[JavaScript 代码执行效率对比工具，对比多个程序在一段时间内执行的次数，和性能差异。]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[元素选择器 - Mini Query]]></title>
-      <link>http://www.barretlee.com/blog/2016/04/28/mini-query/</link>
-      <guid>http://www.barretlee.com/blog/2016/04/28/mini-query/</guid>
-      <pubDate>Thu Apr 28 2016 12:00:00 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[寥寥几行代码，实现一个简单的元素选择器，兼容低版本 IE。]]>
-      
-      </description>
-      <content:encoded><![CDATA[寥寥几行代码，实现一个简单的元素选择器，兼容低版本 IE。]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2016/04/28/mini-query/#comments</comments>
     </item>
     
   </channel>
