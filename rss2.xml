@@ -8,8 +8,22 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Sun Feb 19 2017 21:41:51 GMT+0800 (CST)</pubDate>
+    <pubDate>Wed Feb 22 2017 23:32:37 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[知识付费，小密圈能走多远？]]></title>
+      <link>http://www.barretlee.com/blog/2017/02/22/secret-circle-prospects/</link>
+      <guid>http://www.barretlee.com/blog/2017/02/22/secret-circle-prospects/</guid>
+      <pubDate>Wed Feb 22 2017 23:01:32 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[首先需要明确，小密圈是个什么东西。小密圈，它是一个工具，连接粉丝的工具，连接社群的工具。这个工具可以给社群中的人带来价值（知识、人脉、娱乐等），也可以给工具的使用者带来利益（财富回报、知识沉淀和整理、满足感、影响力等）。]]>
+      
+      </description>
+      <content:encoded><![CDATA[首先需要明确，小密圈是个什么东西。小密圈，它是一个工具，连接粉丝的工具，连接社群的工具。这个工具可以给社群中的人带来价值（知识、人脉、娱乐等），也可以给工具的使用者带来利益（财富回报、知识沉淀和整理、满足感、影响力等）。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/02/22/secret-circle-prospects/#comments</comments>
+    </item>
     
     <item>
       <title><![CDATA[心流，从工作中找到快感]]></title>
@@ -415,20 +429,6 @@
       <content:encoded><![CDATA[本项目旨在写一个 Kindle 电子书的构建工具，从互联网上抓取数据，合并整合都生成一本小巧的 `.mobi` 电子书。而使用这个工具，你只需要编辑下配置文件，或者直接运行命令行工具。]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[JavaScript 代码执行效率对比工具]]></title>
-      <link>http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/</link>
-      <guid>http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/</guid>
-      <pubDate>Thu Apr 28 2016 20:00:23 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[JavaScript 代码执行效率对比工具，对比多个程序在一段时间内执行的次数，和性能差异。]]>
-      
-      </description>
-      <content:encoded><![CDATA[JavaScript 代码执行效率对比工具，对比多个程序在一段时间内执行的次数，和性能差异。]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/#comments</comments>
     </item>
     
   </channel>
