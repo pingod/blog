@@ -6213,7 +6213,11 @@ span.line {
 .shareMode .chatroom,
 .shareMode .copyright,
 .shareMode .bread,
-.shareMode .post-title-wrapper img {
+.shareMode .post-title-wrapper img,
+.shareMode .web-feed,
+.shareMode .ds-meta,
+.shareMode .website-info,
+.shareMode .arrow-expend {
   display: none !important;
 }
 .shareMode .follow-wechat {
