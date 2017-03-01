@@ -8,7 +8,7 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Wed Feb 22 2017 23:32:37 GMT+0800 (CST)</pubDate>
+    <pubDate>Wed Mar 01 2017 18:19:50 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
@@ -37,20 +37,6 @@
       <content:encoded><![CDATA[今天学到一个词，心流，指的是当人们沉浸在当下的某件事情时，全神贯注、全情投入并享受其中从而体验到的一种幸福的精神状态。]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2017/02/19/make-your-heart-comfortable/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[情人节，你发微信黄金红包了么？]]></title>
-      <link>http://www.barretlee.com/blog/2017/02/14/wechat-gold/</link>
-      <guid>http://www.barretlee.com/blog/2017/02/14/wechat-gold/</guid>
-      <pubDate>Tue Feb 14 2017 13:18:44 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[2 月 14 日情人节，微信将单个红包上线从 200 调整到了 520，貌似去年也这么调整过。不一样的是，今年在这天开启了微信黄金红包的公测。]]>
-      
-      </description>
-      <content:encoded><![CDATA[2 月 14 日情人节，微信将单个红包上线从 200 调整到了 520，貌似去年也这么调整过。不一样的是，今年在这天开启了微信黄金红包的公测。]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2017/02/14/wechat-gold/#comments</comments>
     </item>
     
     <item>
@@ -429,6 +415,20 @@
       <content:encoded><![CDATA[本项目旨在写一个 Kindle 电子书的构建工具，从互联网上抓取数据，合并整合都生成一本小巧的 `.mobi` 电子书。而使用这个工具，你只需要编辑下配置文件，或者直接运行命令行工具。]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2016/05/20/kindle-book-maker/#comments</comments>
+    </item>
+    
+    <item>
+      <title><![CDATA[JavaScript 代码执行效率对比工具]]></title>
+      <link>http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/</link>
+      <guid>http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/</guid>
+      <pubDate>Thu Apr 28 2016 20:00:23 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[JavaScript 代码执行效率对比工具，对比多个程序在一段时间内执行的次数，和性能差异。]]>
+      
+      </description>
+      <content:encoded><![CDATA[JavaScript 代码执行效率对比工具，对比多个程序在一段时间内执行的次数，和性能差异。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2016/04/28/javascript-performance-tester/#comments</comments>
     </item>
     
   </channel>
