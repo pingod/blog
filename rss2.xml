@@ -8,8 +8,22 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Sat Apr 01 2017 17:09:02 GMT+0800 (CST)</pubDate>
+    <pubDate>Mon Apr 03 2017 10:21:37 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[我接受大家吐槽]]></title>
+      <link>http://www.barretlee.com/blog/2017/04/03/about-secret-circle/</link>
+      <guid>http://www.barretlee.com/blog/2017/04/03/about-secret-circle/</guid>
+      <pubDate>Mon Apr 03 2017 10:13:31 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[看到有人关注和吐槽，我就过来说几句吧，当然我也知道，不管我下面说什么，都会有人赞和踩。]]>
+      
+      </description>
+      <content:encoded><![CDATA[看到有人关注和吐槽，我就过来说几句吧，当然我也知道，不管我下面说什么，都会有人赞和踩。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/04/03/about-secret-circle/#comments</comments>
+    </item>
     
     <item>
       <title><![CDATA[聊聊 HSTS 下的 HTTPS 降级问题]]></title>
@@ -415,20 +429,6 @@
       <content:encoded><![CDATA[从 14 年双十二结束开始接手淘宝首页，到如今差不多 1 年半时间，不久前完成了首页相关工作的交接。期间经历了两次改版和一次从 PHP 到 Node 的迁移，还是颇有感受，下面给大家分享下。]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2016/06/02/thing-about-taobao-homepage/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[H5 Crash 研究]]></title>
-      <link>http://www.barretlee.com/blog/2016/05/30/h5-crash-research/</link>
-      <guid>http://www.barretlee.com/blog/2016/05/30/h5-crash-research/</guid>
-      <pubDate>Mon May 30 2016 00:30:12 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[我们知道，支撑页面在 webview 上良好运转的前提是具备一个高效并且稳定的 webview 容器，而容器的高效稳定不仅仅由容器提供方来保障，也需要容器使用者遵守一些基本准则，否则就有可能出现页面 Crash 的情况，这些准则是什么？什么样的上层代码会引起容器异常退出？这是本文需要阐述的内容]]>
-      
-      </description>
-      <content:encoded><![CDATA[我们知道，支撑页面在 webview 上良好运转的前提是具备一个高效并且稳定的 webview 容器，而容器的高效稳定不仅仅由容器提供方来保障，也需要容器使用者遵守一些基本准则，否则就有可能出现页面 Crash 的情况，这些准则是什么？什么样的上层代码会引起容器异常退出？这是本文需要阐述的内容]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2016/05/30/h5-crash-research/#comments</comments>
     </item>
     
   </channel>
