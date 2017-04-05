@@ -8,11 +8,11 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Mon Apr 03 2017 12:33:08 GMT+0800 (CST)</pubDate>
+    <pubDate>Thu Apr 06 2017 07:49:47 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
-      <title><![CDATA[我接受大家吐槽]]></title>
+      <title><![CDATA[关于开源精神和小密圈]]></title>
       <link>http://www.barretlee.com/blog/2017/04/03/about-secret-circle/</link>
       <guid>http://www.barretlee.com/blog/2017/04/03/about-secret-circle/</guid>
       <pubDate>Mon Apr 03 2017 10:13:31 GMT+0800 (CST)</pubDate>
