@@ -119,6 +119,12 @@
 <li><code>Image Preview</code>，在行号左侧的小槽中展示图片的预览</li>
 </ul>
 <p>以上是用的比较多的，还装了几十个使用频度比较低的插件，主要包括 Snippet 和文件高亮配置，可以在这里查看：<a href="https://gist.github.com/barretlee/a5170eb6ca1805f66687063d2e3a4983" target="_blank" rel="external">https://gist.github.com/barretlee/a5170eb6ca1805f66687063d2e3a4983</a>，你也可以通过 <code>Settings Sync</code> 将这个配置下载下来，id 就是后面半截：<code>a5170eb6ca1805f66687063d2e3a4983</code>。</p>
+<h3 id="在命令行打开-VSC"><a href="#在命令行打开-VSC" class="headerlink" title="在命令行打开 VSC"></a>在命令行打开 VSC</h3><p>在安装好 VSC 后，直接配置 <code>.bash_profile</code> 或者 <code>.zshrc</code> 文件：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="built_in">alias</span> vsc=<span class="string">'/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin/code'</span>;</div><div class="line">VSC_BIN=<span class="string">'/Applications/Visual\ Studio\ Code.app/Contents/Resources/app/bin'</span>;</div><div class="line">PATH=<span class="variable">$VSC_BIN</span>:<span class="variable">$PATH</span>;</div><div class="line"><span class="built_in">export</span> PATH;</div></pre></td></tr></table></figure>
+<p>然后让配置生效，在控制台执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># 如果没有安装 zsh，可能是 ~/.bash_profile</span></div><div class="line"><span class="built_in">source</span> ~/.zshrc</div></pre></td></tr></table></figure>
+<p>这个时候就可以在全局打开了：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><div class="line"><span class="comment"># -a 的意思是不要新开窗口，在当前已经打开的 vsc 中打开文件</span></div><div class="line">vsc path/to/file.ext <span class="_">-a</span></div></pre></td></tr></table></figure>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>一款好的 IDE 能够帮助我们预防很多程序上愚蠢的问题，也能够聚合一系列小工具，避免我们频繁地切换工作区间。VSC 只是众多选择中的一个，熟悉其他编辑器的套路也是一样的。</p>
 <p>「磨刀不误砍柴工」，花费点时间在工具的研究上，可以提升我们的开发和写作效率，提倡大家在这方面进行长时间的折腾。</p>
 
@@ -171,7 +177,7 @@
 <a class="article-tag-link" href="/blog/tags/VSC/">VSC</a>
 </li>
 		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
-		<li>最后编辑时间: 2017-04-21 12:13:26</li>
+		<li>最后编辑时间: 2017-04-21 12:17:54</li>
 		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
 	</ul>
 	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
