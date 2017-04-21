@@ -8,14 +8,14 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Fri Apr 21 2017 12:17:54 GMT+0800 (CST)</pubDate>
+    <pubDate>Fri Apr 21 2017 12:35:25 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title><![CDATA[如何快速上手一款 IDE - VSC 配置指南和插件推荐]]></title>
       <link>http://www.barretlee.com/blog/2017/04/21/something-about-vsc/</link>
       <guid>http://www.barretlee.com/blog/2017/04/21/something-about-vsc/</guid>
-      <pubDate>Fri Apr 21 2017 10:23:28 GMT+0800 (CST)</pubDate>
+      <pubDate>Fri Apr 21 2017 12:23:28 GMT+0800 (CST)</pubDate>
       <description>
       <![CDATA[VSCode 刚出来的时候并不是特别看好，因为 Sublime 和 Atom 的插件生态已经做起来了，成千上万个可供选择，VSC 从零开始，除了自身提供的几个内置插件外几乎没有多余的选择，没想到短短一年多的时间，发展如此快。]]>
       
