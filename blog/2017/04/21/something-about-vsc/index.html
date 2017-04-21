@@ -79,7 +79,7 @@
 <p>选择并坚持使用一个 IDE，我们会很关注它的使用效率，包括界面的美观和功能的完善度，比如支持换肤、能够调试多种语言、具备友好的控制台等等，这些特征 Atom、VSC 和 WebStorm 都具备。编辑器本没有什么好坏之分，你用得爽就最好了，我有一个朋友使用最简洁的记事本写过几个月程序，这也并不影响他的程序质量。</p>
 <p>不过，在我看来， WebStorm 过于臃肿了，而且还不是免费的；Sublime 在插件机制上对前端也没有亲和力；Atom 的整体性能还达不到我理想中的要求；VIM 的理念过于深入，灵活性强到普通人都接受不了。从 Atom 到 VSC，我看重的只有 VSC 打开大文件效率这一点，而且作为一名优秀的编辑器，它该具备的都已经具备了，比如繁荣的插件生态，以及持续的版本迭代，这足以给我巨大的信心和勇气使用它。</p>
 <p>从一个 IDE 转移到另一个，最让我们头疼的事情莫过于使用习惯，好在 ST、VSC、Atom 已经统一了这种习惯，比如使用 <code>Command + Shift + P</code> 调出 Pannel，便可以在这里做任何你想得到的事情。</p>
-<h3 id="拿到-VSC-的第一件事"><a href="#拿到-VSC-的第一件事" class="headerlink" title="拿到 VSC 的第一件事"></a>拿到 VSC 的第一件事</h3><p>安装 VSC 后，我心里想的第一件事请就是，如何像使用 Atom 一样让我使用 VSC，毕竟我在 Atom 上配置了许多个性化的内容个。一个编辑器的配置大体包括这三块：</p>
+<h3 id="拿到-VSC-的第一件事"><a href="#拿到-VSC-的第一件事" class="headerlink" title="拿到 VSC 的第一件事"></a>拿到 VSC 的第一件事</h3><p>安装 VSC 后，我心里想的第一件事请就是，如何像使用 Atom 一样让我使用 VSC，毕竟我在 Atom 上配置了许多个性化的内容。一个编辑器的配置大体包括这三块：</p>
 <ul>
 <li><strong>IDE 配置</strong>，调整字体、颜色、行高、行溢出等；</li>
 <li><strong>快捷键配置</strong>，比如多行编辑、预览设置、折行设置等；</li>
@@ -96,7 +96,7 @@
 <p>我用了大概一个小时，将自己最常用的快捷键配置好了，比如我最喜欢的多行编辑，换成了自己熟悉的快捷键（Gif图片）：</p>
 <p><img src="http://ww3.sinaimg.cn/large/006tKfTcgy1feu6aa5k7lg30jv08hti7.gif" alt="多行编辑配置"></p>
 <p>不管自己用了多久的 Atom 或者 ST，当这些基础配置完成之后，会觉得转投另一个 IDE 并非什么痛苦的事情。</p>
-<h3 id="接下来就是插件配置"><a href="#接下来就是插件配置" class="headerlink" title="接下来就是插件配置"></a>接下来就是插件配置</h3><p>考虑一个 IDE，我会首先看看它是否有类似于 <code>Sync</code> 的插件，我有几台电脑，不可能每次换电脑都让我重新配置一次，我可经不起这个折腾，实际上，Atom 和 VSC 都提供了 <code>Sync</code> 插件，比如 VSC de  <code>Settings Sync</code>，可以轻松将 IDE 的所有配置一键备份到 github 上，也可以将 github 上的配置一键拉取下来，然后重启 IDE 就可以共享同样的配置了。这个配置并不复杂，考虑到新手，我来简单介绍下它的使用：</p>
+<h3 id="接下来就是插件配置"><a href="#接下来就是插件配置" class="headerlink" title="接下来就是插件配置"></a>接下来就是插件配置</h3><p>考虑一个 IDE，我会首先看看它是否有类似于 <code>Sync</code> 的插件，我有几台电脑，不可能每次换电脑都让我重新配置一次，我可经不起这个折腾，实际上，Atom 和 VSC 都提供了 <code>Sync</code> 插件，比如 VSC 的 <code>Settings Sync</code>，可以轻松将 IDE 的所有配置一键备份到 github 上，也可以将 github 上的配置一键拉取下来，然后重启 IDE 便可以共享同样的配置了。这个配置并不复杂，考虑到新手同学，我来简单介绍下它的使用：</p>
 <ul>
 <li>在左侧的 sidebar 选中最后一个，搜索 <code>Sync</code>，不出意外，你会从前几个中找到下载量很高的那个 <code>Settings Sync</code>；</li>
 <li>安装后，摁下 <code>Command + Shift + P</code> 打开控制面板，搜索 Sync，选择 <code>update/upload</code> 可以上传你的配置，选择 <code>Download</code> 会下载远程配置；</li>
@@ -116,7 +116,7 @@
 <li><code>View In Browser</code>，打开 html 文件</li>
 <li><code>Document This</code>，自动生成注释</li>
 <li><code>File Peek</code>，类似于 Go To Definition，点击后定位文件</li>
-<li><code>Image Preview</code>，在行号左侧的小槽中展示图片的预览</li>
+<li><code>Image Preview</code>，在行号左侧的小槽中展示图片的预览，MD 中也可以 hover 预览</li>
 </ul>
 <p>以上是用的比较多的，还装了几十个使用频度比较低的插件，主要包括 Snippet 和文件高亮配置，可以在这里查看：<a href="https://gist.github.com/barretlee/a5170eb6ca1805f66687063d2e3a4983" target="_blank" rel="external">https://gist.github.com/barretlee/a5170eb6ca1805f66687063d2e3a4983</a>，你也可以通过 <code>Settings Sync</code> 将这个配置下载下来，id 就是后面半截：<code>a5170eb6ca1805f66687063d2e3a4983</code>。</p>
 <h3 id="在命令行打开-VSC"><a href="#在命令行打开-VSC" class="headerlink" title="在命令行打开 VSC"></a>在命令行打开 VSC</h3><p>在安装好 VSC 后，直接配置 <code>.bash_profile</code> 或者 <code>.zshrc</code> 文件：</p>
@@ -177,7 +177,7 @@
 <a class="article-tag-link" href="/blog/tags/VSC/">VSC</a>
 </li>
 		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
-		<li>最后编辑时间: 2017-04-21 12:42:03</li>
+		<li>最后编辑时间: 2017-04-21 12:46:31</li>
 		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
 	</ul>
 	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
