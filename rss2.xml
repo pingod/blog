@@ -8,8 +8,22 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Fri Apr 21 2017 12:57:36 GMT+0800 (CST)</pubDate>
+    <pubDate>Wed Apr 26 2017 12:15:49 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[熟练工如何拔高 & 零碎知识的整理]]></title>
+      <link>http://www.barretlee.com/blog/2017/04/26/about-improve/</link>
+      <guid>http://www.barretlee.com/blog/2017/04/26/about-improve/</guid>
+      <pubDate>Wed Apr 26 2017 12:08:11 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[整理了一条圈子里头一位朋友的提问，这个问题比较普遍，我好好思考了下。]]>
+      
+      </description>
+      <content:encoded><![CDATA[整理了一条圈子里头一位朋友的提问，这个问题比较普遍，我好好思考了下。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/04/26/about-improve/#comments</comments>
+    </item>
     
     <item>
       <title><![CDATA[如何快速上手一款 IDE - VSC 配置指南和插件推荐]]></title>
@@ -415,20 +429,6 @@
       <content:encoded><![CDATA[最近办了一张招行香港一卡通，流程比较长，遇到的问题也很多，趁着自己还记得比较清楚，写下来备忘。]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2016/07/07/hongkong-cmbchina/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[谈一谈越来越难做的前端]]></title>
-      <link>http://www.barretlee.com/blog/2016/06/13/talk-about-front-end/</link>
-      <guid>http://www.barretlee.com/blog/2016/06/13/talk-about-front-end/</guid>
-      <pubDate>Mon Jun 13 2016 00:10:34 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[我接触前端的时间不长也不短，13 年入门，14 年初在百度实习，14 中正式参加工作，掐指一算 4 年整。然而这四年间前端的变化已经让很多人摸不着头脑。]]>
-      
-      </description>
-      <content:encoded><![CDATA[我接触前端的时间不长也不短，13 年入门，14 年初在百度实习，14 中正式参加工作，掐指一算 4 年整。然而这四年间前端的变化已经让很多人摸不着头脑。]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2016/06/13/talk-about-front-end/#comments</comments>
     </item>
     
   </channel>
