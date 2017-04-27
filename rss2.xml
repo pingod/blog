@@ -8,8 +8,22 @@
     <script xmlns="http://www.w3.org/1999/xhtml" src="/public/js/rss.js"></script>
     <atom:link href="/rss2.xml" rel="self" type="application/rss+xml"/>
     <description><![CDATA[想法，随笔，思考，感叹，瞬间，笔记...]]></description>
-    <pubDate>Wed Apr 26 2017 12:15:49 GMT+0800 (CST)</pubDate>
+    <pubDate>Thu Apr 27 2017 14:56:08 GMT+0800 (CST)</pubDate>
     <generator>http://hexo.io/</generator>
+    
+    <item>
+      <title><![CDATA[理解 Gulp 和 Webpack]]></title>
+      <link>http://www.barretlee.com/blog/2017/04/27/gulp-and-webpack/</link>
+      <guid>http://www.barretlee.com/blog/2017/04/27/gulp-and-webpack/</guid>
+      <pubDate>Thu Apr 27 2017 12:50:04 GMT+0800 (CST)</pubDate>
+      <description>
+      <![CDATA[Gulp 和 webpack 之间的关系是十分暧昧的，却也经常被人误解，以为它俩是竞争关系，其实不然。]]>
+      
+      </description>
+      <content:encoded><![CDATA[Gulp 和 webpack 之间的关系是十分暧昧的，却也经常被人误解，以为它俩是竞争关系，其实不然。]]>
+      </content:encoded>
+      <comments>http://www.barretlee.com/blog/2017/04/27/gulp-and-webpack/#comments</comments>
+    </item>
     
     <item>
       <title><![CDATA[熟练工如何拔高 & 零碎知识的整理]]></title>
@@ -415,20 +429,6 @@
       <content:encoded><![CDATA[ECMAScript 6 目前基本成为业界标准，它的普及速度比 ES5 要快很多，主要原因是现代浏览器对 ES6 的支持相当迅速，尤其是 Chrome 和 Firefox 浏览器，已经支持 ES6 中绝大多数的特性。]]>
       </content:encoded>
       <comments>http://www.barretlee.com/blog/2016/07/09/a-kickstarter-guide-to-writing-es6/#comments</comments>
-    </item>
-    
-    <item>
-      <title><![CDATA[招行香港一卡通办理和使用]]></title>
-      <link>http://www.barretlee.com/blog/2016/07/07/hongkong-cmbchina/</link>
-      <guid>http://www.barretlee.com/blog/2016/07/07/hongkong-cmbchina/</guid>
-      <pubDate>Thu Jul 07 2016 19:44:39 GMT+0800 (CST)</pubDate>
-      <description>
-      <![CDATA[最近办了一张招行香港一卡通，流程比较长，遇到的问题也很多，趁着自己还记得比较清楚，写下来备忘。]]>
-      
-      </description>
-      <content:encoded><![CDATA[最近办了一张招行香港一卡通，流程比较长，遇到的问题也很多，趁着自己还记得比较清楚，写下来备忘。]]>
-      </content:encoded>
-      <comments>http://www.barretlee.com/blog/2016/07/07/hongkong-cmbchina/#comments</comments>
     </item>
     
   </channel>
