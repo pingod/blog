@@ -3208,7 +3208,7 @@ div.recent-pic {
   word-wrap: break-word;
 }
 .post-content {
-  text-align: justify;
+  word-break: break-word;
 }
 .post-content .line {
   margin-bottom: 0;
