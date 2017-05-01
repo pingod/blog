@@ -73,7 +73,7 @@
 <a id="more"></a>
 <p>看起来是个很简单的需求，但遇到了两个问题，下面说的比较详细，供小白参考。</p>
 <h3 id="资源引用"><a href="#资源引用" class="headerlink" title="资源引用"></a>资源引用</h3><p>Wordpress 在设置完站点 URL 和主页 URL 后，所有的资源引用都指向线上地址，比如我线上地址是 <code>112.18.3.7:3333</code>，进入后台管理页，会直接跳转到 <code>http://112.18.3.7:3333/wp-admin/</code>，根本不会进入我本地的 <code>http://localhost:8888/wp-admin</code>，原因很简单，WP 会从数据库读取这些配置信息，可以将 <code>/wp-includes/option.php</code> 中的 <code>get_option</code> 函数做一下修改：</p>
-<figure class="highlight php"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_option</span><span class="params">( $option, $default = false )</span> </span>&#123;</div><div class="line">  <span class="keyword">var</span> $BLOG_DEBUG = $_COOKIE[<span class="string">"blog_debug"</span>];</div><div class="line">true<span class="keyword">var</span> $IS_URL_REG = <span class="string">"/^https?:\/\/[\w-_.:]+$/"</span>;</div><div class="line">  <span class="keyword">if</span> ( $BLOG_DEBUG &amp;&amp; preg_match($IS_URL_REG, $BLOG_DEBUG)</div><div class="line">    &amp;&amp; ($option == <span class="string">'siteurl'</span> || $option == <span class="string">'home'</span>) ) &#123;</div><div class="line">    <span class="keyword">return</span> $BLOG_DEBUG;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="code"><pre><div class="line"><span class="function"><span class="keyword">function</span> <span class="title">get_option</span><span class="params">( $option, $default = false )</span> </span>&#123;</div><div class="line"></div><div class="line">  $BLOG_DEBUG = $_COOKIE[<span class="string">"blog_debug"</span>];　</div><div class="line">  </div><div class="line">  <span class="keyword">if</span> ( $BLOG_DEBUG &amp;&amp; preg_match(<span class="string">"/^https?:\/\/[\w-_.:]+$/"</span>, $BLOG_DEBUG)</div><div class="line">    &amp;&amp; ($option == <span class="string">'siteurl'</span> || $option == <span class="string">'home'</span>) ) &#123;</div><div class="line">    <span class="keyword">return</span> $BLOG_DEBUG;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  <span class="comment">// ...</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>上面代码的意思是，如果访问站点时，找到了名叫 <code>blog_debug</code> 的 cookie，则将数据库取出来的 <code>siteurl</code> 和 <code>home</code> 两个值提换成 <code>blog_debug</code> 对一个的 cookie。那么，我们只需要在本地打开的 <code>http://localhost:8888/</code> 页面中写上：</p>
 <figure class="highlight javascript"><table><tr><td class="code"><pre><div class="line"><span class="built_in">document</span>.cookie = <span class="string">'blog_debug=http://localhost:8888'</span>;</div></pre></td></tr></table></figure>
 <p>如上，就可以完成本地调试了。</p>
@@ -135,7 +135,7 @@
 <a class="article-tag-link" href="/blog/tags/Wordpress/">Wordpress</a>
 </li>
 		<li>版权声明: 署名-非商业性使用-禁止演绎 3.0 国际（<a href="https://creativecommons.org/licenses/by-nc-nd/3.0/deed.zh" target="_blank">CC BY-NC-ND 3.0</a>）</li>
-		<li>最后编辑时间: 2017-05-02 00:17:14</li>
+		<li>最后编辑时间: 2017-05-02 00:22:35</li>
 		<li>Feed订阅: <a href="/rss2.xml"><i class="icon">&#x25c8;</i></a></li>
 	</ul>
 	<a href="/about/"><img src="/blogimgs/avatar150.png" /></a>
