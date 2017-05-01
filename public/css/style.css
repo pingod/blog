@@ -3338,7 +3338,7 @@ h1 img:hover {
   margin-top: 20px;
 }
 .post-content p {
-  word-break: normal;
+  word-break: break-all;
 }
 .post-content img {
   max-width: 96%;
@@ -6099,7 +6099,7 @@ div#ds-thread #ds-reset .ds-comment-body {
   top: 0 !important;
 }
 code {
-  word-break: normal;
+  word-break: break-all;
 }
 span.line {
   display: block !important;
