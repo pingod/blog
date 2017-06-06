@@ -1,9 +1,11 @@
+---
 title: 深入理解 Node Stream 内部机制
-description: 小胡子哥的个人网站
+description: 相信很多人对 Node 的 Stream 已经不陌生了，不论是请求流、响应流、文件流还是 socket 流，这些流的底层都是使用 `stream` 模块封装的，Stream 模块做了很多事情，了解了 Stream，那么 Node 中其他很多模块理解起来就顺畅多了。
 warning: true
 author: 小胡子哥
 date: 2017-06-06 14:46:21
 ---
+
 相信很多人对 Node 的 Stream 已经不陌生了，不论是请求流、响应流、文件流还是 socket 流，这些流的底层都是使用 `stream` 模块封装的，甚至我们平时用的最多的 `console.log` 打印日志也使用了它，不信你打开 Node runtime 的源码，看看 [`lib/console.js`](https://github.com/nodejs/node/blob/master/lib/console.js#L82-L109)：
 
 ```js
@@ -24,7 +26,7 @@ Console.prototype.log = function log(...args) {
 
 Stream 模块做了很多事情，了解了 Stream，那么 Node 中其他很多模块理解起来就顺畅多了。
 
-本文代码和图片可以在这里取用：<https://github.com/barretlee/dive-into-node-stream>。
+> 本文代码和图片可以在这里取用：<https://github.com/barretlee/dive-into-node-stream>。
 
 ### stream 模块
 
@@ -36,7 +38,7 @@ Stream 模块做了很多事情，了解了 Stream，那么 Node 中其他很多
 - `lib/_stream_tranform.js`
 - `lib/_stream_duplex.js`
 
-把 `Readable` 和 `Writable` 看明白，后面两者也就差不多理解了。
+把 `Readable` 和 `Writable` 看明白，Tranform 和 Duplex 就不难理解了。
 
 
 ### Readable Stream
@@ -336,7 +338,7 @@ transform.end();
 
 ### 小结
 
-本文主要参考和查阅 Node 官网的文档和源码，细节问题都是从源码中找到的答案，如果有理解不准确之处，还请斧正。
+本文主要参考和查阅 Node 官网的文档和源码，细节问题都是从源码中找到的答案，如有理解不准确之处，还请斧正。关于 Stream，这篇文章只是讲述了基础的原理，还有很多细节之处没有讲到，要真正理解它，还是需要多读读文档，写写代码。
 
 了解了这些 Stream 的内部机制，对我们后续深入理解上层代码有很大的促进作用，特别希望初学 Node 的同学花点时间进来看看。
 
