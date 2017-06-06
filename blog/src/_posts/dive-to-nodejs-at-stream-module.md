@@ -3,6 +3,11 @@ title: 深入理解 Node Stream 内部机制
 description: 相信很多人对 Node 的 Stream 已经不陌生了，不论是请求流、响应流、文件流还是 socket 流，这些流的底层都是使用 `stream` 模块封装的，Stream 模块做了很多事情，了解了 Stream，那么 Node 中其他很多模块理解起来就顺畅多了。
 warning: true
 author: 小胡子哥
+tags:
+  - 前端杂谈
+categories:
+  - JavaScript
+  - 前端杂谈
 date: 2017-06-06 14:46:21
 ---
 

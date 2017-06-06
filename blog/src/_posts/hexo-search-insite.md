@@ -2,8 +2,10 @@ title: 为 Hexo 博客增加一个站内搜索
 description: ' 最近两个周末在 Hexo 博客的构建上做了不少事情，我会分成几篇文章一一叙述，首先来说一说 Hexo 的一个插件 `hexo-generator-search`，利用它可以给博客增加一个站内搜索'
 warning: true
 author: 小胡子哥
-tags: []
-categories: []
+tags:
+  - 前端杂谈
+categories:
+  - 前端杂谈
 date: 2017-06-04 12:30:00
 ---
 这个页面的右上角就可以看到效果（如果你是通过 PC 打开的话~）。
