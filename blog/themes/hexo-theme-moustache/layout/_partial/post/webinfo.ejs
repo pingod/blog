@@ -1,8 +1,9 @@
-<% try{
-		var id = post._id || page._id; 
-		var type = page.layout === 'post' ? 'posts' : 'pages';
-		var path = type + '/' + id; 
-	}catch(e){ path = ''; } 
+<% var path;
+try {
+	var id = post._id || page._id; 
+	var type = page.layout === 'post' ? 'posts' : 'pages';
+	var path = type + '/' + id; 
+} catch (e) { path = ''; }
 %>
 <div class="website-info" aria-hidden="true">
 	<a class="page_editor" href="/admin/#/<%- path %>" target="_blank">🙈</a>

@@ -7,16 +7,17 @@ hexo.extend.generator.register('raw_markdown', function(locals){
   var posts = locals.posts.data.filter(function(post) {
     return post.published;
   }).map(function(post) {
-    var source = post.source.split('/')[1];
-    var path = 'raw/posts/' + (source || post.slug + '.md');
+    var path = 'raw/posts/' + post.slug + '.md';
     list.posts.push(path);
     return {
       path: path,
       data: post.raw
     };
   });
-  var pages = locals.pages.data.map(function(page) {
-    var path = 'raw/pages/' + page.source;
+  var pages = locals.pages.data.filter(function(pages) {
+    return /^pages\//.test(pages.source);
+  }).map(function(page) {
+    var path = 'raw/' + page.source;
     list.pages.push(path);
     return {
       path: path,
