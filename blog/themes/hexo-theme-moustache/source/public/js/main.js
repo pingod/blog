@@ -350,7 +350,7 @@ var operation = {
           link: window.location.href,
           // desc: $(".ds-share").attr("data-content").replace(/<[^>]*?>/gmi, ""),
           desc: '文章链接地址：',
-          title: $(".ds-share").attr("data-title")
+          title: $('.post-title').text()
         };
         wechat('email', data, function () {});
       });
@@ -361,18 +361,18 @@ var operation = {
         });
       });
 
-      // var data = {
-      //   'app': 'wxddd17adddf433070',    // 选填，默认为空
-      //   'img': 'http://www.barretlee.com/blogimgs/avatar.png',
-      //   'link': window.location.href,
-      //   'desc': $('meta[name="description"]').attr('content'),
-      //   'title': $('.post-title').text()
-      // };
-      // var callback = function() {};
+      var data = {
+        'app': 'wxddd17adddf433070',    // 选填，默认为空
+        // 'img': 'http://www.barretlee.com/blogimgs/avatar.png',
+        'link': window.location.href,
+        'desc': $('meta[name="description"]').attr('content'),
+        'title': $('.post-title').text()
+      };
+      var callback = function() {};
 
-      // wechat('friend', data, callback);           // 朋友
-      // wechat('timeline', data, callback);         // 朋友圈
-      // wechat('weibo', data, callback);            // 微博
+      wechat('friend', data, callback);           // 朋友
+      wechat('timeline', data, callback);         // 朋友圈
+      wechat('weibo', data, callback);            // 微博
     });
   },
   welcome: function () {
