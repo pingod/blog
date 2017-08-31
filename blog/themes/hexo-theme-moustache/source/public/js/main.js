@@ -1706,7 +1706,7 @@ $(function () {
     this.users = [];
     this.nameChanged = false;
     this.totalCount = 0;
-    this.socket = io.connect('http://123.56.230.53:29231/');
+    this.socket = io.connect('http://119.23.13.9:29231/');
     // this.socket = io.connect();
     this.startup();
     this.init();
