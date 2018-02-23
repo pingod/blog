@@ -567,6 +567,7 @@ var NM = {
       }
       $("#nmlist li").removeClass('on');
       $("#nmlist li").removeClass('play');
+      $('#nmPlayer').appendTo($('html')).attr('style', '').dragmove();
       $this.addClass('loading');
       self.pause();
       self.start(id);
@@ -600,11 +601,12 @@ var NM = {
     });
   },
 
-  start: function(id) {
+  start: function(id, cb) {
     var self = this;
     var musicList = this.cache[id];
     if (musicList) {
       self._startSong(musicList, id);
+      cb && cb();
       return;
     }
     window['jsonp' + id] = function(list) {
@@ -613,7 +615,9 @@ var NM = {
       self._startSong(musicList, id);
       delete window['jsonp' + id];
     };
-    $.getScript('/music/' + id + '.js');
+    $.getScript('/music/' + id + '.js', function () {
+      cb && cb();
+    });
   },
 
   _startSong: function(list, id) {

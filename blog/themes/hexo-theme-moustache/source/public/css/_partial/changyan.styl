@@ -1,11 +1,15 @@
 #SOHU_MAIN {
   font-family: consolas !important;
   margin-top: 50px !important;
+  margin-bottom: 50px !important;
 }
 .task-li,
 .hots-li,
 .feedback-li,
-.set-li,
+.set-phone-hint,
+// .set-li,
+.help-ico,
+.prop-lead,
 .power-by-cy-txt,
 .btn-bean-outer,
 .cy-user-sex,
@@ -26,7 +30,11 @@
 .user-wrap-w, 
 .module-person-page-prompt, 
 .module-prop-prompt,
-.cy-comment-has-apply-tip
+.cy-comment-has-apply-tip,
+.header-skin,
+.split-hr,
+.power-by-cy,
+.cy-logo-s
 [node-type="cy-sohu-feed"] {
   display: none !important;
   visible: hidden !important;
@@ -150,6 +158,7 @@
   border-radius: 100% !important;
   transform: rotate(0);
   transition: all 0.3s;
+  background: #CCC;
 }
 .head-img-gw img:hover {
   transform: rotate(180deg);
@@ -252,4 +261,22 @@ body>.clearfix, body>.aboutme, body>.message, body>.demos {
     display: inline-block !important;
     line-height: 22px !important;
   }
+}
+
+
+#SOHUCS #SOHU_MAIN .changyan-login-dialog-wrapper .phone-login .login-btn {
+  text-indent: 1000px;  
+  position: relative;
+}
+#SOHUCS #SOHU_MAIN .changyan-login-dialog-wrapper .phone-login .login-btn::after {
+  content: "点击登录";
+  text-indent: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.cy-icon-num {
+  font-size: 12px !important
 }

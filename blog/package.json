@@ -3,11 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "hexo": {
-    "version": "3.3.7"
+    "version": "3.5.0"
   },
   "dependencies": {
     "hexo": "^3.3.7",
     "hexo-admin": "^2.2.1",
+    "hexo-all-minifier": "^0.5.2",
     "hexo-deployer-ftpsync": "^0.1.1",
     "hexo-deployer-git": "0.0.4",
     "hexo-deployer-heroku": "0.0.3",
@@ -19,6 +20,7 @@
     "hexo-generator-search": "^2.1.1",
     "hexo-generator-sitemap": "~1.0.1",
     "hexo-generator-tag": "^0.1.1",
+    "hexo-lazyload-image": "^1.0.2",
     "hexo-migrator-rss": "~0.1.2",
     "hexo-renderer-ejs": "^0.1.0",
     "hexo-renderer-marked": "^0.2.4",

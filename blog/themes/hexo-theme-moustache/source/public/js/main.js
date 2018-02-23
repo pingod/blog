@@ -220,6 +220,7 @@ var isMobile = {
 
 var operation = {
   init: function () {
+    var $this = this;
     this.wechat();
     this.fontChange();
     this.toTop();
@@ -228,8 +229,30 @@ var operation = {
     this.bind();
     this.tips();
     this.insertWeibo();
-    this.loadChangyanCount();
+    $(window).on('load', function () {
+      setTimeout(function () {
+        $this.loadChangyanCount();
+      }, 3E3);
+    });
     this.initSearch();
+  },
+  runMusic: function () {
+    var $box = $('.post-content .music');
+    if (!isMobile.any() && $box.size() && window.NM) {
+      var id = $box.attr('data-id');
+      id && NM.start(+id, function () {
+        $("#nmPlayer").css({
+          position: 'static',
+          margin: '40px auto',
+          width: '80%',
+          cursor: 'default'
+        }).off();
+        var index = $box.attr('data-index');
+        index && window._ap.setMusic(+index);
+        $box.append($("#nmPlayer")).show();
+        window._ap.play();
+      });
+    }
   },
   initSearch: function() {
     if ($('.local-search').size() && !isMobile.any()) {
@@ -423,7 +446,9 @@ var operation = {
       // $(window).on("load", function() {
       var $ifr = $(".rightbar-frame");
       if (!$ifr.find('iframe').size()) {
-        $ifr.css("background", "none").append(htmlStr);
+        $(window).on('load', function () {
+          $ifr.css("background", "none").append(htmlStr);
+        });
       }
       // });
     }
@@ -1052,14 +1077,18 @@ $(window).on("load", function () {
 
   if (!$('#nmlist').size()) {
     // run music app
-    !isMobile.any() && $.getScript('/music/nmlist.js');
+    !isMobile.any() && $.getScript('/music/nmlist.js', function() {
+      operation.runMusic();
+    });
 
     if (window.location.search.indexOf('music') > -1 && isMobile.any()) {
       $(document).on('touchstart', '.aplayer .aplayer-pic', function (e) {
         evt.preventDefault();
         NM.togglePlay();
       });
-      $.getScript('/music/nmlist.js');
+      $.getScript('/music/nmlist.js', function() {
+        operation.runMusic();
+      });
     }
   }
 
@@ -1561,6 +1590,7 @@ typeof history.pushState === 'function' && (function () {
     // var loadingWords = ['伸个懒腰再来~', '打个呵欠再来~', '加载中...', '玩命加载中...', '同学，你很帅！', '这是 Pjax 效果；）', '不要问我这是啥!', '我在加载...', '客官稍等~', '欢迎继续踩点！', '我认识你！', '咱们是不是认识？', '这玩意儿有点意思！', '出 bug 了', '是否有帮到你？', '大家好，我是小胡子', '吃饭了么？'];
     // var word = loadingWords[Math.floor(Math.random() * loadingWords.length)];
     var loadLayer = '<div id="loadLayer" style="position:fixed;left:0;right:0;top:0;bottom:0;background:rgba(255,255,255,0.8);text-align:center;line-height:400px;font-size:30px;z-index:82;display:none;">' + '玩命加载中...' + '</div>';
+    $('.post-content .music').size() && window._ap && window._ap.pause();
     $(loadLayer).appendTo($('html')).fadeIn(300);
     $.ajax({
       url: url,
@@ -1605,6 +1635,7 @@ typeof history.pushState === 'function' && (function () {
     }
     operation.reloadChangyan();
     operation.wechat();
+    operation.runMusic();
     $(window).trigger('load');
     // if(window.location.href.indexOf('/entry/') > -1 && !isMobile.any()) {
     //     roundScroll();
@@ -1681,13 +1712,15 @@ $(function () {
     }
   };
 
-  $.ajax({
-    url: "//busuanzi.ibruce.info/busuanzi",
-    dataType: 'jsonp',
-    jsonp: 'jsonpCallback',
-    success: function (a) {
-      bszTag.texts(a), bszTag.shows()
-    }
+  $(window).on('load', function () {
+    $.ajax({
+      url: "//busuanzi.ibruce.info/busuanzi",
+      dataType: 'jsonp',
+      jsonp: 'jsonpCallback',
+      success: function (a) {
+        bszTag.texts(a), bszTag.shows()
+      }
+    });
   });
 });
 
@@ -1722,10 +1755,10 @@ $(function () {
     this.addInfoLog({
       msg: '提示：点击头像可进入私聊'
     }, 'group');
-    $('.chatroom-item[data-id="group"]').append('<div class="chatroom-log-info"><img src="/circle.jpg" width="200"></div>');
-    this.addInfoLog({
-      msg: '上面是条广告，接着聊。'
-    }, 'group');
+    // $('.chatroom-item[data-id="group"]').append('<div class="chatroom-log-info"><img src="/circle.jpg" width="200"></div>');
+    // this.addInfoLog({
+    //   msg: '上面是条广告，接着聊。'
+    // }, 'group');
   };
 
   ChatRoomClient.prototype.startup = function () {

@@ -126,3 +126,46 @@ metadata:
 search:
   path: search.xml
   field: post
+
+# for hexo all minifier
+all_minifier: true
+js_concator:
+  enable: false
+  bundle_path: '/js/bundle.js'
+  front: false
+  silent: false
+html_minifier:
+  enable: true
+  ignore_error: true
+  silent: false
+  exclude:
+css_minifier:
+  enable: true
+  silent: false
+  exclude: 
+    - '*.min.css'
+js_minifier:
+  enable: true
+  mangle: true
+  silent: false
+  output:
+  compress:
+  exclude: 
+    - '*.min.js'
+image_minifier:
+  enable: true
+  interlaced: false
+  multipass: false
+  optimizationLevel: 2
+  pngquant: false
+  progressive: false
+  silent: false
+
+# for img lazyload
+lazyload:
+  enable: true 
+  onlypost: true
+  # loadingImg: https://img.alicdn.com/tps/TB13WjkHVXXXXX0XVXXXXXXXXXX-900-500.jpg_500x500.jpg
+
+
+# webpack_config: 'themes/hexo-theme-moustache/webpack.config.js'

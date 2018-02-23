@@ -14,7 +14,10 @@
 				if(post.permalink === p.permalink) return;
 				if(++count >= limit) return;
 				var excerpt = p.excerpt.replace(/<[^>]+?>|\n/gm, '') || p.content.replace(/<[^>]+?>|\n/gm, '').slice(0, 50) + "...";
-    		var m = p.content.match(/<img src="([^"]+?)"/);
+				var m = p.content.match(/<img src="[^"]+?" data-original="([^"]+?)"/);
+				if (!m) {
+					m = p.content.match(/<img src="([^"]+?)"/);
+				}
     		var img = m && m.length == 2 ? m[1] : '';
 			%>
 			<li>
