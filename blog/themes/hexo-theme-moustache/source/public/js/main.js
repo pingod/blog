@@ -238,7 +238,7 @@ var operation = {
   },
   runMusic: function () {
     var $box = $('.post-content .music');
-    if (!isMobile.any() && $box.size() && window.NM) {
+    if (!params['share'] && !isMobile.any() && $box.size() && window.NM) {
       var id = $box.attr('data-id');
       id && NM.start(+id, function () {
         $("#nmPlayer").css({
