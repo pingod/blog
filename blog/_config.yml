@@ -163,7 +163,7 @@ image_minifier:
 
 # for img lazyload
 lazyload:
-  enable: false
+  enable: true 
   onlypost: true
   # loadingImg: https://img.alicdn.com/tps/TB13WjkHVXXXXX0XVXXXXXXXXXX-900-500.jpg_500x500.jpg
 
