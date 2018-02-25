@@ -165,7 +165,7 @@ image_minifier:
 lazyload:
   enable: true 
   onlypost: true
-  # loadingImg: https://img.alicdn.com/tps/TB13WjkHVXXXXX0XVXXXXXXXXXX-900-500.jpg_500x500.jpg
+  loadingImg: //img.alicdn.com/tfs/TB1oyqGa_tYBeNjy1XdXXXXyVXa-300-300.png
 
 
 # webpack_config: 'themes/hexo-theme-moustache/webpack.config.js'
