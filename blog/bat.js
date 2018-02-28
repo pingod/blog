@@ -25,37 +25,37 @@ function deal(file) {
   var date = /(\d{4})-(\d{2})-(\d{2})/.exec(file);
   var content2 = content.replace(/\!\[([^\]]+?])\(([\s\S]+?)\)/g, function ($0, $1, $2) {
     if ($2.indexOf('/blogimgs/') > -1) {
-      return `<%- config.source %>${$0}`;
+      return `![${$1}](<%- config.source %>${$2})`;
     }
-    if ($2.indexOf('//') === -1 || $2 === "//img.alicdn.com/tfs/TB1oyqGa_tYBeNjy1XdXXXXyVXa-300-300.png") return $0;
-    if ($2.indexOf('www.barretlee.com') > -1) {
-      var p = '/blogimgs/' + $2.split('/blogimgs/')[1];
-      return `![${$1}](${p})`;
-    }
-    var url = /^http/.test($2) ? $2 : `http:${$2}`;
-    var name = url.split('/');
-    name = name[name.length - 1];
-    if (url.indexOf('sinaimg') > -1 && url.indexOf('.') === -1) {
-      name += '.jpg';
-    }
-    // console.log(`![${$1}](/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name})<!--<source src="${$2}">-->`);
-    mkDirByPathSync(`./src/blogimgs/${date[1]}/${date[2]}/${date[3]}`);
-    try {
-      exexSync(`wget -O /Users/barretlee/work/blogsys/blog/src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name} ${url}`);
-    } catch(e) {
-      err.push(file + ' ' + $2);
-    }
-    // // 删除错误目录下的文件
-    // if (fs.existsSync(`./src/blogimgs/${name}`)) {
-    //   fs.unlink(`./src/blogimgs/${name}`);
+    // if ($2.indexOf('//') === -1 || $2 === "//img.alicdn.com/tfs/TB1oyqGa_tYBeNjy1XdXXXXyVXa-300-300.png") return $0;
+    // if ($2.indexOf('www.barretlee.com') > -1) {
+    //   var p = '/blogimgs/' + $2.split('/blogimgs/')[1];
+    //   return `![${$1}](${p})`;
     // }
-    return `![${$1}](/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name})<!--<source src="${$2}">-->`;
+    // var url = /^http/.test($2) ? $2 : `http:${$2}`;
+    // var name = url.split('/');
+    // name = name[name.length - 1];
+    // if (url.indexOf('sinaimg') > -1 && url.indexOf('.') === -1) {
+    //   name += '.jpg';
+    // }
+    // // console.log(`![${$1}](/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name})<!--<source src="${$2}">-->`);
+    // mkDirByPathSync(`./src/blogimgs/${date[1]}/${date[2]}/${date[3]}`);
+    // try {
+    //   exexSync(`wget -O /Users/barretlee/work/blogsys/blog/src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name} ${url}`);
+    // } catch(e) {
+    //   err.push(file + ' ' + $2);
+    // }
+    // // // 删除错误目录下的文件
+    // // if (fs.existsSync(`./src/blogimgs/${name}`)) {
+    // //   fs.unlink(`./src/blogimgs/${name}`);
+    // // }
+    // return `![${$1}](/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name})<!--<source src="${$2}">-->`;
   }).replace(/<img src="\/blogimgs\//g, function ($0, $1, $2) {
     return `<img src="<%- config.source %>\/blogimgs\/`;
   });
-  // if (content !== content2) {
-  //   fs.writeFileSync(file, content2);
-  // }
+  if (content !== content2) {
+    fs.writeFileSync(file, content2);
+  }
 }
 
 function mkDirByPathSync(targetDir, {isRelativeToScript = false} = {}) {
