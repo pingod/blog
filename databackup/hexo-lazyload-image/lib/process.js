@@ -13,15 +13,16 @@ function lazyProcess(htmlContent) {
     }
 
     return htmlContent.replace(/<img(\s*?)src="(.*?)"(.*?)>/gi, function (str, p1, p2) {
-        str = str.replace(/data-original="\/blogimgs/, function ($0) {
-            return 'data-original="' + imgCDN + '/blogimgs';
-        });
-        p2 = /^\/blogimgs/.test(p2) ? imgCDN + p2 : p2;
         // might be duplicate
         if(/data-original/gi.test(str)){
-            return str;
+            return str.replace(/data-original="\/blogimgs/gim, function () {
+                return 'data-original="' + imgCDN + '/blogimgs';
+            });
         }
-        return str.replace(p2, loadingImage + '" data-original="' + p2);
+        return str.replace(p2, loadingImage + '" data-original="' + p2)
+                .replace(/data-original="\/blogimgs/gim, function () {
+                    return 'data-original="' + imgCDN + '/blogimgs';
+                });
     });
 }
 module.exports.processPost = function (data) {

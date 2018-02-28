@@ -18,8 +18,10 @@
             if (isBg) {
                 el.style.backgroundImage = src;
             }
-            el.src = src;
-            fn ? fn() : null;
+            setTimeout(function () {
+                el.setAttribute('src', src);
+                fn ? fn() : null;
+            }, 10);
         // };
         // img.src = src;
     }

@@ -25,7 +25,12 @@ function deal(file) {
   var date = /(\d{4})-(\d{2})-(\d{2})/.exec(file);
   var content2 = content.replace(/\!\[([^\]]+?)\]\(([\s\S]+?)\)/g, function ($0, $1, $2) {
     if (!/\.(jpg|png|svg|gif)$/.test($2)) {
-      return $0 + '.jpg';
+      var name = $2.split('/');
+      name = name[name.length - 1];
+      if (fs.existsSync(`./src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name}`)) {
+        fs.renameSync(`./src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name}`, `./src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name}.jpg`)
+      }
+      return `![${$1}](${$2}.jpg)`
     } else {
       return $0;
     }
@@ -53,9 +58,9 @@ function deal(file) {
     // }
     // return `![${$1}](/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name})<!--<source src="${$2}">-->`;
   });
-  // if (content !== content2) {
-  //   fs.writeFileSync(file, content2);
-  // }
+  if (content !== content2) {
+    fs.writeFileSync(file, content2);
+  }
 }
 
 function mkDirByPathSync(targetDir, {isRelativeToScript = false} = {}) {
