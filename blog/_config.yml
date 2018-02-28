@@ -127,6 +127,8 @@ search:
   path: search.xml
   field: post
 
+imgurl: /blogimg/
+
 # for hexo all minifier
 all_minifier: true
 js_concator:
