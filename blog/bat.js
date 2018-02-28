@@ -24,6 +24,9 @@ function deal(file) {
   var content = fs.readFileSync(file).toString();
   var date = /(\d{4})-(\d{2})-(\d{2})/.exec(file);
   var content2 = content.replace(/\!\[([^\]]+?])\(([\s\S]+?)\)/g, function ($0, $1, $2) {
+    if ($2.indexOf('/blogimgs/') > -1) {
+      return `<%- config.source %>${$0}`;
+    }
     if ($2.indexOf('//') === -1 || $2 === "//img.alicdn.com/tfs/TB1oyqGa_tYBeNjy1XdXXXXyVXa-300-300.png") return $0;
     if ($2.indexOf('www.barretlee.com') > -1) {
       var p = '/blogimgs/' + $2.split('/blogimgs/')[1];
@@ -47,6 +50,8 @@ function deal(file) {
     //   fs.unlink(`./src/blogimgs/${name}`);
     // }
     return `![${$1}](/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name})<!--<source src="${$2}">-->`;
+  }).replace(/<img src="\/blogimgs\//g, function ($0, $1, $2) {
+    return `<img src="<%- config.source %>\/blogimgs\/`;
   });
   // if (content !== content2) {
   //   fs.writeFileSync(file, content2);
