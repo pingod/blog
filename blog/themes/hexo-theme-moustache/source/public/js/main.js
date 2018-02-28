@@ -37,14 +37,14 @@ $(function () {
   }
 });
 
-if (window.location.protocol == 'https:') {
-  $("img").each(function () {
-    var src = $(this).attr('src');
-    if (/ww1.sinaimg.cn/.test(src)) {
-      $(this).attr('src', src.replace('ww1.', 'www.'));
-    }
-  });
-}
+// if (window.location.protocol == 'https:') {
+//   $("img").each(function () {
+//     var src = $(this).attr('src');
+//     if (/ww1.sinaimg.cn/.test(src)) {
+//       $(this).attr('src', src.replace('ww1.', 'www.'));
+//     }
+//   });
+// }
 
 function notify(notice) {
   if (!("Notification" in window)) {
