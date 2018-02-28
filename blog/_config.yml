@@ -11,7 +11,7 @@ author: 小胡子哥 # Barret Lee
 language: zh-cn
 timezone: Asia/Shanghai
 
-imgCDN: //barretlee-blogimgs.oss-cn-beijing.aliyuncs.com
+imgCDN: 
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
