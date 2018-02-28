@@ -23,23 +23,26 @@ console.log(err);
 function deal(file) {
   var content = fs.readFileSync(file).toString();
   var date = /(\d{4})-(\d{2})-(\d{2})/.exec(file);
-  var content2 = content.replace(/\!\[([\s\S]+?)\]\(([\s\S]+?)\)/g, function ($0, $1, $2) {
-    if ($2.indexOf('//') === -1) return;
-    var url = /^http/.test($2) ? $2 : `http:${$2}`;
+  var content2 = content.replace(/<img src="([^"]+?)"/g, function ($0, $1) {
+    if ($1.indexOf('//') === -1 || $1 === "//img.alicdn.com/tfs/TB1oyqGa_tYBeNjy1XdXXXXyVXa-300-300.png") return;
+    var url = /^http/.test($1) ? $1 : `http:${$1}`;
     var name = url.split('/');
     name = name[name.length - 1];
-    // console.log('>>>>>', name, url);
-    // mkDirByPathSync(`./src/blogimgs/${date[1]}/${date[2]}/${date[3]}`);
-    // try {
-    //   exexSync(`wget -O /Users/barretlee/work/blogsys/blog/src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name} ${url}`);
-    // } catch(e) {
-    //   err.push(file + ' ' + $2);
-    // }
+    if (url.indexOf('sinaimg') > -1 && url.indexOf('.') === -1) {
+      name += '.jpg';
+    }
+    // console.log(`<img src="//img.alicdn.com/tfs/TB1oyqGa_tYBeNjy1XdXXXXyVXa-300-300.png" data-original="/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name}" data-source="${$1}"`);
+    mkDirByPathSync(`./src/blogimgs/${date[1]}/${date[2]}/${date[3]}`);
+    try {
+      exexSync(`wget -O /Users/barretlee/work/blogsys/blog/src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name} ${url}`);
+    } catch(e) {
+      err.push(file + ' ' + $1);
+    }
     // // 删除错误目录下的文件
     // if (fs.existsSync(`./src/blogimgs/${name}`)) {
     //   fs.unlink(`./src/blogimgs/${name}`);
     // }
-    return `//img.alicdn.com/tfs/TB1oyqGa_tYBeNjy1XdXXXXyVXa-300-300.png" data-original="/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name}" data-source="${$2}"`;
+    return `<img src="//img.alicdn.com/tfs/TB1oyqGa_tYBeNjy1XdXXXXyVXa-300-300.png" data-original="/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name}" data-source="${$1}"`;
   });
   // if (content !== content2) {
   //   fs.writeFileSync(file, content2);
