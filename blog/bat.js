@@ -18,26 +18,15 @@ travel(base);
 function deal(file) {
   var content = fs.readFileSync(file).toString();
   var date = /(\d{4})-(\d{2})-(\d{2})/.exec(file);
-  var content2 = content.replace(/src="http:\/\/images.cnitblog.com\/([^\/]+\/){1,2}([^"]+?)"/g, function ($0, $1, $2, $3) {
-    var name = $2.split('/');
+  var content2 = content.replace(/\(\/blogimgs\/([^\)]+?)\)/g, function ($0, $1) {
+    var name = $1.split('/');
     name = name[name.length - 1];
-    var url = $0.slice(5, -1);
-    console.log('>>>>>', name, url);
-    mkDirByPathSync(`./src/blogimgs/${date[1]}/${date[2]}/${date[3]}`);
-    try {
-      exexSync(`wget -O /Users/barretlee/work/blogsys/blog/src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name} ${url}`);
-    } catch(e) {
-      console.log(e);
-    }
-    // 删除错误目录下的文件
-    if (fs.existsSync(`./src/blogimgs/${name}`)) {
-      fs.unlink(`./src/blogimgs/${name}`);
-    }
-    return `src="//img.alicdn.com/tfs/TB1oyqGa_tYBeNjy1XdXXXXyVXa-300-300.png" data-original="/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name}" data-source="${$0.slice(5, -1)}"`;
+    fs.renameSync('./src' + $0.slice(1, -1), `./src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name}`);
+    return `(/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name})`;
   });
-  if (content !== content2) {
-    fs.writeFileSync(file, content2);
-  }
+  // if (content !== content2) {
+  //   fs.writeFileSync(file, content2);
+  // }
 }
 
 function mkDirByPathSync(targetDir, {isRelativeToScript = false} = {}) {
