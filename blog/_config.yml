@@ -138,7 +138,8 @@ html_minifier:
   enable: true
   ignore_error: true
   silent: false
-  exclude:
+  exclude: 
+    - '/ST/'
 css_minifier:
   enable: true
   silent: false

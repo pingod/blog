@@ -1726,6 +1726,7 @@ $(function () {
   });
 });
 
+/*
 $(function () {
 
   function htmlspecialchars(str) {
@@ -2165,3 +2166,4 @@ $(function () {
     window.chatRoomClient = new ChatRoomClient();
   }
 });
+*/
