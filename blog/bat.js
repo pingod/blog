@@ -13,16 +13,33 @@ var travel = function(filePath) {
     }
   });
 };
+
+
+var err = [];
 travel(base);
+console.log(err);
+
 
 function deal(file) {
   var content = fs.readFileSync(file).toString();
   var date = /(\d{4})-(\d{2})-(\d{2})/.exec(file);
-  var content2 = content.replace(/\(\/blogimgs\/([^\)]+?)\)/g, function ($0, $1) {
-    var name = $1.split('/');
+  var content2 = content.replace(/\!\[([\s\S]+?)\]\(([\s\S]+?)\)/g, function ($0, $1, $2) {
+    if ($2.indexOf('//') === -1) return;
+    var url = /^http/.test($2) ? $2 : `http:${$2}`;
+    var name = url.split('/');
     name = name[name.length - 1];
-    fs.renameSync('./src' + $0.slice(1, -1), `./src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name}`);
-    return `(/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name})`;
+    // console.log('>>>>>', name, url);
+    // mkDirByPathSync(`./src/blogimgs/${date[1]}/${date[2]}/${date[3]}`);
+    // try {
+    //   exexSync(`wget -O /Users/barretlee/work/blogsys/blog/src/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name} ${url}`);
+    // } catch(e) {
+    //   err.push(file + ' ' + $2);
+    // }
+    // // 删除错误目录下的文件
+    // if (fs.existsSync(`./src/blogimgs/${name}`)) {
+    //   fs.unlink(`./src/blogimgs/${name}`);
+    // }
+    return `//img.alicdn.com/tfs/TB1oyqGa_tYBeNjy1XdXXXXyVXa-300-300.png" data-original="/blogimgs/${date[1]}/${date[2]}/${date[3]}/${name}" data-source="${$2}"`;
   });
   // if (content !== content2) {
   //   fs.writeFileSync(file, content2);
