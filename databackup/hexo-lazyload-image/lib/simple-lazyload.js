@@ -14,14 +14,14 @@
             , src = el.getAttribute('data-original')
             , isBg = el.getAttribute('data-isbg');
         src = src.replace(/^https?:/, '');
-        img.onload = function () {
+        // img.onload = function () {
             if (isBg) {
                 el.style.backgroundImage = src;
             }
             el.src = src;
             fn ? fn() : null;
-        };
-        img.src = src;
+        // };
+        // img.src = src;
     }
 
     function processImages() {
