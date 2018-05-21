@@ -695,6 +695,12 @@ var operation = {
         }
       }
     });
+    var commentTriggered = false;
+    $(window).on('scroll', function () {
+      if (commentTriggered) return;
+      commentTriggered = !commentTriggered;
+      $('.footer-nav a').eq(0).trigger('click');
+    });
   },
   isIE: function (num) {
     var name = navigator.appVersion.toUpperCase();

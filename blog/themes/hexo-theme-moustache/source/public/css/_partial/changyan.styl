@@ -1,3 +1,7 @@
+html {
+  overflow: hidden;
+  overflow-y: auto;
+}
 #SOHU_MAIN {
   font-family: consolas !important;
   margin-top: 50px !important;
@@ -35,12 +39,17 @@
 .split-hr,
 .power-by-cy,
 .cy-logo-s,
-.user-address-gw  
+.user-address-g,
+#feedAv,
+[node-type="ad-pc-feed"],
 [node-type="cy-sohu-feed"] {
   display: none !important;
   visible: hidden !important;
   opacity: 0 !important;
-  
+  z-index: -1;
+  position: absolute;
+  left: -9999px;
+  right: -99999px;
 }
 
 .section-cbox-w {
