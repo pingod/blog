@@ -95,7 +95,7 @@ backup:
 	# 二次备份 drafts
 	- cp -f ${DRAFTS}* ${BACKUPDRAFTS_BAC};
 	# 备份到 google driver
-	- cp -f ${POSTS} ${GOOGLE_DRIVER_BLOG};
+	- cp -f ${POSTS}* ${GOOGLE_DRIVER_BLOG};
 	- cp -rf ${POSTS_IMG} ${GOOGLE_DRIVER_BLOG_IMG};
 ifneq (${P},)
 	# 参数中包含 push, 推到仓库中去备份
