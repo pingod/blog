@@ -12,9 +12,10 @@
 			</ul>
 		</em>
 		<%- partial("../_partial/post/rss.ejs") %>
-		<span class="entry-page-search">
-        <input type="text" placeholder="Google 站内搜索">
-        <i class="icon" aria-hidden="true">&#x2708;</i>
+		<span class="entry-page-search local-search-google local-search">
+        <input type="text" placeholder="站内搜索" id="local-search-input">
+        <i class="icon" aria-hidden="true" title="点击进入 Google 搜索">&#x2708;</i>
+				<div id="local-search-result" class="local-search-result-cls"></div>
     </span>
 	</h1>
 	<div class="clearfix response-overflow">
@@ -46,7 +47,10 @@
 		<% var recentPost = site.posts.sort('date', 'desc').data[1];
 		var rTitle = recentPost.title;
 		var excerpt = recentPost.excerpt.replace(/<[^>]+?>|\n/gm, '') || recentPost.content.replace(/<[^>]+?>|\n/gm, '').slice(0, 100) + "...";
-		var m = recentPost.content.match(/<img src="([^"]+?)"/);
+		var m = recentPost.content.match(/<img src="[^"]+?" data-original="([^"]+?)"/);
+		if (!m) {
+			m = recentPost.content.match(/<img src="([^"]+?)"/);
+		}
 		var img = m && m.length == 2 ? m[1] : '';
 		%>
 		<div class="entry-recent-post clearfix" itemscope itemtype="http://schema.org/Article" aria-hidden="true">
@@ -62,13 +66,14 @@
 				at <a href="<%- url_for('/blog/categories/' + recentPost.category + "/") %>"><%- partial("../_partial/post/category", {post: recentPost}) %></a>
 				on <time><%- moment(recentPost.date).format("YYYY-MM-DD") %></time>
 				<a href="<%- url_for(recentPost.path) %>#comments">
-					<b class="ds-thread-count disqus-comment-count"
+					<b class="ds-thread-count disqus-comment-count cy_cmt_count"
 						data-thread-key="<%- recentPost.slug || recentPost.path %>"
-						data-disqus-identifier="<%- recentPost.slug || recentPost.path %>"></b>
+						data-disqus-identifier="<%- recentPost.slug || recentPost.path %>"
+						id="sourceId::<%- recentPost.slug || recentPost.path %>"
+						></b>
 				</a>
 			</span>
 		</div>
-
 		<div class="entry-recent-posts">
 			<h2><a href="<%- url_for('/blog/categories/前端杂烩/') %>" aria-hidden="true">博客归档 »</a>近期文章</h2>
 			<ul itemscope itemtype="http://schema.org/Article">
@@ -78,9 +83,11 @@
 						<em tabindex="0" aria-hidden="true" class="entry-item-tag"><%- post.mark %></em>
 					<% } %>
 				</a><span tabindex="0" class="aria-readonly">发布时间为<%- moment(post.date).format("YYYY年MM月DD日") %></span> <span><b
-								class="ds-thread-count disqus-comment-count"
+								class="ds-thread-count disqus-comment-count cy_cmt_count"
 								data-thread-key="<%- post.slug || post.path %>"
-								data-disqus-identifier="<%- post.slug || post.path %>"></b></span></li>
+								data-disqus-identifier="<%- post.slug || post.path %>"
+              	id="sourceId::<%- post.slug || post.path %>"
+								></b></span></li>
 			<% }) %>
 			<% if(site.posts.length > 125) {%>
 				<li><a href="<%- url_for("/blog/archives/") %>">更多文章...</a></li>

@@ -33,6 +33,14 @@
     margin-bottom: 0;
   }
 }
+video {
+  max-width: 96%;
+  display: block;
+  border-radius: 8px;
+  border: 6px solid #e8e8e8;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
 h1 {
   img {
     position: absolute;
@@ -184,6 +192,12 @@ h1 {
 .post-content p,.post-content blockquote,.post-content .highlight,
 .post-content div,.post-content table {
   margin-bottom: 25px;
+}
+.post-content #nmPlayer > div, .post-content #nmPlayer .aplayer-pause {
+  margin-bottom: 0;
+}
+.post-content #nmPlayer li {
+  margin-bottom: 0;
 }
 .highlight table,.highlight table th,.highlight table td {
   margin: 0;
@@ -506,9 +520,10 @@ table td, table th {
   overflow: hidden;
 }
 a.relative-img-wrapper {
+  display: flex;
   float: right;
   width: 200px;
-  height: 120px;
+  max-height: 120px;
   margin-left: 10px;
   margin-top: 7px;
   overflow: hidden;

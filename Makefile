@@ -1,6 +1,6 @@
 .PHONY: r d b h n i c p run backup deploy help new mkfile init clear goroot pull
 
-ROOT = ~/work/blogsys/
+ROOT = $(CURDIR)/
 DRAFTS = ${ROOT}blog/src/_drafts/
 POSTS = ${ROOT}blog/src/_posts/
 POSTS_IMG = ${ROOT}blog/src/blogimgs/
@@ -30,7 +30,7 @@ p: pull
 
 # 拉取远程代码
 pull:
-	git pull coding master;
+	git pull origin master;
 
 # 回到根文件夹
 goroot:
@@ -57,18 +57,26 @@ clear:
 
 # 打开 hexo 本地服务
 run:
+ifneq (${F},)
 	cd blog; \
-	hexo g; \
-	open ${LOCAL}; \
-	hexo s;
-
-# 备份文件,部署到 gitcafe 和 github
-deploy:
-	cd blog; \
-	rm -rf ${BUILD}; \
 	rm -rf ${DEPLOY_GIT}; \
-	rm db.json; \
-	hexo g; \
+	hexo clean;
+	hexo g;
+endif
+	git pull origin master; \
+	cd blog; \
+	open ${LOCAL}; \
+	hexo s -d --debug;
+
+# 备份文件,部署到 coding 和 github
+deploy:
+ifneq (${F},)
+	cd blog; \
+	rm -rf ${DEPLOY_GIT}; \
+	hexo clean;
+	hexo g;
+endif
+	cd blog; \
 	hexo d; \
 	open ${WEB};
 	git add --all; \
@@ -87,7 +95,7 @@ backup:
 	# 二次备份 drafts
 	- cp -f ${DRAFTS}* ${BACKUPDRAFTS_BAC};
 	# 备份到 google driver
-	- cp -f ${POSTS} ${GOOGLE_DRIVER_BLOG};
+	- cp -f ${POSTS}* ${GOOGLE_DRIVER_BLOG};
 	- cp -rf ${POSTS_IMG} ${GOOGLE_DRIVER_BLOG_IMG};
 ifneq (${P},)
 	# 参数中包含 push, 推到仓库中去备份

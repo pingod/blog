@@ -7,7 +7,7 @@
  */
 function curl_get($url)
 {
-    $refer = "http://music.163.com/";
+    $refer = "//music.163.com/";
     $header[] = "Cookie: " . "appver=1.5.0.75771;";
     $ch = curl_init();
     curl_setopt($ch, CURLOPT_URL, $url);
@@ -22,14 +22,14 @@ function curl_get($url)
 
 function music_search($word, $type)
 {
-    $url = "http://music.163.com/api/search/pc";
+    $url = "//music.163.com/api/search/pc";
     $post_data = array(
         's' => $word,
         'offset' => '0',
         'limit' => '20',
         'type' => $type,
     );
-    $referrer = "http://music.163.com/";
+    $referrer = "//music.163.com/";
     $URL_Info = parse_url($url);
     $values = [];
     $result = '';
@@ -67,41 +67,41 @@ function music_search($word, $type)
 
 function get_music_info($music_id)
 {
-    $url = "http://music.163.com/api/song/detail/?id=" . $music_id . "&ids=%5B" . $music_id . "%5D";
+    $url = "//music.163.com/api/song/detail/?id=" . $music_id . "&ids=%5B" . $music_id . "%5D";
     return curl_get($url);
 }
 
 function get_artist_album($artist_id, $limit)
 {
-    $url = "http://music.163.com/api/artist/albums/" . $artist_id . "?limit=" . $limit;
+    $url = "//music.163.com/api/artist/albums/" . $artist_id . "?limit=" . $limit;
     return curl_get($url);
 }
 
 function get_album_info($album_id)
 {
-    $url = "http://music.163.com/api/album/" . $album_id;
+    $url = "//music.163.com/api/album/" . $album_id;
     return curl_get($url);
 }
 
 function get_playlist_info($playlist_id)
 {
-    $url = "http://music.163.com/api/playlist/detail?id=" . $playlist_id;
+    $url = "//music.163.com/api/playlist/detail?id=" . $playlist_id;
     return curl_get($url);
 }
 
 function get_music_lyric($music_id)
 {
-    $url = "http://music.163.com/api/song/lyric?os=pc&id=" . $music_id . "&lv=-1&kv=-1&tv=-1";
+    $url = "//music.163.com/api/song/lyric?os=pc&id=" . $music_id . "&lv=-1&kv=-1&tv=-1";
     return curl_get($url);
 }
 
 function get_mv_info()
 {
-    $url = "http://music.163.com/api/mv/detail?id=319104&type=mp4";
+    $url = "//music.163.com/api/mv/detail?id=319104&type=mp4";
     return curl_get($url);
 }
 
-#http://music.163.com/api/artist/歌手id?ext=true&top=50&id=歌手id
+#//music.163.com/api/artist/歌手id?ext=true&top=50&id=歌手id
 
 #echo music_search("Moon Without The Stars", "1");
 #echo get_music_info("28949444");

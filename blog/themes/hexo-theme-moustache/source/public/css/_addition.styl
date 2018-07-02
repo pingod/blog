@@ -192,6 +192,7 @@ br
 }
 
 .ds-loading {
+  margin-top: 20px;
   padding: 20px 0;
   text-align: center;
   color: #AFAFAF;
@@ -280,7 +281,7 @@ div#ds-thread #ds-reset .ds-comment-body {
 
 
 code {
-  word-break: break-all;
+  word-break: normal;
 }
 span.line {
   display: block !important;
@@ -383,7 +384,7 @@ span.line {
 
 
 .shareMode {
-  .post-info, .tools-wrapper, .share-article, .post-relative, .single-page-footer, .sidebar, #nmlist, .chatroom, .copyright, .bread, .post-title-wrapper img, .web-feed, .ds-meta, .website-info, .arrow-expend{
+  .post-info, .tools-wrapper, .share-article, .post-relative, .single-page-footer, .sidebar, #nmlist, .chatroom, .copyright, .bread, .post-title-wrapper img, .web-feed, .ds-meta, .website-info, .arrow-expend, .local-search{
     display: none !important;
   }
   .follow-wechat {
@@ -396,5 +397,12 @@ span.line {
     img {
       margin: 30px auto;
     }
+  }
+}
+
+.message #cyHotusers {
+  .hotusers-nick, .hotusers-totalcmt {
+    padding-top: 0;
+    margin-top: -8px;
   }
 }

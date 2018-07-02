@@ -1,5 +1,5 @@
 {
-  "name": "hexo-generator-feed",
+  "name": "hexo-generator-feed2",
   "version": "1.0.3",
   "description": "Feed generator plugin for Hexo",
   "main": "index",
@@ -23,11 +23,6 @@
     "atom",
     "generator"
   ],
-  "author": {
-    "name": "Tommy Chen",
-    "email": "tommy351@gmail.com",
-    "url": "http://zespia.tw"
-  },
   "license": "MIT",
   "dependencies": {
     "ejs": "^1.0.0",
